@@ -1,0 +1,86 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  fpm:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@
+
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install fpm
+        uses: fortran-lang/setup-fpm@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify fpm installation
+        run: fpm --version
+
+      - name: Install fypp
+        run: pip install --upgrade fypp ninja
+
+      - name: Verify fypp installation
+        run: fypp --version
+
+      - name: Verify gfortran installation
+        run: gfortran --version
+
+      - name: Build library using fpm
+        run: fpm build
+
+  ford:
+
+    needs: fpm
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install fpm
+        uses: fortran-lang/setup-fpm@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check fpm
+        run: fpm --version
+
+      - name: Install FORD
+        run: |
+          sudo apt-get -y update
+          sudo pip install ford
+
+      - name: Verify FORD installation
+        run: ford --version
+
+      - name: Generate the documentation
+        run: ford ford.md
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: doc
+          if-no-files-found: error
+
+      - name: Deploy documentation
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        if: ${{ github.event_name == 'push'  &&  github.ref == 'refs/heads/main' }}
+        with:
+          branch: github-pages
+          folder: doc
