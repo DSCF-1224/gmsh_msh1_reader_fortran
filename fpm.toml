@@ -15,4 +15,7 @@ library = false
 implicit-typing = false
 implicit-external = false
 source-form = "free"
-
+[[test]]
+name = "check"
+source-dir = "test"
+main = "check.f90"
