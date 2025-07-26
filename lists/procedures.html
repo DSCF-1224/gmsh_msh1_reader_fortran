@@ -87,7 +87,7 @@
                  <td><a href='../proc/all_flag.html'>all_flag</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Function</td>
-                 <td></td>
+                 <td><p>If any of the flags is <code>.false.</code>, it indicates that the file read operation failed.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/clear_msg.html'>clear_msg</a></td>
@@ -111,7 +111,8 @@
                  <td><a href='../proc/fetch_element_from_loc_gmsh_msh1_file.html'>fetch_element_from_loc_gmsh_msh1_file</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Subroutine</td>
-                 <td></td>
+                 <td><p>If no element corresponding to the <a href="../proc/fetch_element_from_loc_gmsh_msh1_file.html#variable-loc~2">loc</a> argument exists,
+a element initialized by <a href="../proc/initialize_gmsh_msh1_element.html">initialize_gmsh_msh1_element</a> will be returned.</p><a href="../proc/fetch_element_from_loc_gmsh_msh1_file.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/initialize_gmsh_msh1_element.html'>initialize_gmsh_msh1_element</a></td>
@@ -183,19 +184,20 @@
                  <td><a href='../proc/output_node_from_loc_gmsh_msh1_file.html'>output_node_from_loc_gmsh_msh1_file</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Function</td>
-                 <td></td>
+                 <td><p>If no node corresponding to the <a href="../proc/output_node_from_loc_gmsh_msh1_file.html#variable-loc">loc</a> argument exists,
+a node initialized by <a href="../proc/initialize_gmsh_msh1_node.html">initialize_gmsh_msh1_node</a> will be returned.</p><a href="../proc/output_node_from_loc_gmsh_msh1_file.html" class="pull-right"><emph>Read more&hellip;</emph></a></td>
                </tr>
 			   <tr>
                  <td><a href='../interface/output_node_number.html'>output_node_number</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Interface</td>
-                 <td><p>get the number (index) of the <em>n</em>-th node in the mesh</p></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-node_number">node_number</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/output_node_number_gmsh_msh1_node.html'>output_node_number_gmsh_msh1_node</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Function</td>
-                 <td></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-node_number">node_number</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../interface/output_node_number_list.html'>output_node_number_list</a></td>
@@ -267,37 +269,37 @@
                  <td><a href='../interface/output_x_coord.html'>output_x_coord</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Interface</td>
-                 <td><p>get the floating point values giving the X coordinates of the <em>n</em>-th node.</p></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-x_coord">x_coord</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/output_x_coord_gmsh_msh1_node.html'>output_x_coord_gmsh_msh1_node</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Function</td>
-                 <td></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-x_coord">x_coord</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../interface/output_y_coord.html'>output_y_coord</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Interface</td>
-                 <td><p>get the floating point values giving the Y coordinates of the <em>n</em>-th node.</p></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-y_coord">y_coord</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/output_y_coord_gmsh_msh1_node.html'>output_y_coord_gmsh_msh1_node</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Function</td>
-                 <td></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-y_coord">y_coord</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../interface/output_z_coord.html'>output_z_coord</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Interface</td>
-                 <td><p>get the floating point values giving the Z coordinates of the <em>n</em>-th node.</p></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-z_coord">z_coord</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/output_z_coord_gmsh_msh1_node.html'>output_z_coord_gmsh_msh1_node</a></td>
                  <td><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></td>
                  <td>Function</td>
-                 <td></td>
+                 <td><p>Get the <a href="../type/gmsh_msh1_node_type.html#variable-z_coord">z_coord</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a>.</p></td>
                </tr>
 			   <tr>
                  <td><a href='../proc/read_gmsh_msh1_element.html'>read_gmsh_msh1_element</a></td>
@@ -354,7 +356,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-07-24 14:07 +0000             </p>
+ on 2025-07-26 09:09 +0000             </p>
           </div>
         </div>
         <br>
