@@ -15,7 +15,11 @@ sort: permission-alpha
 print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 license: mit
-alias: GmshDefinesH = Reference: [`GmshDefines.h`](https://gitlab.onelab.info/gmsh/gmsh/blob/master/src/common/GmshDefines.h)
+alias: DescOutputNodeNumber = Get the [[gmsh_msh1_node_type:node_number]] from the [[gmsh_msh1_node_type]].
+       DescOutputXCoord = Get the [[gmsh_msh1_node_type:x_coord]] from the [[gmsh_msh1_node_type]].
+       DescOutputYCoord = Get the [[gmsh_msh1_node_type:y_coord]] from the [[gmsh_msh1_node_type]].
+       DescOutputZCoord = Get the [[gmsh_msh1_node_type:z_coord]] from the [[gmsh_msh1_node_type]].
+       GmshDefinesH = Reference: [`GmshDefines.h`](https://gitlab.onelab.info/gmsh/gmsh/blob/master/src/common/GmshDefines.h)
        GmshReferenceManualTop = [Gmsh](https://gmsh.info/doc/texinfo/gmsh.html)
        GmshReferenceManualMsh1 = [MSH file format version 1](https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-1-_0028Legacy_0029)
 ---

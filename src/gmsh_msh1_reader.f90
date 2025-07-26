@@ -290,7 +290,7 @@ module gmsh_msh1_reader
 
 
 
-    !> get the number (index) of the *n*-th node in the mesh
+    !> |DescOutputNodeNumber|
     interface output_node_number
         module procedure :: output_node_number_gmsh_msh1_node
     end interface output_node_number
@@ -333,21 +333,21 @@ module gmsh_msh1_reader
 
 
 
-    !> get the floating point values giving the X coordinates of the *n*-th node.
+    !> |DescOutputXCoord|
     interface output_x_coord
         module procedure :: output_x_coord_gmsh_msh1_node
     end interface output_x_coord
 
 
 
-    !> get the floating point values giving the Y coordinates of the *n*-th node.
+    !> |DescOutputYCoord|
     interface output_y_coord
         module procedure :: output_y_coord_gmsh_msh1_node
     end interface output_y_coord
 
 
 
-    !> get the floating point values giving the Z coordinates of the *n*-th node.
+    !> |DescOutputZCoord|
     interface output_z_coord
         module procedure :: output_z_coord_gmsh_msh1_node
     end interface output_z_coord
@@ -359,6 +359,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> If any of the flags is `.false.`, it indicates that the file read operation failed.
     elemental function all_flag(mesh_data)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
@@ -478,6 +479,9 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> @warning
+    !> If no node corresponding to the [[output_node_from_loc_gmsh_msh1_file:loc]] argument exists,
+    !> a node initialized by [[initialize_gmsh_msh1_node]] will be returned.
     elemental function output_node_from_loc_gmsh_msh1_file(mesh_data, loc) result(node)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
@@ -508,6 +512,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputNodeNumber|
     elemental function output_node_number_gmsh_msh1_node(node) result(node_number)
 
         type(gmsh_msh1_node_type), intent(in) :: node
@@ -613,6 +618,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputXCoord|
     elemental function output_x_coord_gmsh_msh1_node(node) result(x_coord)
 
         type(gmsh_msh1_node_type), intent(in) :: node
@@ -628,6 +634,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputYCoord|
     elemental function output_y_coord_gmsh_msh1_node(node) result(y_coord)
 
         type(gmsh_msh1_node_type), intent(in) :: node
@@ -643,6 +650,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputZCoord|
     elemental function output_z_coord_gmsh_msh1_node(node) result(z_coord)
 
         type(gmsh_msh1_node_type), intent(in) :: node
@@ -688,6 +696,9 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> @warning
+    !> If no element corresponding to the [[fetch_element_from_loc_gmsh_msh1_file:loc]] argument exists,
+    !> a element initialized by [[initialize_gmsh_msh1_element]] will be returned.
     subroutine fetch_element_from_loc_gmsh_msh1_file(mesh_data, loc, element, stat, errmsg)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
