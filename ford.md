@@ -15,7 +15,15 @@ sort: permission-alpha
 print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 license: mit
-alias: DescOutputNodeNumber = Get the [[gmsh_msh1_node_type:node_number]] from the [[gmsh_msh1_node_type]].
+alias: DescOutputElmNumber = Get the [[gmsh_msh1_element_type:elm_number]] from the [[gmsh_msh1_element_type]].
+       DescOutputElmType = Get the [[gmsh_msh1_element_type:elm_type]] from the [[gmsh_msh1_element_type]].
+       DescOutputNode = Get the [[gmsh_msh1_node_type]] from the [[gmsh_msh1_data_type]].
+       DescOutputNodeNumber = Get the [[gmsh_msh1_node_type:node_number]] from the [[gmsh_msh1_node_type]].
+       DescOutputNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]].
+       DescOutputNumberOfElements = Get the number of [[gmsh_msh1_element_type]]s in the [[gmsh_msh1_data_type]].
+       DescOutputNumberOfNodes = Get the number of [[gmsh_msh1_node_type]]s
+       DescOutputRegElem = Get the [[gmsh_msh1_element_type:reg_elem]] from the [[gmsh_msh1_element_type]].
+       DescOutputRegPhys = Get the [[gmsh_msh1_element_type:reg_phys]] from the [[gmsh_msh1_element_type]].
        DescOutputXCoord = Get the [[gmsh_msh1_node_type:x_coord]] from the [[gmsh_msh1_node_type]].
        DescOutputYCoord = Get the [[gmsh_msh1_node_type:y_coord]] from the [[gmsh_msh1_node_type]].
        DescOutputZCoord = Get the [[gmsh_msh1_node_type:z_coord]] from the [[gmsh_msh1_node_type]].
