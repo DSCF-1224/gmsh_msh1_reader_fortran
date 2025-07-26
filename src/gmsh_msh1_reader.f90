@@ -269,21 +269,21 @@ module gmsh_msh1_reader
 
 
 
-    !> get the number (index) of the *n*-th element in the mesh
+    !> |DescOutputElmNumber|
     interface output_elm_number
         module procedure :: output_elm_number_gmsh_msh1_element
     end interface output_elm_number
 
 
 
-    !> get the geometrical type of the *n*-th element in the mesh
+    !> |DescOutputElmType|
     interface output_elm_type
         module procedure :: output_elm_type_gmsh_msh1_element
     end interface output_elm_type
 
 
 
-    !> get the node in the mesh
+    !> |DescOutputNode|
     interface output_node_from_loc
         module procedure :: output_node_from_loc_gmsh_msh1_file
     end interface output_node_from_loc
@@ -297,21 +297,21 @@ module gmsh_msh1_reader
 
 
 
-    !> get the list of the `number_of_nodes` node numbers of the *n*-th element.
+    !> |DescOutputNodeNumberList|
     interface output_node_number_list
         module procedure :: output_node_number_list_gmsh_msh1_element
     end interface output_node_number_list
 
 
 
-    !> get the number of elements in the mesh
+    !> |DescOutputNumberOfElements|
     interface output_number_of_elements
         module procedure :: output_number_of_elements_gmsh_msh1_file
     end interface output_number_of_elements
 
 
 
-    !> get the number of nodes in the mesh
+    !> |DescOutputNumberOfNodes|.
     interface output_number_of_nodes
         module procedure :: output_number_of_nodes_gmsh_msh1_element
         module procedure :: output_number_of_nodes_gmsh_msh1_file
@@ -319,14 +319,14 @@ module gmsh_msh1_reader
 
 
 
-    !> get the tag of the elementary entity to which the element belongs
+    !> |DescOutputRegElem|
     interface output_reg_elem
         module procedure :: output_reg_elem_gmsh_msh1_element
     end interface output_reg_elem
 
 
 
-    !> get the tag of the physical entity to which the element belongs
+    !> |DescOutputRegPhys|
     interface output_reg_phys
         module procedure :: output_reg_phys_gmsh_msh1_element
     end interface output_reg_phys
@@ -449,6 +449,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputElmNumber|
     elemental function output_elm_number_gmsh_msh1_element(element) result(elm_number)
 
         type(gmsh_msh1_element_type), intent(in) :: element
@@ -464,6 +465,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputElmType|
     elemental function output_elm_type_gmsh_msh1_element(element) result(elm_type)
 
         type(gmsh_msh1_element_type), intent(in) :: element
@@ -479,6 +481,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputNode|
     !> @warning
     !> If no node corresponding to the [[output_node_from_loc_gmsh_msh1_file:loc]] argument exists,
     !> a node initialized by [[initialize_gmsh_msh1_node]] will be returned.
@@ -528,6 +531,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputNodeNumberList|
     pure function output_node_number_list_gmsh_msh1_element(element) result(node_number_list)
 
         type(gmsh_msh1_element_type), intent(in) :: element
@@ -543,6 +547,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputNumberOfElements|
     elemental function output_number_of_elements_gmsh_msh1_file(mesh_data) result(number_of_elements)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
@@ -558,6 +563,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputNumberOfNodes| in the [[gmsh_msh1_element_type]].
     elemental function output_number_of_nodes_gmsh_msh1_element(element) result(number_of_nodes)
 
         type(gmsh_msh1_element_type), intent(in) :: element
@@ -573,6 +579,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputNumberOfNodes| in the [[gmsh_msh1_data_type]].
     elemental function output_number_of_nodes_gmsh_msh1_file(mesh_data) result(number_of_nodes)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
@@ -588,6 +595,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputRegElem|
     elemental function output_reg_elem_gmsh_msh1_element(element) result(reg_elem)
 
         type(gmsh_msh1_element_type), intent(in) :: element
@@ -603,6 +611,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescOutputRegPhys|
     elemental function output_reg_phys_gmsh_msh1_element(element) result(reg_phys)
 
         type(gmsh_msh1_element_type), intent(in) :: element
