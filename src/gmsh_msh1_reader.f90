@@ -686,25 +686,6 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    subroutine close_gmsh_msh1_file(file_unit, status)
-
-        integer, intent(in) :: file_unit
-
-        type(gmsh_msh1_status_type), intent(inout) :: status
-
-
-
-        close( &!
-        unit   = file_unit        , &!
-        iostat = status%io%code   , &!
-        iomsg  = status%io%msg(:)   &!
-        )
-
-    end subroutine close_gmsh_msh1_file
-
-
-
-    !> version: experimental
     !> @warning
     !> If no element corresponding to the [[fetch_element_from_loc_gmsh_msh1_file:loc]] argument exists,
     !> a element initialized by [[initialize_gmsh_msh1_element]] will be returned.
@@ -993,18 +974,6 @@ module gmsh_msh1_reader
 
         integer :: file_unit
 
-        !> the number of elements in the mesh
-        integer :: number_of_elements
-
-        !> the number of nodes in the mesh
-        integer :: number_of_nodes
-
-        !> version: experimental
-        !> A string for reading a line of text.<br>
-        !> The length of this string is 2048,<br>
-        !> which is a provisional value.
-        character(len=2048) :: text_line
-
 
 
         mesh_data%flag_nod_section_header    = initial_flag_nod_section_header
@@ -1039,6 +1008,48 @@ module gmsh_msh1_reader
 
 
 
+        call read_gmsh_msh1_file_kernel(mesh_data, file_unit)
+
+
+
+        close( &!
+        unit   = file_unit                  , &!
+        iostat = mesh_data%status%io%code   , &!
+        iomsg  = mesh_data%status%io%msg(:)   &!
+        )
+
+
+
+        mesh_data%status%err%code = stat_success
+
+    end subroutine read_gmsh_msh1_file
+
+
+
+    !> version: experimental
+    subroutine read_gmsh_msh1_file_kernel(mesh_data, file_unit)
+
+        !> The read data will be stored in this argument
+        type(gmsh_msh1_data_type), intent(inout) :: mesh_data
+
+        integer, intent(in) :: file_unit
+
+
+
+        !> the number of elements in the mesh
+        integer :: number_of_elements
+
+        !> the number of nodes in the mesh
+        integer :: number_of_nodes
+
+        !> version: experimental
+        !> A string for reading a line of text.<br>
+        !> The length of this string is 2048,<br>
+        !> which is a provisional value.
+        character(len=2048) :: text_line
+
+
+
         read_nod_section_header: &!
         do
 
@@ -1052,11 +1063,6 @@ module gmsh_msh1_reader
 
             if ( mesh_data%flag_nod_section_header   ) exit
             if ( is_iostat_success(mesh_data%status) ) cycle
-
-            call close_gmsh_msh1_file( &!
-            file_unit = file_unit        , &!
-            status    = mesh_data%status   &!
-            )
 
             return
 
@@ -1077,16 +1083,7 @@ module gmsh_msh1_reader
             flag            = mesh_data%flag_number_of_nodes   &!
             )
 
-            if ( .not. mesh_data%flag_number_of_nodes ) then
-
-                call close_gmsh_msh1_file( &!
-                file_unit = file_unit        , &!
-                status    = mesh_data%status   &!
-                )
-
-                return
-
-            end if
+            if ( .not. mesh_data%flag_number_of_nodes ) return
 
         end block &!
         read_number_of_nodes
@@ -1108,16 +1105,7 @@ module gmsh_msh1_reader
                 errmsg = mesh_data%status%err%msg(:)   &!
                 )
 
-                if ( is_stat_failure(mesh_data%status) ) then
-
-                    call close_gmsh_msh1_file( &!
-                    file_unit = file_unit        , &!
-                    status    = mesh_data%status   &!
-                    )
-
-                    return
-
-                end if
+                if ( is_stat_failure(mesh_data%status) ) return
 
             end if
 
@@ -1131,16 +1119,7 @@ module gmsh_msh1_reader
             errmsg = mesh_data%status%err%msg(:)   &!
             )
 
-            if ( is_stat_failure(mesh_data%status) ) then
-
-                call close_gmsh_msh1_file( &!
-                file_unit = file_unit        , &!
-                status    = mesh_data%status   &!
-                )
-
-                return
-
-            end if
+            if ( is_stat_failure(mesh_data%status) ) return
 
             mesh_data%flag_allocation_nodes = .true.
 
@@ -1156,16 +1135,7 @@ module gmsh_msh1_reader
                 status    = mesh_data%status           &!
                 )
 
-                if ( is_iostat_failure(mesh_data%status) ) then
-
-                    call close_gmsh_msh1_file( &!
-                    file_unit = file_unit        , &!
-                    status    = mesh_data%status   &!
-                    )
-
-                    return
-
-                end if
+                if ( is_iostat_failure(mesh_data%status) ) return
 
             end do
 
@@ -1177,7 +1147,7 @@ module gmsh_msh1_reader
 
 
         read_nod_section_footer: &!
-        do
+        block
 
             call read_gmsh_msh1_header_footer( &!
             file_unit     = file_unit                            , &!
@@ -1187,17 +1157,9 @@ module gmsh_msh1_reader
             flag          = mesh_data%flag_nod_section_footer      &!
             )
 
-            if ( mesh_data%flag_nod_section_footer   ) exit
-            if ( is_iostat_success(mesh_data%status) ) cycle
+            if ( .not. mesh_data%flag_nod_section_footer ) return
 
-            call close_gmsh_msh1_file( &!
-            file_unit = file_unit        , &!
-            status    = mesh_data%status   &!
-            )
-
-            return
-
-        end do &!
+        end block &!
         read_nod_section_footer
 
 
@@ -1215,11 +1177,6 @@ module gmsh_msh1_reader
 
             if ( mesh_data%flag_elm_section_header   ) exit
             if ( is_iostat_success(mesh_data%status) ) cycle
-
-            call close_gmsh_msh1_file( &!
-            file_unit = file_unit        , &!
-            status    = mesh_data%status   &!
-            )
 
             return
 
@@ -1240,16 +1197,7 @@ module gmsh_msh1_reader
             flag            = mesh_data%flag_number_of_elements   &!
             )
 
-            if ( .not. mesh_data%flag_number_of_elements ) then
-
-                call close_gmsh_msh1_file( &!
-                file_unit = file_unit        , &!
-                status    = mesh_data%status   &!
-                )
-
-                return
-
-            end if
+            if ( .not. mesh_data%flag_number_of_elements ) return
 
         end block &!
         read_number_of_elements
@@ -1271,16 +1219,7 @@ module gmsh_msh1_reader
                 errmsg = mesh_data%status%err%msg(:)   &!
                 )
 
-                if ( is_stat_failure(mesh_data%status) ) then
-
-                    call close_gmsh_msh1_file( &!
-                    file_unit = file_unit        , &!
-                    status    = mesh_data%status   &!
-                    )
-
-                    return
-
-                end if
+                if ( is_stat_failure(mesh_data%status) ) return
 
             end if
 
@@ -1294,16 +1233,7 @@ module gmsh_msh1_reader
             errmsg = mesh_data%status%err%msg(:)    &!
             )
 
-            if ( is_stat_failure(mesh_data%status) ) then
-
-                call close_gmsh_msh1_file( &!
-                file_unit = file_unit        , &!
-                status    = mesh_data%status   &!
-                )
-
-                return
-
-            end if
+            if ( is_stat_failure(mesh_data%status) ) return
 
             mesh_data%flag_allocation_elements = .true.
 
@@ -1322,38 +1252,9 @@ module gmsh_msh1_reader
                     flag        = mesh_data%flag_reading_elements   &!
                     )
 
-                    if ( is_iostat_failure(mesh_data%status) ) then
-
-                        call close_gmsh_msh1_file( &!
-                        file_unit = file_unit        , &!
-                        status    = mesh_data%status   &!
-                        )
-
-                        return
-
-                    end if
-
-                    if ( is_stat_failure(mesh_data%status) ) then
-
-                        call close_gmsh_msh1_file( &!
-                        file_unit = file_unit        , &!
-                        status    = mesh_data%status   &!
-                        )
-
-                        return
-
-                    end if
-
-                    if ( .not. mesh_data%flag_reading_elements ) then
-
-                        call close_gmsh_msh1_file( &!
-                        file_unit = file_unit        , &!
-                        status    = mesh_data%status   &!
-                        )
-
-                        return
-
-                    end if
+                    if ( is_iostat_failure (mesh_data%status)  ) return
+                    if ( is_stat_failure   (mesh_data%status)  ) return
+                    if ( .not. mesh_data%flag_reading_elements ) return
 
                 end do
 
@@ -1369,7 +1270,7 @@ module gmsh_msh1_reader
 
 
         read_elm_section_footer: &!
-        do
+        block
 
             call read_gmsh_msh1_header_footer( &!
             file_unit     = file_unit                            , &!
@@ -1379,31 +1280,10 @@ module gmsh_msh1_reader
             flag          = mesh_data%flag_elm_section_footer      &!
             )
 
-            if ( mesh_data%flag_elm_section_footer   ) exit
-            if ( is_iostat_success(mesh_data%status) ) cycle
-
-            call close_gmsh_msh1_file( &!
-            file_unit = file_unit        , &!
-            status    = mesh_data%status   &!
-            )
-
-            return
-
-        end do &!
+        end block &!
         read_elm_section_footer
 
-
-
-        call close_gmsh_msh1_file( &!
-        file_unit = file_unit        , &!
-        status    = mesh_data%status   &!
-        )
-
-
-
-        mesh_data%status%err%code = stat_success
-
-    end subroutine read_gmsh_msh1_file
+    end subroutine read_gmsh_msh1_file_kernel
 
 
 
@@ -1437,6 +1317,12 @@ module gmsh_msh1_reader
             case(iostat_success) 
 
                 flag = trim( text_line(:) ) .eq. header_footer(:)
+
+                if (flag) then
+                    status%err%msg(:) = ' '
+                else
+                    status%err%msg(:) = 'The read text line is not `' // header_footer(:) // '`.'
+                end if
 
             case(iostat_end)
 
@@ -1539,7 +1425,7 @@ module gmsh_msh1_reader
 
         read( &!
         unit   = text_line(:)     , &!
-        fmt    = '(A)'            , &!
+        fmt    = *                , &!
         iostat = status%io%code   , &!
         iomsg  = status%io%msg(:)   &!
         ) &!
