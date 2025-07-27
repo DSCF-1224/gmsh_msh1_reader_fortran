@@ -230,6 +230,10 @@ program check
 
 
 
+        cmdmsg(:) = ' '
+
+
+
         call read_gmsh_msh1_file( msh1_data, msh1_file )
 
         if ( is_invalid_gmsh_msh1_file(msh1_data) ) then
@@ -287,6 +291,8 @@ program check
             write( error_unit, "(A,I0)" ) "exitstat : " , exitstat
             write( error_unit, "(A,I0)" ) "cmdstat  : " , cmdstat
             write( error_unit, "(A,A)"  ) "cmdmsg   : " , trim( cmdmsg(:) )
+
+            error stop
 
         end if
 
