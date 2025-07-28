@@ -236,7 +236,7 @@ program check
 
         call read_gmsh_msh1_file( msh1_data, msh1_file )
 
-        if ( is_invalid_gmsh_msh1_file(msh1_data) ) then
+        if ( is_invalid(msh1_data) ) then
 
             call test_read_gmsh_msh1_file_kernel( &!
             unit      = error_unit   , &!
