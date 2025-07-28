@@ -26,7 +26,7 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
     public :: fetch_element_from_loc
-    public :: is_invalid_gmsh_msh1_file
+    public :: is_invalid
     public :: output_elm_number
     public :: output_elm_type
     public :: output_node_from_loc
@@ -269,6 +269,13 @@ module gmsh_msh1_reader
 
 
 
+    !> version: experimental
+    !> |DescIsInValid|
+    interface is_invalid
+        module procedure :: is_invalid_gmsh_msh1_file
+    end interface is_invalid
+
+
     !> |DescOutputElmNumber|
     interface output_elm_number
         module procedure :: output_elm_number_gmsh_msh1_element
@@ -416,6 +423,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescIsInValid|
     elemental function is_invalid_gmsh_msh1_file(mesh_data)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
