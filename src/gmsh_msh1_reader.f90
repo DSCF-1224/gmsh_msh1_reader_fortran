@@ -25,6 +25,7 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_data_type
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
+    public :: gmsh_msh1_node_number_type
     public :: fetch_element_from_loc
     public :: is_invalid
     public :: output_elm_number
@@ -172,24 +173,33 @@ module gmsh_msh1_reader
 
 
 
+    !> version: experimental
+    !> Derived type to for reading |DescGmshMsh1NodeNumber|
+    !>
+    !> @warning
+    !> The [[gmsh_msh1_node_number_type:number]] must be a positive (non-zero) integer.
+    !> @endwarning
+    !>
+    !> @note
+    !> The [[gmsh_msh1_node_number_type:number]] do not necessarily have to form a dense nor an ordered sequence.
+    !> @endnote
+    type :: gmsh_msh1_node_number_type
+
+        integer, private :: number
+
+    end type gmsh_msh1_node_number_type
+
+
     !> Derived type to for reading
     !> the *n*-th node in the
     !> |GmshReferenceManualTop|
     !> |GmshReferenceManualMsh1|
-    !>
-    !> @warning
-    !> The [[gmsh_msh1_node_type:node_number]] must be a positive (non-zero) integer.
-    !> @endwarning
-    !>
-    !> @note
-    !> The [[gmsh_msh1_node_type:node_number]] do not necessarily have to form a dense nor an ordered sequence.
-    !> @endnote
     type :: gmsh_msh1_node_type
 
         private
 
         !> |DescGmshMsh1NodeNumber|
-        integer :: node_number
+        type(gmsh_msh1_node_number_type) :: node_number
 
         !> The floating point values giving the X coordinates of the *n*-th node.
         real(real64) :: x_coord
@@ -532,7 +542,7 @@ module gmsh_msh1_reader
 
 
 
-        node_number = node%node_number
+        node_number = node%node_number%number
 
     end function output_node_number_gmsh_msh1_node
 
@@ -767,10 +777,10 @@ module gmsh_msh1_reader
 
 
 
-        node%node_number = 0
-        node%x_coord     = ieee_value( node%x_coord, ieee_signaling_nan )
-        node%y_coord     =             node%x_coord
-        node%z_coord     =             node%x_coord
+        node%node_number%number = 0
+        node%x_coord            = ieee_value( node%x_coord, ieee_signaling_nan )
+        node%y_coord            =             node%x_coord
+        node%z_coord            =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
 
