@@ -15,7 +15,8 @@ sort: permission-alpha
 print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 license: mit
-alias: DescIsInValid = Checks if the read [[gmsh_msh1_data_type]] is **invalid**.
+alias: DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
+       DescIsInValid = Checks if the read [[gmsh_msh1_data_type]] is **invalid**.
        DescOutputElmNumber = Get the [[gmsh_msh1_element_type:elm_number]] from the [[gmsh_msh1_element_type]].
        DescOutputElmType = Get the [[gmsh_msh1_element_type:elm_type]] from the [[gmsh_msh1_element_type]].
        DescOutputNode = Get the [[gmsh_msh1_node_type]] from the [[gmsh_msh1_data_type]].

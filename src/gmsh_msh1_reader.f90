@@ -188,7 +188,7 @@ module gmsh_msh1_reader
 
         private
 
-        !> the number (index) of the *n*-th node in the mesh
+        !> |DescGmshMsh1NodeNumber|
         integer :: node_number
 
         !> The floating point values giving the X coordinates of the *n*-th node.
