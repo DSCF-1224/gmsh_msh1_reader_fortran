@@ -366,7 +366,7 @@ program check
             node = output_node_from_loc( msh1_data, itr )
 
             write( write_unit, '(I0,3ES24.16)' ) &!
-                output_node_number (node) , &!!
+                export_node_number (node) , &!!
                 output_x_coord     (node) , &!!
                 output_y_coord     (node) , &!!
                 output_z_coord     (node)

@@ -22,6 +22,7 @@ module gmsh_msh1_reader
 
 
 
+    public :: export_node_number
     public :: gmsh_msh1_data_type
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
@@ -272,6 +273,13 @@ module gmsh_msh1_reader
 
 
 
+    !> |DescExportNodeNumber|
+    interface export_node_number
+        module procedure :: export_node_number_gmsh_msh1_node
+    end interface export_node_number
+
+
+
     !> get the node in the mesh
     interface fetch_element_from_loc
         module procedure :: fetch_element_from_loc_gmsh_msh1_file
@@ -399,6 +407,22 @@ module gmsh_msh1_reader
         &        .and. mesh_data%flag_elm_section_footer
 
     end function all_flag
+
+
+
+    !> version: experimental
+    !> |DescExportNodeNumber|
+    elemental function export_node_number_gmsh_msh1_node(node) result(node_number)
+
+        type(gmsh_msh1_node_type), intent(in) :: node
+
+        integer :: node_number
+
+
+
+        node_number = node%node_number%number
+
+    end function export_node_number_gmsh_msh1_node
 
 
 
@@ -538,11 +562,11 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_node_type), intent(in) :: node
 
-        integer :: node_number
+        type(gmsh_msh1_node_number_type) :: node_number
 
 
 
-        node_number = node%node_number%number
+        node_number = node%node_number
 
     end function output_node_number_gmsh_msh1_node
 

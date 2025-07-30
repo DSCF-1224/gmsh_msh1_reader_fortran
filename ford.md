@@ -15,12 +15,13 @@ sort: permission-alpha
 print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 license: mit
-alias: DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
+alias: DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as integer).
+       DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
        DescIsInValid = Checks if the read [[gmsh_msh1_data_type]] is **invalid**.
        DescOutputElmNumber = Get the [[gmsh_msh1_element_type:elm_number]] from the [[gmsh_msh1_element_type]].
        DescOutputElmType = Get the [[gmsh_msh1_element_type:elm_type]] from the [[gmsh_msh1_element_type]].
        DescOutputNode = Get the [[gmsh_msh1_node_type]] from the [[gmsh_msh1_data_type]].
-       DescOutputNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]].
+       DescOutputNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as derived type).
        DescOutputNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]].
        DescOutputNumberOfElements = Get the number of [[gmsh_msh1_element_type]]s in the [[gmsh_msh1_data_type]].
        DescOutputNumberOfNodes = Get the number of [[gmsh_msh1_node_type]]s
