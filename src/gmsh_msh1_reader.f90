@@ -525,30 +525,30 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescOutputNode|
     !> @warning
-    !> If no node corresponding to the [[output_node_from_loc_gmsh_msh1_file:loc]] argument exists,
-    !> a node initialized by [[initialize_gmsh_msh1_node]] will be returned.
-    elemental function output_node_from_loc_gmsh_msh1_file(mesh_data, loc) result(node)
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_from_loc_gmsh_msh1_file:location]] argument exists,
+    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
+    elemental function output_node_from_loc_gmsh_msh1_file(mesh_data, location) result(node)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
 
         !> location in [[gmsh_msh1_data_type:node]]
-        integer, intent(in) :: loc
+        integer, intent(in) :: location
 
         type(gmsh_msh1_node_type) :: node
 
 
 
-        if (loc .lt. 1) then
+        if (location .lt. 1) then
 
             call initialize_gmsh_msh1_node(node)
 
-        else if ( output_number_of_nodes(mesh_data) .lt. loc ) then
+        else if ( output_number_of_nodes(mesh_data) .lt. location ) then
 
             call initialize_gmsh_msh1_node(node)
 
         else
 
-            node = mesh_data%node(loc)
+            node = mesh_data%node(location)
 
         end if
 
