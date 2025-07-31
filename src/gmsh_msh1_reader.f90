@@ -31,7 +31,7 @@ module gmsh_msh1_reader
     public :: is_invalid
     public :: output_elm_number
     public :: output_elm_type
-    public :: output_node_from_loc
+    public :: output_node
     public :: output_node_number
     public :: output_node_number_list
     public :: output_number_of_elements
@@ -309,9 +309,10 @@ module gmsh_msh1_reader
 
 
     !> |DescOutputNode|
-    interface output_node_from_loc
-        module procedure :: output_node_from_loc_gmsh_msh1_file
-    end interface output_node_from_loc
+    interface output_node
+        module procedure :: output_node_by_loc_gmsh_msh1_file
+        module procedure :: output_node_by_num_gmsh_msh1_file
+    end interface output_node
 
 
 
@@ -525,9 +526,9 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescOutputNode|
     !> @warning
-    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_from_loc_gmsh_msh1_file:location]] argument exists,
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_by_loc_gmsh_msh1_file:location]] argument exists,
     !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
-    elemental function output_node_from_loc_gmsh_msh1_file(mesh_data, location) result(node)
+    elemental function output_node_by_loc_gmsh_msh1_file(mesh_data, location) result(node)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
 
@@ -552,7 +553,44 @@ module gmsh_msh1_reader
 
         end if
 
-    end function output_node_from_loc_gmsh_msh1_file
+    end function output_node_by_loc_gmsh_msh1_file
+
+
+
+    !> version: experimental
+    !> |DescOutputNode|
+    !> @warning
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_by_num_gmsh_msh1_file:node_number]] argument exists,
+    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
+    elemental function output_node_by_num_gmsh_msh1_file(mesh_data, node_number) result(node)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        type(gmsh_msh1_node_type) :: node
+
+
+
+        integer :: itr_node
+
+
+
+        do itr_node = 1, output_number_of_nodes(mesh_data)
+
+            if ( mesh_data%node(itr_node)%node_number%number .eq. node_number%number ) then
+
+                node = mesh_data%node(itr_node)
+
+                return
+
+            end if
+
+        end do
+
+        call initialize_gmsh_msh1_node(node)
+
+    end function output_node_by_num_gmsh_msh1_file
 
 
 
