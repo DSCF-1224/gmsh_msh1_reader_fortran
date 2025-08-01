@@ -22,6 +22,7 @@ module gmsh_msh1_reader
 
 
 
+    public :: operator(.eq.)
     public :: export_node_number
     public :: export_node_number_list
     public :: gmsh_msh1_data_type
@@ -274,6 +275,13 @@ module gmsh_msh1_reader
 
 
 
+    !> version: experimental
+    interface operator(.eq.)
+        module procedure :: is_equal_gmsh_msh1_node_number_type
+    end interface operator(.eq.)
+
+
+
     !> |DescExportNodeNumber|
     interface export_node_number
         module procedure :: export_node_number_gmsh_msh1_node
@@ -482,6 +490,21 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    elemental function is_equal_gmsh_msh1_node_number_type(number1, number2) result(is_equal)
+
+        type(gmsh_msh1_node_number_type), intent(in) :: number1, number2
+
+        logical :: is_equal
+
+
+
+        is_equal = number1%number .eq. number2%number
+
+    end function is_equal_gmsh_msh1_node_number_type
+
+
+
+    !> version: experimental
     !> |DescIsInValid|
     elemental function is_invalid_gmsh_msh1_file(mesh_data)
 
@@ -602,7 +625,7 @@ module gmsh_msh1_reader
 
         do itr_node = 1, output_number_of_nodes(mesh_data)
 
-            if ( mesh_data%node(itr_node)%node_number%number .eq. node_number%number ) then
+            if ( mesh_data%node(itr_node)%node_number .eq. node_number ) then
 
                 node = mesh_data%node(itr_node)
 
