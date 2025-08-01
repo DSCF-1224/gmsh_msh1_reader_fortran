@@ -397,7 +397,7 @@ program check
                 output_reg_phys         (element) , &!
                 output_reg_elem         (element) , &!
                 output_number_of_nodes  (element) , &!
-                output_node_number_list (element)
+                export_node_number_list (element)
 
         end do
 

@@ -23,6 +23,7 @@ module gmsh_msh1_reader
 
 
     public :: export_node_number
+    public :: export_node_number_list
     public :: gmsh_msh1_data_type
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
@@ -280,6 +281,13 @@ module gmsh_msh1_reader
 
 
 
+    !> |DescExportNodeNumberList|
+    interface export_node_number_list
+        module procedure :: export_node_number_list_gmsh_msh1_element
+    end interface export_node_number_list
+
+
+
     !> get the node in the mesh
     interface fetch_element_from_loc
         module procedure :: fetch_element_from_loc_gmsh_msh1_file
@@ -424,6 +432,22 @@ module gmsh_msh1_reader
         node_number = node%node_number%number
 
     end function export_node_number_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescExportNodeNumberList|
+    pure function export_node_number_list_gmsh_msh1_element(element) result(node_number_list)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer, dimension( output_number_of_nodes(element) ) :: node_number_list
+
+
+
+        node_number_list(:) = element%node_number_list(:)%number
+
+    end function export_node_number_list_gmsh_msh1_element
 
 
 
@@ -616,11 +640,11 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer, dimension( output_number_of_nodes(element) ) :: node_number_list
+        type(gmsh_msh1_node_number_type), dimension( output_number_of_nodes(element) ) :: node_number_list
 
 
 
-        node_number_list(:) = element%node_number_list(:)%number
+        node_number_list(:) = element%node_number_list(:)
 
     end function output_node_number_list_gmsh_msh1_element
 
