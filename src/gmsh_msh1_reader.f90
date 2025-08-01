@@ -148,7 +148,7 @@ module gmsh_msh1_reader
         integer :: reg_elem
 
         !> the list of the `number_of_nodes` node numbers of the *n*-th element.
-        integer, allocatable, dimension(:) :: node_number_list
+        type(gmsh_msh1_node_number_type), allocatable, dimension(:) :: node_number_list
 
     end type gmsh_msh1_element_type
 
@@ -620,7 +620,7 @@ module gmsh_msh1_reader
 
 
 
-        node_number_list(:) = element%node_number_list(:)
+        node_number_list(:) = element%node_number_list(:)%number
 
     end function output_node_number_list_gmsh_msh1_element
 
