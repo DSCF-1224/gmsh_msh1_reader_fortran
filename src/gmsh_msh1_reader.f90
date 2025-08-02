@@ -22,14 +22,18 @@ module gmsh_msh1_reader
 
 
 
+    public :: operator(.eq.)
+    public :: export_node_number
+    public :: export_node_number_list
     public :: gmsh_msh1_data_type
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
+    public :: gmsh_msh1_node_number_type
     public :: fetch_element_from_loc
     public :: is_invalid
     public :: output_elm_number
     public :: output_elm_type
-    public :: output_node_from_loc
+    public :: output_node
     public :: output_node_number
     public :: output_node_number_list
     public :: output_number_of_elements
@@ -146,7 +150,7 @@ module gmsh_msh1_reader
         integer :: reg_elem
 
         !> the list of the `number_of_nodes` node numbers of the *n*-th element.
-        integer, allocatable, dimension(:) :: node_number_list
+        type(gmsh_msh1_node_number_type), allocatable, dimension(:) :: node_number_list
 
     end type gmsh_msh1_element_type
 
@@ -172,24 +176,33 @@ module gmsh_msh1_reader
 
 
 
+    !> version: experimental
+    !> Derived type to for reading |DescGmshMsh1NodeNumber|
+    !>
+    !> @warning
+    !> The [[gmsh_msh1_node_number_type:number]] must be a positive (non-zero) integer.
+    !> @endwarning
+    !>
+    !> @note
+    !> The [[gmsh_msh1_node_number_type:number]] do not necessarily have to form a dense nor an ordered sequence.
+    !> @endnote
+    type :: gmsh_msh1_node_number_type
+
+        integer, private :: number
+
+    end type gmsh_msh1_node_number_type
+
+
     !> Derived type to for reading
     !> the *n*-th node in the
     !> |GmshReferenceManualTop|
     !> |GmshReferenceManualMsh1|
-    !>
-    !> @warning
-    !> The [[gmsh_msh1_node_type:node_number]] must be a positive (non-zero) integer.
-    !> @endwarning
-    !>
-    !> @note
-    !> The [[gmsh_msh1_node_type:node_number]] do not necessarily have to form a dense nor an ordered sequence.
-    !> @endnote
     type :: gmsh_msh1_node_type
 
         private
 
-        !> the number (index) of the *n*-th node in the mesh
-        integer :: node_number
+        !> |DescGmshMsh1NodeNumber|
+        type(gmsh_msh1_node_number_type) :: node_number
 
         !> The floating point values giving the X coordinates of the *n*-th node.
         real(real64) :: x_coord
@@ -262,6 +275,27 @@ module gmsh_msh1_reader
 
 
 
+    !> version: experimental
+    interface operator(.eq.)
+        module procedure :: is_equal_gmsh_msh1_node_number_type
+    end interface operator(.eq.)
+
+
+
+    !> |DescExportNodeNumber|
+    interface export_node_number
+        module procedure :: export_node_number_gmsh_msh1_node
+    end interface export_node_number
+
+
+
+    !> |DescExportNodeNumberList|
+    interface export_node_number_list
+        module procedure :: export_node_number_list_gmsh_msh1_element
+    end interface export_node_number_list
+
+
+
     !> get the node in the mesh
     interface fetch_element_from_loc
         module procedure :: fetch_element_from_loc_gmsh_msh1_file
@@ -291,9 +325,10 @@ module gmsh_msh1_reader
 
 
     !> |DescOutputNode|
-    interface output_node_from_loc
-        module procedure :: output_node_from_loc_gmsh_msh1_file
-    end interface output_node_from_loc
+    interface output_node
+        module procedure :: output_node_by_loc_gmsh_msh1_file
+        module procedure :: output_node_by_num_gmsh_msh1_file
+    end interface output_node
 
 
 
@@ -393,6 +428,38 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescExportNodeNumber|
+    elemental function export_node_number_gmsh_msh1_node(node) result(node_number)
+
+        type(gmsh_msh1_node_type), intent(in) :: node
+
+        integer :: node_number
+
+
+
+        node_number = node%node_number%number
+
+    end function export_node_number_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescExportNodeNumberList|
+    pure function export_node_number_list_gmsh_msh1_element(element) result(node_number_list)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer, dimension( output_number_of_nodes(element) ) :: node_number_list
+
+
+
+        node_number_list(:) = element%node_number_list(:)%number
+
+    end function export_node_number_list_gmsh_msh1_element
+
+
+
+    !> version: experimental
     elemental function is_iostat_failure(status)
 
         type(gmsh_msh1_status_type), intent(in) :: status
@@ -419,6 +486,21 @@ module gmsh_msh1_reader
         is_iostat_success = (status%io%code .eq. iostat_success)
 
     end function is_iostat_success
+
+
+
+    !> version: experimental
+    elemental function is_equal_gmsh_msh1_node_number_type(number1, number2) result(is_equal)
+
+        type(gmsh_msh1_node_number_type), intent(in) :: number1, number2
+
+        logical :: is_equal
+
+
+
+        is_equal = number1%number .eq. number2%number
+
+    end function is_equal_gmsh_msh1_node_number_type
 
 
 
@@ -491,34 +573,71 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescOutputNode|
     !> @warning
-    !> If no node corresponding to the [[output_node_from_loc_gmsh_msh1_file:loc]] argument exists,
-    !> a node initialized by [[initialize_gmsh_msh1_node]] will be returned.
-    elemental function output_node_from_loc_gmsh_msh1_file(mesh_data, loc) result(node)
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_by_loc_gmsh_msh1_file:location]] argument exists,
+    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
+    elemental function output_node_by_loc_gmsh_msh1_file(mesh_data, location) result(node)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
 
         !> location in [[gmsh_msh1_data_type:node]]
-        integer, intent(in) :: loc
+        integer, intent(in) :: location
 
         type(gmsh_msh1_node_type) :: node
 
 
 
-        if (loc .lt. 1) then
+        if (location .lt. 1) then
 
             call initialize_gmsh_msh1_node(node)
 
-        else if ( output_number_of_nodes(mesh_data) .lt. loc ) then
+        else if ( output_number_of_nodes(mesh_data) .lt. location ) then
 
             call initialize_gmsh_msh1_node(node)
 
         else
 
-            node = mesh_data%node(loc)
+            node = mesh_data%node(location)
 
         end if
 
-    end function output_node_from_loc_gmsh_msh1_file
+    end function output_node_by_loc_gmsh_msh1_file
+
+
+
+    !> version: experimental
+    !> |DescOutputNode|
+    !> @warning
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_by_num_gmsh_msh1_file:node_number]] argument exists,
+    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
+    elemental function output_node_by_num_gmsh_msh1_file(mesh_data, node_number) result(node)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        type(gmsh_msh1_node_type) :: node
+
+
+
+        integer :: itr_node
+
+
+
+        do itr_node = 1, output_number_of_nodes(mesh_data)
+
+            if ( mesh_data%node(itr_node)%node_number .eq. node_number ) then
+
+                node = mesh_data%node(itr_node)
+
+                return
+
+            end if
+
+        end do
+
+        call initialize_gmsh_msh1_node(node)
+
+    end function output_node_by_num_gmsh_msh1_file
 
 
 
@@ -528,7 +647,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_node_type), intent(in) :: node
 
-        integer :: node_number
+        type(gmsh_msh1_node_number_type) :: node_number
 
 
 
@@ -544,7 +663,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer, dimension( output_number_of_nodes(element) ) :: node_number_list
+        type(gmsh_msh1_node_number_type), dimension( output_number_of_nodes(element) ) :: node_number_list
 
 
 
@@ -767,10 +886,10 @@ module gmsh_msh1_reader
 
 
 
-        node%node_number = 0
-        node%x_coord     = ieee_value( node%x_coord, ieee_signaling_nan )
-        node%y_coord     =             node%x_coord
-        node%z_coord     =             node%x_coord
+        node%node_number%number = 0
+        node%x_coord            = ieee_value( node%x_coord, ieee_signaling_nan )
+        node%y_coord            =             node%x_coord
+        node%z_coord            =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
 
