@@ -363,10 +363,10 @@ program check
 
         do itr = 1, output_number_of_nodes(msh1_data)
 
-            node = output_node_from_loc( msh1_data, itr )
+            node = output_node( msh1_data, itr )
 
             write( write_unit, '(I0,3ES24.16)' ) &!
-                output_node_number (node) , &!!
+                export_node_number (node) , &!!
                 output_x_coord     (node) , &!!
                 output_y_coord     (node) , &!!
                 output_z_coord     (node)
@@ -397,7 +397,7 @@ program check
                 output_reg_phys         (element) , &!
                 output_reg_elem         (element) , &!
                 output_number_of_nodes  (element) , &!
-                output_node_number_list (element)
+                export_node_number_list (element)
 
         end do
 
