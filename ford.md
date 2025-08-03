@@ -19,6 +19,7 @@ alias: DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[
        DescExportNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as integer).
        DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
        DescIsInValid = Checks if the read [[gmsh_msh1_data_type]] is **invalid**.
+       DescLookupElement = Look up a [[gmsh_msh1_element_type]] in the [[gmsh_msh1_data_type]].
        DescLookupNode = Look up a [[gmsh_msh1_node_type]] in the [[gmsh_msh1_data_type]].
        DescOutputElmNumber = Get the [[gmsh_msh1_element_type:elm_number]] from the [[gmsh_msh1_element_type]].
        DescOutputElmType = Get the [[gmsh_msh1_element_type:elm_type]] from the [[gmsh_msh1_element_type]].

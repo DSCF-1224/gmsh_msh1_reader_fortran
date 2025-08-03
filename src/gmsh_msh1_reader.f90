@@ -29,8 +29,8 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
     public :: gmsh_msh1_node_number_type
-    public :: fetch_element_from_loc
     public :: is_invalid
+    public :: lookup_element
     public :: lookup_node
     public :: output_elm_number
     public :: output_elm_type
@@ -296,18 +296,19 @@ module gmsh_msh1_reader
 
 
 
-    !> get the node in the mesh
-    interface fetch_element_from_loc
-        module procedure :: fetch_element_from_loc_gmsh_msh1_file
-    end interface fetch_element_from_loc
-
-
-
     !> version: experimental
     !> |DescIsInValid|
     interface is_invalid
         module procedure :: is_invalid_gmsh_msh1_file
     end interface is_invalid
+
+
+
+    !> version: experimental
+    !> |DescLookupElement|
+    interface lookup_element
+        module procedure :: lookup_element_by_loc_gmsh_msh1_file
+    end interface lookup_element
 
 
 
@@ -814,43 +815,6 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> @warning
-    !> If no element corresponding to the [[fetch_element_from_loc_gmsh_msh1_file:loc]] argument exists,
-    !> a element initialized by [[initialize_gmsh_msh1_element]] will be returned.
-    subroutine fetch_element_from_loc_gmsh_msh1_file(mesh_data, loc, element, stat, errmsg)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        !> location in [[gmsh_msh1_data_type:element]]
-        integer, intent(in) :: loc
-
-        type(gmsh_msh1_element_type), intent(inout) :: element
-
-        integer, intent(out) :: stat
-
-        character(len=*), intent(inout) :: errmsg
-
-
-
-        if (loc .lt. 1) then
-
-            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
-
-        else if ( output_number_of_elements(mesh_data) .lt. loc ) then
-
-            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
-
-        else
-
-            element = mesh_data%element(loc)
-
-        end if
-
-    end subroutine fetch_element_from_loc_gmsh_msh1_file
-
-
-
-    !> version: experimental
     subroutine initialize_gmsh_msh1_element(element, stat, errmsg)
 
         type(gmsh_msh1_element_type), intent(inout) :: element
@@ -893,6 +857,44 @@ module gmsh_msh1_reader
         node%z_coord            =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescLookupElement|
+    !> @warning
+    !> If no element corresponding to the [[lookup_element_by_loc_gmsh_msh1_file:location]] argument exists,
+    !> a element initialized by [[initialize_gmsh_msh1_element]] will be returned.
+    subroutine lookup_element_by_loc_gmsh_msh1_file(mesh_data, location, element, stat, errmsg)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        !> location in [[gmsh_msh1_data_type:element]]
+        integer, intent(in) :: location
+
+        type(gmsh_msh1_element_type), intent(inout) :: element
+
+        integer, intent(out) :: stat
+
+        character(len=*), intent(inout) :: errmsg
+
+
+
+        if (location .lt. 1) then
+
+            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
+
+        else if ( output_number_of_elements(mesh_data) .lt. location ) then
+
+            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
+
+        else
+
+            element = mesh_data%element(location)
+
+        end if
+
+    end subroutine lookup_element_by_loc_gmsh_msh1_file
 
 
 
