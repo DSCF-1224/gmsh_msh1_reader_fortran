@@ -89,7 +89,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title="100.0% of total for modules and submodules.">534 statements</a>
+                 title="100.0% of total for modules and submodules.">551 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -224,6 +224,7 @@
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-lookup_node_by_num_gmsh_msh1_file">lookup_node_by_num_gmsh_msh1_file</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-output_elm_number_gmsh_msh1_element">output_elm_number_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-output_elm_type_gmsh_msh1_element">output_elm_type_gmsh_msh1_element</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-output_node_number_gmsh_msh1_element">output_node_number_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-output_node_number_gmsh_msh1_node">output_node_number_gmsh_msh1_node</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-output_node_number_list_gmsh_msh1_element">output_node_number_list_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-output_number_of_elements_gmsh_msh1_file">output_number_of_elements_gmsh_msh1_file</a>
@@ -250,6 +251,7 @@
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-clear_msg">clear_msg</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_element">initialize_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_node">initialize_gmsh_msh1_node</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_node_number">initialize_gmsh_msh1_node_number</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-lookup_element_by_loc_gmsh_msh1_file">lookup_element_by_loc_gmsh_msh1_file</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_element">read_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_file_kernel">read_gmsh_msh1_file_kernel</a>
@@ -281,9 +283,9 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
                   <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/ieee_arithmetic'>ieee_arithmetic</a></li>
                   <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_c_binding'>iso_c_binding</a></li>
-                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -992,7 +994,7 @@ parameter
   <p>Look up a <a href="../type/gmsh_msh1_element_type.html">gmsh_msh1_element_type</a> in the <a href="../type/gmsh_msh1_data_type.html">gmsh_msh1_data_type</a>.</p>
 <div class="alert alert-warning">
 <p class="alert-title h4">Warning</p>
-<p>If no element corresponding to the <a href="../proc/lookup_element_by_loc_gmsh_msh1_file.html#variable-location~2">location</a> argument exists,
+<p>If no element corresponding to the <a href="../proc/lookup_element_by_loc_gmsh_msh1_file.html#variable-location~3">location</a> argument exists,
 a element initialized by <a href="../proc/initialize_gmsh_msh1_element.html">initialize_gmsh_msh1_element</a> will be returned.</p>
 </div>
 
@@ -1024,7 +1026,7 @@ a element initialized by <a href="../proc/initialize_gmsh_msh1_element.html">ini
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-location~2"></span>
+              <span class="anchor" id="variable-location~3"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -1039,7 +1041,7 @@ a element initialized by <a href="../proc/initialize_gmsh_msh1_element.html">ini
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~10"></span>
+              <span class="anchor" id="variable-element~11"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -1446,6 +1448,74 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
     <ul class="list-group">
           <li class="list-group-item">
                 <h3>
+    private elemental function <a href='../proc/output_node_number_gmsh_msh1_element.html'>output_node_number_gmsh_msh1_element</a>(element, location) result(node_number)  
+
+    </h3>
+        <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  <p>Get the <a href="../type/gmsh_msh1_node_number_type.html">gmsh_msh1_node_number_type</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> (as derived type).</p>
+<div class="alert alert-warning">
+<p class="alert-title h4">Warning</p>
+<p>If no <a href="../type/gmsh_msh1_node_number_type.html">gmsh_msh1_node_number_type</a> corresponding to the <a href="../proc/output_node_number_gmsh_msh1_element.html#variable-location~2">location</a> argument exists,
+a <a href="../type/gmsh_msh1_node_number_type.html">gmsh_msh1_node_number_type</a> initialized by <a href="../proc/initialize_gmsh_msh1_node_number.html">initialize_gmsh_msh1_node_number</a> will be returned.</p>
+</div>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-element~5"></span>
+              type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>element</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-location~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>location</strong></td>
+            <td>
+<p>location in <a href="../type/gmsh_msh1_element_type.html#variable-node_number_list">node_number_list</a></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/gmsh_msh1_node_number_type.html'>gmsh_msh1_node_number_type</a>)</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                <h3>
     private elemental function <a href='../proc/output_node_number_gmsh_msh1_node.html'>output_node_number_gmsh_msh1_node</a>(node) result(node_number)  
 
     </h3>
@@ -1530,7 +1600,7 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~5"></span>
+              <span class="anchor" id="variable-element~6"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -1652,7 +1722,7 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~6"></span>
+              <span class="anchor" id="variable-element~7"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -1761,7 +1831,7 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~7"></span>
+              <span class="anchor" id="variable-element~8"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -1822,7 +1892,7 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~8"></span>
+              <span class="anchor" id="variable-element~9"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -3369,6 +3439,70 @@ the <em>n</em>-th node in the
   </div>
 
               <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-output_node_number_gmsh_msh1_element"></span> <h3>private elemental function <a href='../proc/output_node_number_gmsh_msh1_element.html'>output_node_number_gmsh_msh1_element</a>(element, location) result(node_number)  
+</h3></div>
+    <div class="card-body">
+              <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  <p>Get the <a href="../type/gmsh_msh1_node_number_type.html">gmsh_msh1_node_number_type</a> from the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> (as derived type).</p><a href="../proc/output_node_number_gmsh_msh1_element.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-element~5"></span>
+              type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>element</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-location~2"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>location</strong></td>
+            <td>
+<p>location in <a href="../type/gmsh_msh1_element_type.html#variable-node_number_list">node_number_list</a></p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>type(<a href='../type/gmsh_msh1_node_number_type.html'>gmsh_msh1_node_number_type</a>)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
     <div class="card-header codesum"><span class="anchor" id="proc-output_node_number_gmsh_msh1_node"></span> <h3>private elemental function <a href='../proc/output_node_number_gmsh_msh1_node.html'>output_node_number_gmsh_msh1_node</a>(node) result(node_number)  
 </h3></div>
     <div class="card-body">
@@ -3441,7 +3575,7 @@ the <em>n</em>-th node in the
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~5"></span>
+              <span class="anchor" id="variable-element~6"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -3539,7 +3673,7 @@ the <em>n</em>-th node in the
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~6"></span>
+              <span class="anchor" id="variable-element~7"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -3637,7 +3771,7 @@ the <em>n</em>-th node in the
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~7"></span>
+              <span class="anchor" id="variable-element~8"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -3686,7 +3820,7 @@ the <em>n</em>-th node in the
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~8"></span>
+              <span class="anchor" id="variable-element~9"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(in)</td>
@@ -4049,7 +4183,7 @@ the <em>n</em>-th node in the
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~9"></span>
+              <span class="anchor" id="variable-element~10"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -4144,6 +4278,50 @@ the <em>n</em>-th node in the
   </div>
 
               <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-initialize_gmsh_msh1_node_number"></span> <h3>private elemental subroutine <a href='../proc/initialize_gmsh_msh1_node_number.html'>initialize_gmsh_msh1_node_number</a>(node_number)  
+</h3></div>
+    <div class="card-body">
+              <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-node_number~6"></span>
+              type(<a href='../type/gmsh_msh1_node_number_type.html'>gmsh_msh1_node_number_type</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>node_number</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
     <div class="card-header codesum"><span class="anchor" id="proc-lookup_element_by_loc_gmsh_msh1_file"></span> <h3>private  subroutine <a href='../proc/lookup_element_by_loc_gmsh_msh1_file.html'>lookup_element_by_loc_gmsh_msh1_file</a>(mesh_data, location, element, stat, errmsg)  
 </h3></div>
     <div class="card-body">
@@ -4182,7 +4360,7 @@ the <em>n</em>-th node in the
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-location~2"></span>
+              <span class="anchor" id="variable-location~3"></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -4197,7 +4375,7 @@ the <em>n</em>-th node in the
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~10"></span>
+              <span class="anchor" id="variable-element~11"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -4316,7 +4494,7 @@ the <em>n</em>-th node in the
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-element~11"></span>
+              <span class="anchor" id="variable-element~12"></span>
               type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
             </td>
 <td>intent(inout)</td>
@@ -4760,7 +4938,7 @@ the <em>n</em>-th node in the
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-08-03 05:11 +0000             </p>
+ on 2025-08-03 14:16 +0000             </p>
           </div>
         </div>
         <br>
