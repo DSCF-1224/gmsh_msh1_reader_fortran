@@ -867,12 +867,26 @@ module gmsh_msh1_reader
 
 
 
-        node%node_number%number = 0
-        node%x_coord            = ieee_value( node%x_coord, ieee_signaling_nan )
-        node%y_coord            =             node%x_coord
-        node%z_coord            =             node%x_coord
+        call initialize_gmsh_msh1_node_number(node%node_number)
+
+        node%x_coord = ieee_value( node%x_coord, ieee_signaling_nan )
+        node%y_coord =             node%x_coord
+        node%z_coord =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    elemental subroutine initialize_gmsh_msh1_node_number(node_number)
+
+        type(gmsh_msh1_node_number_type), intent(out) :: node_number
+
+
+
+        node_number%number = 0
+
+    end subroutine initialize_gmsh_msh1_node_number
 
 
 
