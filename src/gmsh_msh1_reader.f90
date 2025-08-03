@@ -29,11 +29,11 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
     public :: gmsh_msh1_node_number_type
-    public :: fetch_element_from_loc
     public :: is_invalid
+    public :: lookup_element
+    public :: lookup_node
     public :: output_elm_number
     public :: output_elm_type
-    public :: output_node
     public :: output_node_number
     public :: output_node_number_list
     public :: output_number_of_elements
@@ -296,18 +296,28 @@ module gmsh_msh1_reader
 
 
 
-    !> get the node in the mesh
-    interface fetch_element_from_loc
-        module procedure :: fetch_element_from_loc_gmsh_msh1_file
-    end interface fetch_element_from_loc
-
-
-
     !> version: experimental
     !> |DescIsInValid|
     interface is_invalid
         module procedure :: is_invalid_gmsh_msh1_file
     end interface is_invalid
+
+
+
+    !> version: experimental
+    !> |DescLookupElement|
+    interface lookup_element
+        module procedure :: lookup_element_by_loc_gmsh_msh1_file
+    end interface lookup_element
+
+
+
+    !> |DescLookupNode|
+    interface lookup_node
+        module procedure :: lookup_node_by_loc_gmsh_msh1_file
+        module procedure :: lookup_node_by_num_gmsh_msh1_file
+    end interface lookup_node
+
 
 
     !> |DescOutputElmNumber|
@@ -321,14 +331,6 @@ module gmsh_msh1_reader
     interface output_elm_type
         module procedure :: output_elm_type_gmsh_msh1_element
     end interface output_elm_type
-
-
-
-    !> |DescOutputNode|
-    interface output_node
-        module procedure :: output_node_by_loc_gmsh_msh1_file
-        module procedure :: output_node_by_num_gmsh_msh1_file
-    end interface output_node
 
 
 
@@ -539,6 +541,77 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescLookupNode|
+    !> @warning
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[lookup_node_by_loc_gmsh_msh1_file:location]] argument exists,
+    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
+    elemental function lookup_node_by_loc_gmsh_msh1_file(mesh_data, location) result(node)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        !> location in [[gmsh_msh1_data_type:node]]
+        integer, intent(in) :: location
+
+        type(gmsh_msh1_node_type) :: node
+
+
+
+        if (location .lt. 1) then
+
+            call initialize_gmsh_msh1_node(node)
+
+        else if ( output_number_of_nodes(mesh_data) .lt. location ) then
+
+            call initialize_gmsh_msh1_node(node)
+
+        else
+
+            node = mesh_data%node(location)
+
+        end if
+
+    end function lookup_node_by_loc_gmsh_msh1_file
+
+
+
+    !> version: experimental
+    !> |DescLookupNode|
+    !> @warning
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[lookup_node_by_num_gmsh_msh1_file:node_number]] argument exists,
+    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
+    elemental function lookup_node_by_num_gmsh_msh1_file(mesh_data, node_number) result(node)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        type(gmsh_msh1_node_type) :: node
+
+
+
+        integer :: itr_node
+
+
+
+        do itr_node = 1, output_number_of_nodes(mesh_data)
+
+            if ( mesh_data%node(itr_node)%node_number .eq. node_number ) then
+
+                node = mesh_data%node(itr_node)
+
+                return
+
+            end if
+
+        end do
+
+        call initialize_gmsh_msh1_node(node)
+
+    end function lookup_node_by_num_gmsh_msh1_file
+
+
+
+    !> version: experimental
     !> |DescOutputElmNumber|
     elemental function output_elm_number_gmsh_msh1_element(element) result(elm_number)
 
@@ -567,77 +640,6 @@ module gmsh_msh1_reader
         elm_type = element%elm_type
 
     end function output_elm_type_gmsh_msh1_element
-
-
-
-    !> version: experimental
-    !> |DescOutputNode|
-    !> @warning
-    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_by_loc_gmsh_msh1_file:location]] argument exists,
-    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
-    elemental function output_node_by_loc_gmsh_msh1_file(mesh_data, location) result(node)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        !> location in [[gmsh_msh1_data_type:node]]
-        integer, intent(in) :: location
-
-        type(gmsh_msh1_node_type) :: node
-
-
-
-        if (location .lt. 1) then
-
-            call initialize_gmsh_msh1_node(node)
-
-        else if ( output_number_of_nodes(mesh_data) .lt. location ) then
-
-            call initialize_gmsh_msh1_node(node)
-
-        else
-
-            node = mesh_data%node(location)
-
-        end if
-
-    end function output_node_by_loc_gmsh_msh1_file
-
-
-
-    !> version: experimental
-    !> |DescOutputNode|
-    !> @warning
-    !> If no [[gmsh_msh1_node_type]] corresponding to the [[output_node_by_num_gmsh_msh1_file:node_number]] argument exists,
-    !> a [[gmsh_msh1_node_type]] initialized by [[initialize_gmsh_msh1_node]] will be returned.
-    elemental function output_node_by_num_gmsh_msh1_file(mesh_data, node_number) result(node)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        type(gmsh_msh1_node_number_type), intent(in) :: node_number
-
-        type(gmsh_msh1_node_type) :: node
-
-
-
-        integer :: itr_node
-
-
-
-        do itr_node = 1, output_number_of_nodes(mesh_data)
-
-            if ( mesh_data%node(itr_node)%node_number .eq. node_number ) then
-
-                node = mesh_data%node(itr_node)
-
-                return
-
-            end if
-
-        end do
-
-        call initialize_gmsh_msh1_node(node)
-
-    end function output_node_by_num_gmsh_msh1_file
 
 
 
@@ -813,43 +815,6 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> @warning
-    !> If no element corresponding to the [[fetch_element_from_loc_gmsh_msh1_file:loc]] argument exists,
-    !> a element initialized by [[initialize_gmsh_msh1_element]] will be returned.
-    subroutine fetch_element_from_loc_gmsh_msh1_file(mesh_data, loc, element, stat, errmsg)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        !> location in [[gmsh_msh1_data_type:element]]
-        integer, intent(in) :: loc
-
-        type(gmsh_msh1_element_type), intent(inout) :: element
-
-        integer, intent(out) :: stat
-
-        character(len=*), intent(inout) :: errmsg
-
-
-
-        if (loc .lt. 1) then
-
-            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
-
-        else if ( output_number_of_elements(mesh_data) .lt. loc ) then
-
-            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
-
-        else
-
-            element = mesh_data%element(loc)
-
-        end if
-
-    end subroutine fetch_element_from_loc_gmsh_msh1_file
-
-
-
-    !> version: experimental
     subroutine initialize_gmsh_msh1_element(element, stat, errmsg)
 
         type(gmsh_msh1_element_type), intent(inout) :: element
@@ -892,6 +857,44 @@ module gmsh_msh1_reader
         node%z_coord            =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescLookupElement|
+    !> @warning
+    !> If no element corresponding to the [[lookup_element_by_loc_gmsh_msh1_file:location]] argument exists,
+    !> a element initialized by [[initialize_gmsh_msh1_element]] will be returned.
+    subroutine lookup_element_by_loc_gmsh_msh1_file(mesh_data, location, element, stat, errmsg)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        !> location in [[gmsh_msh1_data_type:element]]
+        integer, intent(in) :: location
+
+        type(gmsh_msh1_element_type), intent(inout) :: element
+
+        integer, intent(out) :: stat
+
+        character(len=*), intent(inout) :: errmsg
+
+
+
+        if (location .lt. 1) then
+
+            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
+
+        else if ( output_number_of_elements(mesh_data) .lt. location ) then
+
+            call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
+
+        else
+
+            element = mesh_data%element(location)
+
+        end if
+
+    end subroutine lookup_element_by_loc_gmsh_msh1_file
 
 
 

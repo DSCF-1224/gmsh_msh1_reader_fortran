@@ -363,7 +363,7 @@ program check
 
         do itr = 1, output_number_of_nodes(msh1_data)
 
-            node = output_node( msh1_data, itr )
+            node = lookup_node( msh1_data, itr )
 
             write( write_unit, '(I0,3ES24.16)' ) &!
                 export_node_number (node) , &!!
@@ -383,9 +383,9 @@ program check
 
         do itr = 1, output_number_of_elements(msh1_data)
 
-            call fetch_element_from_loc( &!
+            call lookup_element( &!
             mesh_data = msh1_data , &!
-            loc       = itr       , &!
+            location  = itr       , &!
             element   = element   , &!
             stat      = stat      , &!
             errmsg    = msg(:)      &!
