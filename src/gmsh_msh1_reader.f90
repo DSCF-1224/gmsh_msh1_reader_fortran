@@ -344,6 +344,7 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescOutputNodeNumber|
     interface output_node_number
+        module procedure :: output_node_number_gmsh_msh1_element
         module procedure :: output_node_number_gmsh_msh1_node
     end interface output_node_number
 
@@ -661,6 +662,40 @@ module gmsh_msh1_reader
 
     !> version: experimental
     !> |DescOutputNodeNumber|
+    !> @warning
+    !> If no [[gmsh_msh1_node_number_type]] corresponding to the [[output_node_number_gmsh_msh1_element:location]] argument exists,
+    !> a [[gmsh_msh1_node_number_type]] initialized by [[initialize_gmsh_msh1_node_number]] will be returned.
+    elemental function output_node_number_gmsh_msh1_element(element, location) result(node_number)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        !> location in [[gmsh_msh1_element_type:node_number_list]]
+        integer, intent(in) :: location
+
+        type(gmsh_msh1_node_number_type) :: node_number
+
+
+
+        if (location .lt. 1) then
+
+            call initialize_gmsh_msh1_node_number(node_number)
+
+        else if ( output_number_of_nodes(element) .lt. location ) then
+
+            call initialize_gmsh_msh1_node_number(node_number)
+
+        else
+
+            node_number = element%node_number_list(location)
+
+        end if
+
+    end function output_node_number_gmsh_msh1_element
+
+
+
+    !> version: experimental
+    !> |DescOutputNodeNumber|
     elemental function output_node_number_gmsh_msh1_node(node) result(node_number)
 
         type(gmsh_msh1_node_type), intent(in) :: node
@@ -867,12 +902,26 @@ module gmsh_msh1_reader
 
 
 
-        node%node_number%number = 0
-        node%x_coord            = ieee_value( node%x_coord, ieee_signaling_nan )
-        node%y_coord            =             node%x_coord
-        node%z_coord            =             node%x_coord
+        call initialize_gmsh_msh1_node_number(node%node_number)
+
+        node%x_coord = ieee_value( node%x_coord, ieee_signaling_nan )
+        node%y_coord =             node%x_coord
+        node%z_coord =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    elemental subroutine initialize_gmsh_msh1_node_number(node_number)
+
+        type(gmsh_msh1_node_number_type), intent(out) :: node_number
+
+
+
+        node_number%number = 0
+
+    end subroutine initialize_gmsh_msh1_node_number
 
 
 
