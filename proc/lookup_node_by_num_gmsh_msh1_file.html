@@ -10,7 +10,7 @@
     <meta name="author" content="" >
     <link rel="icon" href="../favicon.png">
 
-    <title>output_node_by_loc_gmsh_msh1_file &ndash; DSCF-1224/gmsh_msh1_reader_fortran</title>
+    <title>lookup_node_by_num_gmsh_msh1_file &ndash; DSCF-1224/gmsh_msh1_reader_fortran</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -77,7 +77,7 @@
 
     <div class="container">
   <div class="row">
-    <h1>output_node_by_loc_gmsh_msh1_file
+    <h1>lookup_node_by_num_gmsh_msh1_file
       <small>Function</small>
       
     </h1>
@@ -90,7 +90,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 2.7% of total for procedures.">12 statements</a>
+                 title=" 2.9% of total for procedures.">13 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -104,7 +104,7 @@
           <ol class="breadcrumb justify-content-end mb-0">
                 <li class="breadcrumb-item"><a href='../sourcefile/gmsh_msh1_reader.f90.html'>gmsh_msh1_reader.f90</a></li>
                 <li class="breadcrumb-item"><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></li>
-            <li class="breadcrumb-item active" aria-current="page">output_node_by_loc_gmsh_msh1_file</li>
+            <li class="breadcrumb-item active" aria-current="page">lookup_node_by_num_gmsh_msh1_file</li>
           </ol>
         </nav>
       </div>
@@ -125,7 +125,18 @@
       <div id="sidebar">
       <h3>Contents</h3>
   
-  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../proc/lookup_node_by_num_gmsh_msh1_file.html#variable-itr_node">itr_node</a>
+        </div>
+      </div>
+    </div>
+
   
   
   
@@ -147,7 +158,7 @@
     <div class="card card-primary">
       <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
       <div class="list-group">
-        <a class="list-group-item" href="../proc/output_node_by_loc_gmsh_msh1_file.html#src">output_node_by_loc_gmsh_msh1_file</a>
+        <a class="list-group-item" href="../proc/lookup_node_by_num_gmsh_msh1_file.html#src">lookup_node_by_num_gmsh_msh1_file</a>
       </div>
     </div>
 
@@ -157,14 +168,14 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>private elemental function output_node_by_loc_gmsh_msh1_file(mesh_data, location) result(node)  
+    <h2>private elemental function lookup_node_by_num_gmsh_msh1_file(mesh_data, node_number) result(node)  
 </h2>
     
 
-    <p>Get the <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> from the <a href="../type/gmsh_msh1_data_type.html">gmsh_msh1_data_type</a>.</p>
+    <p>Look up a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> in the <a href="../type/gmsh_msh1_data_type.html">gmsh_msh1_data_type</a>.</p>
 <div class="alert alert-warning">
 <p class="alert-title h4">Warning</p>
-<p>If no <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> corresponding to the <a href="../proc/output_node_by_loc_gmsh_msh1_file.html#variable-location">location</a> argument exists,
+<p>If no <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> corresponding to the <a href="../proc/lookup_node_by_num_gmsh_msh1_file.html#variable-node_number~3">node_number</a> argument exists,
 a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized by <a href="../proc/initialize_gmsh_msh1_node.html">initialize_gmsh_msh1_node</a> will be returned.</p>
 </div>
 
@@ -182,7 +193,7 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-mesh_data~3"></span>
+              <span class="anchor" id="variable-mesh_data~4"></span>
               type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
             </td>
 <td>intent(in)</td>
@@ -197,17 +208,17 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-location"></span>
-              integer,
+              <span class="anchor" id="variable-node_number~3"></span>
+              type(<a href='../type/gmsh_msh1_node_number_type.html'>gmsh_msh1_node_number_type</a>),
             </td>
 <td>intent(in)</td>
               <td></td>            <td>
               
             </td>
             <td>::</td>
-            <td><strong>location</strong></td>
+            <td><strong>node_number</strong></td>
             <td>
-                <p>location in <a href="../type/gmsh_msh1_data_type.html#variable-node">node</a></p>
+                
             </td>
         </tr>
     </tbody>
@@ -215,7 +226,7 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
 
       <h3>Return Value
         <small>
-          <span class="anchor" id="variable-node~3"></span>
+          <span class="anchor" id="variable-node~4"></span>
           type(<a href='../type/gmsh_msh1_node_type.html'>gmsh_msh1_node_type</a>)
         </small>
       </h3>
@@ -231,82 +242,82 @@ a <a href="../type/gmsh_msh1_node_type.html">gmsh_msh1_node_type</a> initialized
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph Pages: 1 -->
-<svg id="procoutput_node_by_loc_gmsh_msh1_fileCallsGraph" width="641pt" height="85pt"
- viewBox="0.00 0.00 641.00 85.41" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph" class="graph" transform="scale(0.9 0.9) rotate(0) translate(4 91)">
-<title>proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-91 709,-91 709,4 -4,4"/>
-<!-- proc~output_node_by_loc_gmsh_msh1_file -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node1" class="node">
-<title>proc~output_node_by_loc_gmsh_msh1_file</title>
-<polygon fill="none" stroke="black" points="209,-45 0,-45 0,-21 209,-21 209,-45"/>
-<text text-anchor="middle" x="104.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">output_node_by_loc_gmsh_msh1_file</text>
+<!-- Title: proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph Pages: 1 -->
+<svg id="proclookup_node_by_num_gmsh_msh1_fileCallsGraph" width="641pt" height="84pt"
+ viewBox="0.00 0.00 641.00 84.23" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph" class="graph" transform="scale(0.89 0.89) rotate(0) translate(4 91)">
+<title>proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-91 719,-91 719,4 -4,4"/>
+<!-- proc~lookup_node_by_num_gmsh_msh1_file -->
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node1" class="node">
+<title>proc~lookup_node_by_num_gmsh_msh1_file</title>
+<polygon fill="none" stroke="black" points="219,-45 0,-45 0,-21 219,-21 219,-45"/>
+<text text-anchor="middle" x="109.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">lookup_node_by_num_gmsh_msh1_file</text>
 </g>
 <!-- interface~output_number_of_nodes -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node2" class="node">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node2" class="node">
 <title>interface~output_number_of_nodes</title>
-<g id="a_proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node2"><a xlink:href="../interface/output_number_of_nodes.html" xlink:title="output_number_of_nodes">
-<polygon fill="#a7506f" stroke="#a7506f" points="398,-66 250,-66 250,-42 398,-42 398,-66"/>
-<text text-anchor="middle" x="324" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_number_of_nodes</text>
+<g id="a_proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node2"><a xlink:href="../interface/output_number_of_nodes.html" xlink:title="output_number_of_nodes">
+<polygon fill="#a7506f" stroke="#a7506f" points="408,-66 260,-66 260,-42 408,-42 408,-66"/>
+<text text-anchor="middle" x="334" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_number_of_nodes</text>
 </a>
 </g>
 </g>
-<!-- proc~output_node_by_loc_gmsh_msh1_file&#45;&gt;interface~output_number_of_nodes -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_edge1" class="edge">
-<title>proc~output_node_by_loc_gmsh_msh1_file&#45;&gt;interface~output_number_of_nodes</title>
-<path fill="none" stroke="#000000" d="M209.15,-43.01C219.49,-44.01 229.89,-45.01 239.98,-45.98"/>
-<polygon fill="#000000" stroke="#000000" points="239.66,-49.47 249.95,-46.95 240.33,-42.5 239.66,-49.47"/>
+<!-- proc~lookup_node_by_num_gmsh_msh1_file&#45;&gt;interface~output_number_of_nodes -->
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_edge1" class="edge">
+<title>proc~lookup_node_by_num_gmsh_msh1_file&#45;&gt;interface~output_number_of_nodes</title>
+<path fill="none" stroke="#000000" d="M219.14,-43.25C229.38,-44.22 239.64,-45.19 249.59,-46.13"/>
+<polygon fill="#000000" stroke="#000000" points="249.54,-49.64 259.82,-47.09 250.2,-42.67 249.54,-49.64"/>
 </g>
 <!-- proc~initialize_gmsh_msh1_node -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node3" class="node">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node3" class="node">
 <title>proc~initialize_gmsh_msh1_node</title>
-<g id="a_proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node3"><a xlink:href="../proc/initialize_gmsh_msh1_node.html" xlink:title="initialize_gmsh_msh1_node">
-<polygon fill="#d9534f" stroke="#d9534f" points="403,-24 245,-24 245,0 403,0 403,-24"/>
-<text text-anchor="middle" x="324" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize_gmsh_msh1_node</text>
+<g id="a_proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node3"><a xlink:href="../proc/initialize_gmsh_msh1_node.html" xlink:title="initialize_gmsh_msh1_node">
+<polygon fill="#d9534f" stroke="#d9534f" points="413,-24 255,-24 255,0 413,0 413,-24"/>
+<text text-anchor="middle" x="334" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize_gmsh_msh1_node</text>
 </a>
 </g>
 </g>
-<!-- proc~output_node_by_loc_gmsh_msh1_file&#45;&gt;proc~initialize_gmsh_msh1_node -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_edge2" class="edge">
-<title>proc~output_node_by_loc_gmsh_msh1_file&#45;&gt;proc~initialize_gmsh_msh1_node</title>
-<path fill="none" stroke="#000000" d="M209.15,-22.99C217.71,-22.17 226.31,-21.34 234.74,-20.52"/>
-<polygon fill="#000000" stroke="#000000" points="235.3,-23.98 244.92,-19.54 234.63,-17.02 235.3,-23.98"/>
+<!-- proc~lookup_node_by_num_gmsh_msh1_file&#45;&gt;proc~initialize_gmsh_msh1_node -->
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_edge2" class="edge">
+<title>proc~lookup_node_by_num_gmsh_msh1_file&#45;&gt;proc~initialize_gmsh_msh1_node</title>
+<path fill="none" stroke="#000000" d="M219.14,-22.75C227.69,-21.94 236.26,-21.13 244.65,-20.34"/>
+<polygon fill="#000000" stroke="#000000" points="245.15,-23.81 254.77,-19.38 244.49,-16.84 245.15,-23.81"/>
 </g>
 <!-- proc~output_number_of_nodes_gmsh_msh1_element -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node4" class="node">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node4" class="node">
 <title>proc~output_number_of_nodes_gmsh_msh1_element</title>
-<g id="a_proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node4"><a xlink:href="../proc/output_number_of_nodes_gmsh_msh1_element.html" xlink:title="output_number_of_nodes_gmsh_msh1_element">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="705,-87 439,-87 439,-63 705,-63 705,-87"/>
-<text text-anchor="middle" x="572" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_number_of_nodes_gmsh_msh1_element</text>
+<g id="a_proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node4"><a xlink:href="../proc/output_number_of_nodes_gmsh_msh1_element.html" xlink:title="output_number_of_nodes_gmsh_msh1_element">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="715,-87 449,-87 449,-63 715,-63 715,-87"/>
+<text text-anchor="middle" x="582" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_number_of_nodes_gmsh_msh1_element</text>
 </a>
 </g>
 </g>
 <!-- interface~output_number_of_nodes&#45;&gt;proc~output_number_of_nodes_gmsh_msh1_element -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_edge3" class="edge">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_edge3" class="edge">
 <title>interface~output_number_of_nodes&#45;&gt;proc~output_number_of_nodes_gmsh_msh1_element</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.14,-60.24C407.91,-61.08 418.18,-61.95 428.64,-62.85"/>
-<polygon fill="#000000" stroke="#000000" points="428.46,-66.34 438.72,-63.71 429.06,-59.37 428.46,-66.34"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M408.14,-60.24C417.91,-61.08 428.18,-61.95 438.64,-62.85"/>
+<polygon fill="#000000" stroke="#000000" points="438.46,-66.34 448.72,-63.71 439.06,-59.37 438.46,-66.34"/>
 </g>
 <!-- proc~output_number_of_nodes_gmsh_msh1_file -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node5" class="node">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node5" class="node">
 <title>proc~output_number_of_nodes_gmsh_msh1_file</title>
-<g id="a_proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_node5"><a xlink:href="../proc/output_number_of_nodes_gmsh_msh1_file.html" xlink:title="output_number_of_nodes_gmsh_msh1_file">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="691,-45 453,-45 453,-21 691,-21 691,-45"/>
-<text text-anchor="middle" x="572" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_number_of_nodes_gmsh_msh1_file</text>
+<g id="a_proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_node5"><a xlink:href="../proc/output_number_of_nodes_gmsh_msh1_file.html" xlink:title="output_number_of_nodes_gmsh_msh1_file">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="701,-45 463,-45 463,-21 701,-21 701,-45"/>
+<text text-anchor="middle" x="582" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_number_of_nodes_gmsh_msh1_file</text>
 </a>
 </g>
 </g>
 <!-- interface~output_number_of_nodes&#45;&gt;proc~output_number_of_nodes_gmsh_msh1_file -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CallsGraph_edge4" class="edge">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CallsGraph_edge4" class="edge">
 <title>interface~output_number_of_nodes&#45;&gt;proc~output_number_of_nodes_gmsh_msh1_file</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M398.14,-47.76C412.32,-46.55 427.55,-45.25 442.9,-43.94"/>
-<polygon fill="#000000" stroke="#000000" points="443.32,-47.41 452.98,-43.07 442.72,-40.44 443.32,-47.41"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M408.14,-47.76C422.32,-46.55 437.55,-45.25 452.9,-43.94"/>
+<polygon fill="#000000" stroke="#000000" points="453.32,-47.41 462.98,-43.07 452.72,-40.44 453.32,-47.41"/>
 </g>
 </g>
 </svg>
 </div>                <script>
-                  var panprocoutput_node_by_loc_gmsh_msh1_fileCallsGraph = svgPanZoom('#procoutput_node_by_loc_gmsh_msh1_fileCallsGraph',
+                  var panproclookup_node_by_num_gmsh_msh1_fileCallsGraph = svgPanZoom('#proclookup_node_by_num_gmsh_msh1_fileCallsGraph',
                     {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
                   );
                 </script>          <div>
@@ -398,32 +409,32 @@ implementation in a submodule of an interface in a parent module.
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph Pages: 1 -->
-<svg id="procoutput_node_by_loc_gmsh_msh1_fileCalledByGraph" width="332pt" height="32pt"
- viewBox="0.00 0.00 332.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
-<title>proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 328,-28 328,4 -4,4"/>
-<!-- proc~output_node_by_loc_gmsh_msh1_file -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph_node1" class="node">
-<title>proc~output_node_by_loc_gmsh_msh1_file</title>
-<polygon fill="none" stroke="black" points="324,-24 115,-24 115,0 324,0 324,-24"/>
-<text text-anchor="middle" x="219.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">output_node_by_loc_gmsh_msh1_file</text>
+<!-- Title: proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph Pages: 1 -->
+<svg id="proclookup_node_by_num_gmsh_msh1_fileCalledByGraph" width="344pt" height="32pt"
+ viewBox="0.00 0.00 344.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 340,-28 340,4 -4,4"/>
+<!-- proc~lookup_node_by_num_gmsh_msh1_file -->
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph_node1" class="node">
+<title>proc~lookup_node_by_num_gmsh_msh1_file</title>
+<polygon fill="none" stroke="black" points="336,-24 117,-24 117,0 336,0 336,-24"/>
+<text text-anchor="middle" x="226.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">lookup_node_by_num_gmsh_msh1_file</text>
 </g>
-<!-- interface~output_node -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph_node2" class="node">
-<title>interface~output_node</title>
-<g id="a_proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph_node2"><a xlink:href="../interface/output_node.html" xlink:title="output_node">
-<polygon fill="#a7506f" stroke="#a7506f" points="79,-24 0,-24 0,0 79,0 79,-24"/>
-<text text-anchor="middle" x="39.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">output_node</text>
+<!-- interface~lookup_node -->
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph_node2" class="node">
+<title>interface~lookup_node</title>
+<g id="a_proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph_node2"><a xlink:href="../interface/lookup_node.html" xlink:title="lookup_node">
+<polygon fill="#a7506f" stroke="#a7506f" points="81,-24 0,-24 0,0 81,0 81,-24"/>
+<text text-anchor="middle" x="40.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">lookup_node</text>
 </a>
 </g>
 </g>
-<!-- interface~output_node&#45;&gt;proc~output_node_by_loc_gmsh_msh1_file -->
-<g id="proc~~output_node_by_loc_gmsh_msh1_file~~CalledByGraph_edge1" class="edge">
-<title>interface~output_node&#45;&gt;proc~output_node_by_loc_gmsh_msh1_file</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M79.12,-12C86.92,-12 95.49,-12 104.43,-12"/>
-<polygon fill="#000000" stroke="#000000" points="104.66,-15.5 114.66,-12 104.66,-8.5 104.66,-15.5"/>
+<!-- interface~lookup_node&#45;&gt;proc~lookup_node_by_num_gmsh_msh1_file -->
+<g id="proc~~lookup_node_by_num_gmsh_msh1_file~~CalledByGraph_edge1" class="edge">
+<title>interface~lookup_node&#45;&gt;proc~lookup_node_by_num_gmsh_msh1_file</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M81.43,-12C89.18,-12 97.67,-12 106.53,-12"/>
+<polygon fill="#000000" stroke="#000000" points="106.67,-15.5 116.67,-12 106.67,-8.5 106.67,-15.5"/>
 </g>
 </g>
 </svg>
@@ -509,6 +520,40 @@ implementation in a submodule of an interface in a parent module.
     <br>
 
 
+    <section>    
+      <h2>Variables</h2>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-itr_node"></span>
+              integer,
+            </td>
+              <td>private</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>itr_node</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </section>
+    <br>
     
     
 
@@ -520,32 +565,35 @@ implementation in a submodule of an interface in a parent module.
     
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">elemental function </span><span class="n">output_node_by_loc_gmsh_msh1_file</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">elemental function </span><span class="n">lookup_node_by_num_gmsh_msh1_file</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">node_number</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
 
 <span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">gmsh_msh1_data_type</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mesh_data</span>
 
-<span class="w">        </span><span class="c">!&gt; location in [[gmsh_msh1_data_type:node]]</span>
-<span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">location</span>
+<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">gmsh_msh1_node_number_type</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">node_number</span>
 
 <span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">gmsh_msh1_node_type</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">node</span>
 
 
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">itr_node</span>
 
-<span class="k">            call </span><span class="n">initialize_gmsh_msh1_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">else if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">output_number_of_nodes</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 
-<span class="k">            call </span><span class="n">initialize_gmsh_msh1_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="w">        </span><span class="k">do </span><span class="n">itr_node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">output_number_of_nodes</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">mesh_data</span><span class="p">%</span><span class="n">node</span><span class="p">(</span><span class="n">itr_node</span><span class="p">)%</span><span class="n">node_number</span><span class="w"> </span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="w"> </span><span class="n">node_number</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
 
-<span class="k">            </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mesh_data</span><span class="p">%</span><span class="n">node</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+<span class="k">                </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mesh_data</span><span class="p">%</span><span class="n">node</span><span class="p">(</span><span class="n">itr_node</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">end if</span>
+<span class="w">                </span><span class="k">return</span>
 
-<span class="k">    end function </span><span class="n">output_node_by_loc_gmsh_msh1_file</span>
+<span class="k">            end if</span>
+
+<span class="k">        end do</span>
+
+<span class="k">        call </span><span class="n">initialize_gmsh_msh1_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">end function </span><span class="n">lookup_node_by_num_gmsh_msh1_file</span>
 </pre></div>
 
     </section>
@@ -569,7 +617,7 @@ implementation in a submodule of an interface in a parent module.
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-08-02 12:12 +0000             </p>
+ on 2025-08-03 00:27 +0000             </p>
           </div>
         </div>
         <br>
