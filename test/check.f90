@@ -330,7 +330,7 @@ program check
 
 
 
-        integer :: itr
+        logical :: flag_error_stop
 
         integer :: stat
 
@@ -338,9 +338,9 @@ program check
 
         character(len=256) :: msg
 
-        type(gmsh_msh1_element_type) :: element
 
-        type(gmsh_msh1_node_type) :: node
+
+        flag_error_stop = .false.
 
 
 
@@ -354,6 +354,54 @@ program check
         )
 
         call handle_io_error( stat, msg(:), msh1_file(:) )
+
+
+
+        call write_gmsh_msh1_file_kernel( &!
+        write_unit = write_unit   , &!
+        msh1_file  = msh1_file(:) , &!
+        msh1_data  = msh1_data    , &!
+        stat       = stat         , &!
+        msg        = msg(:)         &!
+        )
+
+        flag_error_stop = (stat .ne. 0)
+
+
+
+        close( &!
+        unit   = write_unit , &!
+        iostat = stat       , &!
+        iomsg  = msg(:)       &!
+        )
+
+        call handle_io_error( stat, msg(:), msh1_file(:) )
+
+        if (flag_error_stop) error stop
+
+    end subroutine write_gmsh_msh1_file
+
+
+
+    subroutine write_gmsh_msh1_file_kernel(write_unit, msh1_file, msh1_data, stat, msg)
+
+        integer, intent(in) :: write_unit
+
+        character(len=*), intent(in) :: msh1_file
+
+        type(gmsh_msh1_data_type), intent(in) :: msh1_data
+
+        integer, intent(out) :: stat
+
+        character(len=*), intent(inout) :: msg
+
+
+
+        integer :: itr
+
+        type(gmsh_msh1_element_type) :: element
+
+        type(gmsh_msh1_node_type) :: node
 
 
 
@@ -391,6 +439,16 @@ program check
             errmsg    = msg(:)      &!
             )
 
+            if (stat .ne. 0) then
+
+                write( error_unit, "(A)"    ) msh1_file(:)
+                write( error_unit, "(A,I0)" ) "stat   : " , stat
+                write( error_unit, "(A,A)"  ) "errmsg : " , msg(:)
+
+                return
+
+            end if
+
             write( write_unit, '(I0,*(1X,I0))' ) &!
                 output_elm_number       (element) , &!
                 output_elm_type         (element) , &!
@@ -403,16 +461,6 @@ program check
 
         write( write_unit, "(A)" ) "$ENDELM"
 
-
-
-        close( &!
-        unit   = write_unit , &!
-        iostat = stat       , &!
-        iomsg  = msg(:)       &!
-        )
-
-        call handle_io_error( stat, msg(:), msh1_file(:) )
-
-    end subroutine write_gmsh_msh1_file
+    end subroutine write_gmsh_msh1_file_kernel
 
 end program check
