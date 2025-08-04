@@ -179,7 +179,7 @@ module gmsh_msh1_reader
     !> Derived type to for reading |DescGmshMsh1NodeNumber|
     !>
     !> @warning
-    !> The [[gmsh_msh1_node_number_type:number]] must be a positive (non-zero) integer.
+    !> |WarnNodeNumberType|
     !> @endwarning
     !>
     !> @note
@@ -408,6 +408,7 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescValidate|
     interface validate
+        module procedure :: validate_gmsh_msh1_node_number
         module procedure :: validate_gmsh_msh1_file
     end interface validate
 
@@ -830,6 +831,25 @@ module gmsh_msh1_reader
         z_coord = node%z_coord
 
     end function output_z_coord_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> |WarnNodeNumberType|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_node_number(node_number) result(is_valid)
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        logical :: is_valid
+
+
+
+        is_valid = node_number%number .gt. 0
+
+    end function validate_gmsh_msh1_node_number
 
 
 

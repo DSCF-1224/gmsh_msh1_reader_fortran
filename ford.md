@@ -35,6 +35,7 @@ alias: DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[
        GmshDefinesH = Reference: [`GmshDefines.h`](https://gitlab.onelab.info/gmsh/gmsh/blob/master/src/common/GmshDefines.h)
        GmshReferenceManualTop = [Gmsh](https://gmsh.info/doc/texinfo/gmsh.html)
        GmshReferenceManualMsh1 = [MSH file format version 1](https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-1-_0028Legacy_0029)
+       WarnNodeNumberType = The [[gmsh_msh1_node_number_type:number]] must be a positive (non-zero) integer.
 ---
 
 [TOC]
