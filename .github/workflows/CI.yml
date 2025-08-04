@@ -17,6 +17,13 @@ on:
         default: false
         type: boolean
 
+      force_build:
+
+        description: 'Force run fpm and ford jobs regardless of conditions'
+        required: false
+        default: false
+        type: boolean
+
 
 jobs:
 
@@ -50,6 +57,56 @@ jobs:
         run: |
           echo "branch-missing: ${{ steps.changes.outputs.branch-missing }}"
 
+  check-fortran-changes:
+
+    runs-on: ubuntu-latest
+
+    outputs:
+
+      fortran-changed: ${{ steps.changes.outputs.fortran-changed }}
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for .f90 file changes
+        id: changes
+        run: |
+          case "${{ github.event_name }}" in
+            "workflow_dispatch")
+              if [[ "${{ github.event.inputs.force_build }}" == "true" ]]; then
+                echo "fortran-changed=true" >> $GITHUB_OUTPUT
+              else
+                echo "fortran-changed=false" >> $GITHUB_OUTPUT
+              fi
+              ;;
+            "push")
+              if git diff --name-only HEAD~1 HEAD | grep -q "\.f90$\|\.fypp$\|fpm\.toml$\|ford\.md$\|\.github/workflows/.*\.ya?ml$"; then
+                echo "fortran-changed=true" >> $GITHUB_OUTPUT
+              else
+                echo "fortran-changed=false" >> $GITHUB_OUTPUT
+              fi
+              ;;
+            "pull_request")
+              git fetch origin ${{ github.base_ref }}
+              if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -q "\.f90$\|\.fypp$\|fpm\.toml$\|ford\.md$\|\.github/workflows/.*\.ya?ml$"; then
+                echo "fortran-changed=true" >> $GITHUB_OUTPUT
+              else
+                echo "fortran-changed=false" >> $GITHUB_OUTPUT
+              fi
+              ;;
+            *)
+              echo "fortran-changed=false" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Display result
+        run: |
+          echo "fortran-changed: ${{ steps.changes.outputs.fortran-changed }}"
+
   check-geo-changes:
 
     runs-on: ubuntu-latest
@@ -70,10 +127,14 @@ jobs:
         run: |
           case "${{ github.event_name }}" in
             "workflow_dispatch")
-              echo "geo-changed=true" >> $GITHUB_OUTPUT
+              if [[ "${{ github.event.inputs.force_gmsh }}" == "true" ]]; then
+                echo "geo-changed=true" >> $GITHUB_OUTPUT
+              else
+                echo "geo-changed=false" >> $GITHUB_OUTPUT
+              fi
               ;;
             "push")
-              if git diff --name-only HEAD~1 HEAD | grep -q "test/.*\.geo$"; then
+              if git diff --name-only HEAD~1 HEAD | grep -q "test/.*\.geo$\|\.github/workflows/.*\.ya?ml$"; then
                 echo "geo-changed=true" >> $GITHUB_OUTPUT
               else
                 echo "geo-changed=false" >> $GITHUB_OUTPUT
@@ -81,7 +142,7 @@ jobs:
               ;;
             "pull_request")
               git fetch origin ${{ github.base_ref }}
-              if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -q "test/.*\.geo$"; then
+              if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -q "test/.*\.geo$\|\.github/workflows/.*\.ya?ml$"; then
                 echo "geo-changed=true" >> $GITHUB_OUTPUT
               else
                 echo "geo-changed=false" >> $GITHUB_OUTPUT
@@ -178,9 +239,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs: [check-branch, check-geo-changes, gmsh]
+    needs: [check-branch, check-fortran-changes, check-geo-changes, gmsh]
 
-    if: always() && !cancelled()
+    if: always() && !cancelled() && needs.check-fortran-changes.outputs.fortran-changed == 'true'
 
     strategy:
 
@@ -246,14 +307,14 @@ jobs:
 
   ford:
 
-    needs: fpm
+    needs: [check-fortran-changes, fpm]
 
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
 
-    if: always() && !cancelled()
+    if: always() && !cancelled() && needs.check-fortran-changes.outputs.fortran-changed == 'true'
 
     steps:
 
