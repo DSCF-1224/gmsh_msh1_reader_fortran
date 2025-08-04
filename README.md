@@ -21,7 +21,6 @@ Support for the following intrinsic modules:
 - `ieee_arithmetic`
   - `ieee_value`
   - `ieee_signaling_nan`
-- `iso_c_binding`
 
 ## How to use
 
