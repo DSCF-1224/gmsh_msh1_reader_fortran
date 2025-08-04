@@ -10,8 +10,6 @@ module gmsh_msh1_reader
         only: ieee_value         , &!
         &     ieee_signaling_nan
 
-    use, intrinsic :: iso_c_binding
-
 
 
     implicit none
