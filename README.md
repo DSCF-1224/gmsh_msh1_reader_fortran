@@ -5,6 +5,24 @@
 
 Fortran module for reading [Gmsh][GmshReferenceManualTop] [MSH file format version 1][GmshReferenceManualMsh1]
 
+> [!IMPORTANT]
+> This library does not support new [Gmsh][GmshReferenceManualTop] MSH format versions.
+> - [MSH file format version 2][GmshReferenceManualMsh2]
+> - [MSH file format version 4][GmshReferenceManualMsh4]
+
+## Requirements
+
+Support for the following intrinsic modules:
+
+- `iso_fortran_env`
+  - `iostat_eor`
+  - `iostat_end`
+  - `real64`
+- `ieee_arithmetic`
+  - `ieee_value`
+  - `ieee_signaling_nan`
+- `iso_c_binding`
+
 ## How to use
 
 ### Manual Compilation
@@ -70,4 +88,6 @@ Documentation is available at [https://dscf-1224.github.io/gmsh_msh1_reader_fort
 [FpmGitHubRepository]: https://github.com/fortran-lang/fpm
 [GmshReferenceManualTop]: https://gmsh.info/doc/texinfo/gmsh.html
 [GmshReferenceManualMsh1]: https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-1-_0028Legacy_0029
+[GmshReferenceManualMsh2]: https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-2-_0028Legacy_0029
+[GmshReferenceManualMsh4]: https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format
 [ThisModule]: src/gmsh_msh1_reader.f90
