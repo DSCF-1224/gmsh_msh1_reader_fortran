@@ -838,9 +838,9 @@ module gmsh_msh1_reader
 
     !> version: experimental
     !> |DescValidate|
-    !> @warning
-    !> |WarnNodeNumberType|
-    !> @endwarning
+    !> @note
+    !> Verification by ieee_is_finite is not required by the gmsh documentation.
+    !> @endnote
     elemental function validate_gmsh_msh1_node(node) result(is_valid)
 
         type(gmsh_msh1_node_type), intent(in) :: node
