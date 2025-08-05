@@ -7,8 +7,9 @@ module gmsh_msh1_reader
         &     real64
 
     use, intrinsic :: ieee_arithmetic , &!
-        only: ieee_value         , &!
-        &     ieee_signaling_nan
+        only: ieee_is_finite     , &!
+        &     ieee_signaling_nan , &!
+        &     ieee_value
 
 
 
@@ -408,6 +409,7 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescValidate|
     interface validate
+        module procedure :: validate_gmsh_msh1_node
         module procedure :: validate_gmsh_msh1_node_number
         module procedure :: validate_gmsh_msh1_file
     end interface validate
@@ -831,6 +833,31 @@ module gmsh_msh1_reader
         z_coord = node%z_coord
 
     end function output_z_coord_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> |WarnNodeNumberType|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_node(node) result(is_valid)
+
+        type(gmsh_msh1_node_type), intent(in) :: node
+
+        logical :: is_valid
+
+
+
+        is_valid = validate(node%node_number)
+
+        if ( .not. is_valid ) return
+
+        is_valid =     ieee_is_finite(node%x_coord) &!
+        &        .and. ieee_is_finite(node%y_coord) &!
+        &        .and. ieee_is_finite(node%z_coord)
+
+    end function validate_gmsh_msh1_node
 
 
 
