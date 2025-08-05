@@ -7,8 +7,9 @@ module gmsh_msh1_reader
         &     real64
 
     use, intrinsic :: ieee_arithmetic , &!
-        only: ieee_value         , &!
-        &     ieee_signaling_nan
+        only: ieee_is_finite     , &!
+        &     ieee_signaling_nan , &!
+        &     ieee_value
 
 
 
@@ -27,7 +28,6 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_node_type
     public :: gmsh_msh1_node_number_type
-    public :: is_invalid
     public :: lookup_element
     public :: lookup_node
     public :: output_elm_number
@@ -42,6 +42,7 @@ module gmsh_msh1_reader
     public :: output_y_coord
     public :: output_z_coord
     public :: read_gmsh_msh1_file
+    public :: validate
     public :: write_stat_msg_gmsh_msh1_file
 
 
@@ -179,7 +180,7 @@ module gmsh_msh1_reader
     !> Derived type to for reading |DescGmshMsh1NodeNumber|
     !>
     !> @warning
-    !> The [[gmsh_msh1_node_number_type:number]] must be a positive (non-zero) integer.
+    !> |WarnNodeNumberType|
     !> @endwarning
     !>
     !> @note
@@ -299,14 +300,6 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> |DescIsInValid|
-    interface is_invalid
-        module procedure :: is_invalid_gmsh_msh1_file
-    end interface is_invalid
-
-
-
-    !> version: experimental
     !> |DescLookupElement|
     interface lookup_element
         module procedure :: lookup_element_by_loc_gmsh_msh1_file
@@ -410,6 +403,16 @@ module gmsh_msh1_reader
     interface output_z_coord
         module procedure :: output_z_coord_gmsh_msh1_node
     end interface output_z_coord
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    interface validate
+        module procedure :: validate_gmsh_msh1_node
+        module procedure :: validate_gmsh_msh1_node_number
+        module procedure :: validate_gmsh_msh1_file
+    end interface validate
 
 
 
@@ -518,25 +521,6 @@ module gmsh_msh1_reader
         is_equal = number1%number .eq. number2%number
 
     end function is_equal_gmsh_msh1_node_number_type
-
-
-
-    !> version: experimental
-    !> |DescIsInValid|
-    elemental function is_invalid_gmsh_msh1_file(mesh_data)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        logical :: is_invalid_gmsh_msh1_file
-
-
-
-        is_invalid_gmsh_msh1_file = &!
-            &              is_stat_failure   ( mesh_data%status )   &!
-            & .or.         is_iostat_failure ( mesh_data%status )   &!
-            & .or. ( .not. all_flag          ( mesh_data        ) )
-
-    end function  is_invalid_gmsh_msh1_file
 
 
 
@@ -849,6 +833,75 @@ module gmsh_msh1_reader
         z_coord = node%z_coord
 
     end function output_z_coord_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> |WarnNodeNumberType|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_node(node) result(is_valid)
+
+        type(gmsh_msh1_node_type), intent(in) :: node
+
+        logical :: is_valid
+
+
+
+        is_valid = validate(node%node_number)
+
+        if ( .not. is_valid ) return
+
+        is_valid =     ieee_is_finite(node%x_coord) &!
+        &        .and. ieee_is_finite(node%y_coord) &!
+        &        .and. ieee_is_finite(node%z_coord)
+
+    end function validate_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> |WarnNodeNumberType|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_node_number(node_number) result(is_valid)
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        logical :: is_valid
+
+
+
+        is_valid = node_number%number .gt. 0
+
+    end function validate_gmsh_msh1_node_number
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    elemental function validate_gmsh_msh1_file(mesh_data) result(is_valid)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        logical :: is_invalid
+
+
+
+        is_invalid = &!
+            &              is_stat_failure   ( mesh_data%status )   &!
+            & .or.         is_iostat_failure ( mesh_data%status )   &!
+            & .or. ( .not. all_flag          ( mesh_data        ) )
+
+        is_valid = .not. is_invalid
+
+    end function validate_gmsh_msh1_file
 
 
 
