@@ -18,7 +18,7 @@ license: mit
 alias: DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as integer).
        DescExportNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as integer).
        DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
-       DescIsInValid = Checks if the read [[gmsh_msh1_data_type]] is **invalid**.
+       DescValidate = Checks if the derived type is **valid**.
        DescLookupElement = Look up a [[gmsh_msh1_element_type]] in the [[gmsh_msh1_data_type]].
        DescLookupNode = Look up a [[gmsh_msh1_node_type]] in the [[gmsh_msh1_data_type]].
        DescOutputElmNumber = Get the [[gmsh_msh1_element_type:elm_number]] from the [[gmsh_msh1_element_type]].
@@ -35,6 +35,7 @@ alias: DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[
        GmshDefinesH = Reference: [`GmshDefines.h`](https://gitlab.onelab.info/gmsh/gmsh/blob/master/src/common/GmshDefines.h)
        GmshReferenceManualTop = [Gmsh](https://gmsh.info/doc/texinfo/gmsh.html)
        GmshReferenceManualMsh1 = [MSH file format version 1](https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-1-_0028Legacy_0029)
+       WarnNodeNumberType = The [[gmsh_msh1_node_number_type:number]] must be a positive (non-zero) integer.
 ---
 
 [TOC]

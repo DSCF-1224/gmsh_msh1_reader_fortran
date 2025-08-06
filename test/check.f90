@@ -236,7 +236,15 @@ program check
 
         call read_gmsh_msh1_file( msh1_data, msh1_file )
 
-        if ( is_invalid(msh1_data) ) then
+        if ( validate(msh1_data) ) then
+
+            call test_read_gmsh_msh1_file_kernel( &!
+            unit      = output_unit  , &!
+            msh1_file = msh1_file(:) , &!
+            msh1_data = msh1_data      &!
+            )
+
+        else
 
             call test_read_gmsh_msh1_file_kernel( &!
             unit      = error_unit   , &!
@@ -245,14 +253,6 @@ program check
             )
 
             error stop
-
-        else
-
-            call test_read_gmsh_msh1_file_kernel( &!
-            unit      = output_unit  , &!
-            msh1_file = msh1_file(:) , &!
-            msh1_data = msh1_data      &!
-            )
 
         end if
 
