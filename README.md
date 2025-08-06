@@ -19,8 +19,9 @@ Support for the following intrinsic modules:
   - `iostat_end`
   - `real64`
 - `ieee_arithmetic`
-  - `ieee_value`
+  - `ieee_is_finite`
   - `ieee_signaling_nan`
+  - `ieee_value`
 
 ## How to use
 
