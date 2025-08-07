@@ -22,10 +22,12 @@ module gmsh_msh1_reader
 
 
     public :: operator(.eq.)
+    public :: export_elm_number
     public :: export_node_number
     public :: export_node_number_list
     public :: gmsh_msh1_data_type
     public :: gmsh_msh1_element_type
+    public :: gmsh_msh1_elm_number_type
     public :: gmsh_msh1_node_type
     public :: gmsh_msh1_node_number_type
     public :: lookup_element
@@ -118,27 +120,40 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> Derived type to for reading |DescGmshMsh1ElmNumber|
+    !>
+    !> @warning
+    !> |WarnElmNumberType|
+    !> @endwarning
+    !>
+    !> @note
+    !> The [[gmsh_msh1_elm_number_type:number]] do not necessarily have to form a dense nor an ordered sequence.
+    !> @endnote
+    type :: gmsh_msh1_elm_number_type
+
+        integer, private :: number
+
+    end type gmsh_msh1_elm_number_type
+
+
+
+    !> version: experimental
     !> Derived type to for reading
     !> the *n*-th element in the
     !> |GmshReferenceManualTop|
     !> |GmshReferenceManualMsh1|
     !>
     !> @warning
-    !> - The [[gmsh_msh1_element_type:elm_number]] must be a positive (non-zero) integer.
     !> - The [[gmsh_msh1_element_type:reg_phys]] must be a positive integer, or zero.
     !>   If [[gmsh_msh1_element_type:reg_phys]] is equal to zero, the element is considered not to belong to any physical entity.
     !> - The [[gmsh_msh1_element_type:reg_elem]] must be a positive (non-zero) integer.
     !> @endwarning
-    !>
-    !> @note
-    !> The [[gmsh_msh1_element_type:elm_number]] do not necessarily have to form a dense nor an ordered sequence.
-    !> @endnote
     type :: gmsh_msh1_element_type
 
         private
 
-        !> the number (index) of the *n*-th element in the mesh
-        integer :: elm_number
+        !> |DescGmshMsh1ElmNumber|
+        type(gmsh_msh1_elm_number_type) :: elm_number
 
         !> the geometrical type of the *n*-th element in the mesh
         integer :: elm_type
@@ -284,6 +299,14 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescExportElmNumber|
+    interface export_elm_number
+        module procedure :: export_elm_number_gmsh_msh1_element
+    end interface export_elm_number
+
+
+
+    !> version: experimental
     !> |DescExportNodeNumber|
     interface export_node_number
         module procedure :: export_node_number_gmsh_msh1_node
@@ -409,6 +432,7 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescValidate|
     interface validate
+        module procedure :: validate_gmsh_msh1_elm_number
         module procedure :: validate_gmsh_msh1_node
         module procedure :: validate_gmsh_msh1_node_number
         module procedure :: validate_gmsh_msh1_file
@@ -444,6 +468,22 @@ module gmsh_msh1_reader
         &        .and. mesh_data%flag_elm_section_footer
 
     end function all_flag
+
+
+
+    !> version: experimental
+    !> |DescExportElmNumber|
+    elemental function export_elm_number_gmsh_msh1_element(element) result(elm_number)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer :: elm_number
+
+
+
+        elm_number = element%elm_number%number
+
+    end function export_elm_number_gmsh_msh1_element
 
 
 
@@ -616,7 +656,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer :: elm_number
+        type(gmsh_msh1_elm_number_type) :: elm_number
 
 
 
@@ -838,6 +878,25 @@ module gmsh_msh1_reader
 
     !> version: experimental
     !> |DescValidate|
+    !> @warning
+    !> |WarnElmNumberType|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_elm_number(elm_number) result(is_valid)
+
+        type(gmsh_msh1_elm_number_type), intent(in) :: elm_number
+
+        logical :: is_valid
+
+
+
+        is_valid = elm_number%number .gt. 0
+
+    end function validate_gmsh_msh1_elm_number
+
+
+
+    !> version: experimental
+    !> |DescValidate|
     !> @note
     !> Verification by ieee_is_finite is not required by the gmsh documentation.
     !> @endnote
@@ -927,10 +986,11 @@ module gmsh_msh1_reader
 
 
 
-        element%elm_number = 0
-        element%elm_type   = 0
-        element%reg_elem   = 0
-        element%reg_phys   = 0
+        call initialize_gmsh_msh1_elm_number(element%elm_number)
+
+        element%elm_type = 0
+        element%reg_elem = 0
+        element%reg_phys = 0
 
         if ( allocated(element%node_number_list) ) then
 
@@ -960,6 +1020,19 @@ module gmsh_msh1_reader
         node%z_coord =             node%x_coord
 
     end subroutine initialize_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    elemental subroutine initialize_gmsh_msh1_elm_number(elm_number)
+
+        type(gmsh_msh1_elm_number_type), intent(out) :: elm_number
+
+
+
+        elm_number%number = 0
+
+    end subroutine initialize_gmsh_msh1_elm_number
 
 
 
