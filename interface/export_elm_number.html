@@ -10,7 +10,7 @@
     <meta name="author" content="" >
     <link rel="icon" href="../favicon.png">
 
-    <title>validate_gmsh_msh1_node_number &ndash; DSCF-1224/gmsh_msh1_reader_fortran</title>
+    <title>export_elm_number &ndash; DSCF-1224/gmsh_msh1_reader_fortran</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -77,8 +77,8 @@
 
     <div class="container">
   <div class="row">
-    <h1>validate_gmsh_msh1_node_number
-      <small>Function</small>
+    <h1>export_elm_number
+      <small>Interface</small>
       
     </h1>
       <div class="container p-2 mb-4 bg-light border rounded-3">
@@ -90,7 +90,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 1.1% of total for procedures.">5 statements</a>
+                 title="<p> 0.6% of total for procedures.</p>Including implementation: 8 statements,  1.6% of total for procedures.">3 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -104,7 +104,7 @@
           <ol class="breadcrumb justify-content-end mb-0">
                 <li class="breadcrumb-item"><a href='../sourcefile/gmsh_msh1_reader.f90.html'>gmsh_msh1_reader.f90</a></li>
                 <li class="breadcrumb-item"><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></li>
-            <li class="breadcrumb-item active" aria-current="page">validate_gmsh_msh1_node_number</li>
+            <li class="breadcrumb-item active" aria-current="page">export_elm_number</li>
           </ol>
         </nav>
       </div>
@@ -119,10 +119,10 @@
   </script>
 
   </div>
-  
+
   <div class="row">
     <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
-      <div id="sidebar">
+        <div id="sidebar">
       <h3>Contents</h3>
   
   
@@ -142,133 +142,71 @@
   
   
   
-  
-  
-    <div class="card card-primary">
-      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
-      <div class="list-group">
-        <a class="list-group-item" href="../proc/validate_gmsh_msh1_node_number.html#src">validate_gmsh_msh1_node_number</a>
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
+      </a>
+      <div id="modprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../interface/export_elm_number.html#moduleprocedure-export_elm_number_gmsh_msh1_element">export_elm_number_gmsh_msh1_element</a>
+        </div>
       </div>
     </div>
+
+  
 
 
   </div>
 
     </div>
-    
+
     <div class="col-md-9" id='text'>
-    <h2>private elemental function validate_gmsh_msh1_node_number(node_number) result(is_valid)  
-</h2>
-    
-
-    <p>Checks if the derived type is <strong>valid</strong>.</p>
-<div class="alert alert-warning">
-<p class="alert-title h4">Warning</p>
-<p>The <a href="../type/gmsh_msh1_node_number_type.html#variable-number">number</a> must be a positive (non-zero) integer.</p>
-</div>
-
-
-    <h3>Arguments</h3>
-        <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-node_number~6"></span>
-              type(<a href='../type/gmsh_msh1_node_number_type.html'>gmsh_msh1_node_number_type</a>),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>node_number</strong></td>
-            <td>
-                
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-      <h3>Return Value
-        <small>
-          <span class="anchor" id="variable-is_valid~2"></span>
-          logical
-        </small>
-      </h3>
-      
-    <br>
-    <div class="card">
-      <div class="card-header">
-  <h3 class="card-title">Called by</h3>
-      </div>
-      <div class="card-body">
-  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+      <h2>public interface export_elm_number</h2>
+      <p>Get the <a href="../type/gmsh_msh1_elm_number_type.html">gmsh_msh1_elm_number_type</a> from the <a href="../type/gmsh_msh1_element_type.html">gmsh_msh1_element_type</a> (as integer).</p>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Calls</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.43.0 (0)
  -->
-<!-- Title: proc~~validate_gmsh_msh1_node_number~~CalledByGraph Pages: 1 -->
-<svg id="procvalidate_gmsh_msh1_node_numberCalledByGraph" width="303pt" height="74pt"
- viewBox="0.00 0.00 303.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
-<title>proc~~validate_gmsh_msh1_node_number~~CalledByGraph</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 299,-70 299,4 -4,4"/>
-<!-- proc~validate_gmsh_msh1_node_number -->
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph_node1" class="node">
-<title>proc~validate_gmsh_msh1_node_number</title>
-<polygon fill="none" stroke="black" points="295,-66 91,-66 91,-42 295,-42 295,-66"/>
-<text text-anchor="middle" x="193" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50">validate_gmsh_msh1_node_number</text>
+<!-- Title: interface~~export_elm_number~~CallsGraph Pages: 1 -->
+<svg id="interfaceexport_elm_numberCallsGraph" width="401pt" height="32pt"
+ viewBox="0.00 0.00 401.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="interface~~export_elm_number~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>interface~~export_elm_number~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 397,-28 397,4 -4,4"/>
+<!-- interface~export_elm_number -->
+<g id="interface~~export_elm_number~~CallsGraph_node1" class="node">
+<title>interface~export_elm_number</title>
+<polygon fill="none" stroke="black" points="119,-24 0,-24 0,0 119,0 119,-24"/>
+<text text-anchor="middle" x="59.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">export_elm_number</text>
 </g>
-<!-- interface~validate -->
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph_node2" class="node">
-<title>interface~validate</title>
-<g id="a_proc~~validate_gmsh_msh1_node_number~~CalledByGraph_node2"><a xlink:href="../interface/validate.html" xlink:title="validate">
-<polygon fill="#a7506f" stroke="#a7506f" points="55,-24 0,-24 0,0 55,0 55,-24"/>
-<text text-anchor="middle" x="27.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">validate</text>
+<!-- proc~export_elm_number_gmsh_msh1_element -->
+<g id="interface~~export_elm_number~~CallsGraph_node2" class="node">
+<title>proc~export_elm_number_gmsh_msh1_element</title>
+<g id="a_interface~~export_elm_number~~CallsGraph_node2"><a xlink:href="../proc/export_elm_number_gmsh_msh1_element.html" xlink:title="export_elm_number_gmsh_msh1_element">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="393,-24 155,-24 155,0 393,0 393,-24"/>
+<text text-anchor="middle" x="274" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">export_elm_number_gmsh_msh1_element</text>
 </a>
 </g>
 </g>
-<!-- interface~validate&#45;&gt;proc~validate_gmsh_msh1_node_number -->
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph_edge1" class="edge">
-<title>interface~validate&#45;&gt;proc~validate_gmsh_msh1_node_number</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M55.05,-21.7C66.08,-25.52 79.07,-29.77 91,-33 99.82,-35.39 109.14,-37.66 118.41,-39.77"/>
-<polygon fill="#000000" stroke="#000000" points="117.9,-43.24 128.42,-41.99 119.41,-36.41 117.9,-43.24"/>
-</g>
-<!-- proc~validate_gmsh_msh1_node -->
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph_node3" class="node">
-<title>proc~validate_gmsh_msh1_node</title>
-<g id="a_proc~~validate_gmsh_msh1_node_number~~CalledByGraph_node3"><a xlink:href="../proc/validate_gmsh_msh1_node.html" xlink:title="validate_gmsh_msh1_node">
-<polygon fill="#d94e8f" stroke="#d94e8f" points="271.5,-24 114.5,-24 114.5,0 271.5,0 271.5,-24"/>
-<text text-anchor="middle" x="193" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">validate_gmsh_msh1_node</text>
-</a>
-</g>
-</g>
-<!-- interface~validate&#45;&gt;proc~validate_gmsh_msh1_node -->
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph_edge3" class="edge">
-<title>interface~validate&#45;&gt;proc~validate_gmsh_msh1_node</title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M55.13,-6.86C68.67,-5.9 85.99,-5.37 103.72,-5.27"/>
-<polygon fill="#000000" stroke="#000000" points="104.18,-8.77 114.18,-5.26 104.17,-1.77 104.18,-8.77"/>
-</g>
-<!-- proc~validate_gmsh_msh1_node&#45;&gt;interface~validate -->
-<g id="proc~~validate_gmsh_msh1_node_number~~CalledByGraph_edge2" class="edge">
-<title>proc~validate_gmsh_msh1_node&#45;&gt;interface~validate</title>
-<path fill="none" stroke="#000000" d="M114.18,-18.74C97.08,-18.8 79.75,-18.47 65.2,-17.74"/>
-<polygon fill="#000000" stroke="#000000" points="65.32,-14.24 55.13,-17.14 64.91,-21.23 65.32,-14.24"/>
+<!-- interface~export_elm_number&#45;&gt;proc~export_elm_number_gmsh_msh1_element -->
+<g id="interface~~export_elm_number~~CallsGraph_edge1" class="edge">
+<title>interface~export_elm_number&#45;&gt;proc~export_elm_number_gmsh_msh1_element</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M119.13,-12C127.25,-12 135.84,-12 144.64,-12"/>
+<polygon fill="#000000" stroke="#000000" points="144.66,-15.5 154.66,-12 144.66,-8.5 144.66,-15.5"/>
 </g>
 </g>
 </svg>
 </div>          <div>
-            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
           </div>
-          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -342,41 +280,63 @@ implementation in a submodule of an interface in a parent module.
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <br>
+          </div>
+        </div>
+<br>
 
 
+        <h2>Module Procedures</h2>
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-export_elm_number_gmsh_msh1_element"></span> <h3>private elemental function <a href='../proc/export_elm_number_gmsh_msh1_element.html'>export_elm_number_gmsh_msh1_element</a>(element) result(elm_number)  
+</h3></div>
+    <div class="card-body">
+              <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  <p>Get the <a href="../type/gmsh_msh1_elm_number_type.html">gmsh_msh1_elm_number_type</a> from the <a href="../type/gmsh_msh1_element_type.html">gmsh_msh1_element_type</a> (as integer).</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-element~2"></span>
+              type(<a href='../type/gmsh_msh1_element_type.html'>gmsh_msh1_element_type</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>element</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>integer</small>
+    </h4>
     
-    
 
-    
-    
-
-
-
-    
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="hl codehilite"><pre><span></span><span class="w">    </span><span class="k">elemental function </span><span class="n">validate_gmsh_msh1_node_number</span><span class="p">(</span><span class="n">node_number</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">is_valid</span><span class="p">)</span>
-
-<span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">gmsh_msh1_node_number_type</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">node_number</span>
-
-<span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">is_valid</span>
-
-
-
-<span class="w">        </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_number</span><span class="p">%</span><span class="n">number</span><span class="w"> </span><span class="p">.</span><span class="n">gt</span><span class="p">.</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="w">    </span><span class="k">end function </span><span class="n">validate_gmsh_msh1_node_number</span>
-</pre></div>
-
-    </section>
-    <br>
-    
     </div>
   </div>
 
+</div>
+  </div>
       <hr>
     </div> <!-- /container -->
     <footer>
@@ -392,7 +352,7 @@ implementation in a submodule of an interface in a parent module.
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-08-06 22:10 +0000             </p>
+ on 2025-08-08 19:50 +0000             </p>
           </div>
         </div>
         <br>
