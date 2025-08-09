@@ -188,9 +188,12 @@ module gmsh_msh1_reader
     !> Derived type to for reading |DescGmshMsh1RegPhys|
     !>
     !> @warning
-    !> - |WarnGmshMsh1RegPhys1|
-    !> - |WarnGmshMsh1RegPhys2|
+    !> |WarnGmshMsh1RegPhys|
     !> @endwarning
+    !>
+    !> @note
+    !> |NoteGmshMsh1RegPhys|
+    !> @endnote
     type, extends(gmsh_msh1_tag_type) :: gmsh_msh1_reg_phys_type
     end type gmsh_msh1_reg_phys_type
 
@@ -1110,10 +1113,14 @@ module gmsh_msh1_reader
 
     !> version: experimental
     !> |DescValidate|
+    !>
     !> @warning
-    !> - |WarnGmshMsh1RegPhys1|
-    !> - |WarnGmshMsh1RegPhys2|
+    !> |WarnGmshMsh1RegPhys|
     !> @endwarning
+    !>
+    !> @note
+    !> |NoteGmshMsh1RegPhys|
+    !> @endnote
     elemental function validate_gmsh_msh1_reg_phys(reg_phys) result(is_valid)
 
         type(gmsh_msh1_reg_phys_type), intent(in) :: reg_phys

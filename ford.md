@@ -43,10 +43,10 @@ alias: DescExportElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_e
        GmshDefinesH = Reference: [`GmshDefines.h`](https://gitlab.onelab.info/gmsh/gmsh/blob/master/src/common/GmshDefines.h)
        GmshReferenceManualTop = [Gmsh](https://gmsh.info/doc/texinfo/gmsh.html)
        GmshReferenceManualMsh1 = [MSH file format version 1](https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-1-_0028Legacy_0029)
+       NoteGmshMsh1RegPhys = If [[gmsh_msh1_tag_type:expression]] is equal to zero, the element is considered not to belong to any physical entity.
        WarnGmshMsh1NumberType = The [[gmsh_msh1_number_type:number]] must be a positive (non-zero) integer.
        WarnGmshMsh1RegElem = The [[gmsh_msh1_tag_type:expression]] must be a positive (non-zero) integer.
-       WarnGmshMsh1RegPhys1 = The [[gmsh_msh1_tag_type:expression]] must be a positive integer, or zero.
-       WarnGmshMsh1RegPhys2 = If [[gmsh_msh1_tag_type:expression]] is equal to zero, the element is considered not to belong to any physical entity.
+       WarnGmshMsh1RegPhys = The [[gmsh_msh1_tag_type:expression]] must be a positive integer, or zero.
 ---
 
 [TOC]
