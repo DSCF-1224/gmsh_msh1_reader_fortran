@@ -16,15 +16,17 @@ print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 license: mit
 alias: DescExportElmNumber = Get the [[gmsh_msh1_elm_number_type]] from the [[gmsh_msh1_element_type]] (as integer).
+alias: DescExportElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_element_type]] (as integer).
        DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as integer).
        DescExportNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as integer).
        DescGmshMsh1ElmNumber = the number (index) of the *n*-th element in the mesh.
+       DescGmshMsh1ElmType = the geometrical type of the *n*-th element in the mesh.
        DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
        DescValidate = Checks if the derived type is **valid**.
        DescLookupElement = Look up a [[gmsh_msh1_element_type]] in the [[gmsh_msh1_data_type]].
        DescLookupNode = Look up a [[gmsh_msh1_node_type]] in the [[gmsh_msh1_data_type]].
        DescOutputElmNumber = Get the [[gmsh_msh1_elm_number_type]] from the [[gmsh_msh1_element_type]] (as derived type).
-       DescOutputElmType = Get the [[gmsh_msh1_element_type:elm_type]] from the [[gmsh_msh1_element_type]].
+       DescOutputElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as derived type).
        DescOutputNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputNumberOfElements = Get the number of [[gmsh_msh1_element_type]]s in the [[gmsh_msh1_data_type]].

@@ -451,7 +451,7 @@ program check
 
             write( write_unit, '(I0,*(1X,I0))' ) &!
                 export_elm_number       (element) , &!
-                output_elm_type         (element) , &!
+                export_elm_type         (element) , &!
                 output_reg_phys         (element) , &!
                 output_reg_elem         (element) , &!
                 output_number_of_nodes  (element) , &!

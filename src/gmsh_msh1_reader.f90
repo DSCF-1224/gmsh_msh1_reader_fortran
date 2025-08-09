@@ -23,6 +23,7 @@ module gmsh_msh1_reader
 
     public :: operator(.eq.)
     public :: export_elm_number
+    public :: export_elm_type
     public :: export_node_number
     public :: export_node_number_list
     public :: gmsh_msh1_data_type
@@ -147,6 +148,16 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> Derived type to for reading |DescGmshMsh1ElmType|
+    type :: gmsh_msh1_elm_type
+
+        integer, private :: expression
+
+    end type gmsh_msh1_elm_type
+
+
+
+    !> version: experimental
     !> Derived type to for reading
     !> the *n*-th element in the
     !> |GmshReferenceManualTop|
@@ -164,8 +175,8 @@ module gmsh_msh1_reader
         !> |DescGmshMsh1ElmNumber|
         type(gmsh_msh1_elm_number_type) :: elm_number
 
-        !> the geometrical type of the *n*-th element in the mesh
-        integer :: elm_type
+        !> |DescGmshMsh1ElmType|
+        type(gmsh_msh1_elm_type) :: elm_type
 
         !> the tag of the physical entity to which the element belongs
         integer :: reg_phys
@@ -292,6 +303,7 @@ module gmsh_msh1_reader
     !> version: experimental
     interface operator(.eq.)
         module procedure :: is_equal_gmsh_msh1_elm_number_type
+        module procedure :: is_equal_gmsh_msh1_elm_type
         module procedure :: is_equal_gmsh_msh1_node_number_type
     end interface operator(.eq.)
 
@@ -302,6 +314,14 @@ module gmsh_msh1_reader
     interface export_elm_number
         module procedure :: export_elm_number_gmsh_msh1_element
     end interface export_elm_number
+
+
+
+    !> version: experimental
+    !> |DescExportElmType|
+    interface export_elm_type 
+        module procedure :: export_elm_type_gmsh_msh1_element
+    end interface export_elm_type
 
 
 
@@ -486,6 +506,22 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescExportElmType|
+    elemental function export_elm_type_gmsh_msh1_element(element) result(elm_type)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer :: elm_type
+
+
+
+        elm_type = element%elm_type%expression
+
+    end function export_elm_type_gmsh_msh1_element
+
+
+
+    !> version: experimental
     !> |DescExportNodeNumber|
     elemental function export_node_number_gmsh_msh1_node(node) result(node_number)
 
@@ -559,6 +595,21 @@ module gmsh_msh1_reader
         is_equal = number1%number .eq. number2%number
 
     end function is_equal_gmsh_msh1_elm_number_type
+
+
+
+    !> version: experimental
+    elemental function is_equal_gmsh_msh1_elm_type(type1, type2) result(is_equal)
+
+        type(gmsh_msh1_elm_type), intent(in) :: type1, type2
+
+        logical :: is_equal
+
+
+
+        is_equal = type1%expression .eq. type2%expression
+
+    end function is_equal_gmsh_msh1_elm_type
 
 
 
@@ -685,7 +736,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer :: elm_type
+        type(gmsh_msh1_elm_type) :: elm_type
 
 
 
@@ -982,7 +1033,7 @@ module gmsh_msh1_reader
 
         call initialize_gmsh_msh1_number(element%elm_number)
 
-        element%elm_type = 0
+        element%elm_type%expression = 0
         element%reg_elem = 0
         element%reg_phys = 0
 
