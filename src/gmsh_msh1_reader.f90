@@ -108,6 +108,9 @@ module gmsh_msh1_reader
     integer, parameter :: iostat_success = 0
 
     !> version: experimental
+    integer, parameter :: minval_location = 1
+
+    !> version: experimental
     !> message length
     integer, parameter :: msg_len = 512
 
@@ -393,6 +396,13 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    interface findloc
+        module procedure :: findloc_gmsh_msh1_node_number
+    end interface findloc
+
+
+
+    !> version: experimental
     !> |DescLookupElement|
     interface lookup_element
         module procedure :: lookup_element_by_loc_gmsh_msh1_file
@@ -640,6 +650,49 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> Returns the location of the [[gmsh_msh1_node_type]] corresponding to the [[findloc_gmsh_msh1_node_number:node_number]] argument.
+    !> @warning
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[findloc_gmsh_msh1_node_number:node_number]] argument exists,
+    !> **zero** will be returned.
+    elemental function findloc_gmsh_msh1_node_number(msh1_data, node_number) result(location)
+
+        type(gmsh_msh1_data_type), intent(in) :: msh1_data
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        integer :: location
+
+
+
+        integer :: itr_node
+
+
+
+        location = 0
+
+
+
+        if ( .not. allocated(msh1_data%node) ) return
+
+
+
+        do itr_node = 1, output_number_of_nodes(msh1_data)
+
+            if ( msh1_data%node(itr_node)%node_number .eq. node_number ) then
+
+                location = itr_node
+
+                return
+
+            end if
+
+        end do
+
+    end function findloc_gmsh_msh1_node_number
+
+
+
+    !> version: experimental
     elemental function is_iostat_failure(status)
 
         type(gmsh_msh1_status_type), intent(in) :: status
@@ -775,7 +828,7 @@ module gmsh_msh1_reader
 
 
 
-        if (location .lt. 1) then
+        if (location .lt. minval_location) then
 
             call initialize_gmsh_msh1_node(node)
 
@@ -808,23 +861,21 @@ module gmsh_msh1_reader
 
 
 
-        integer :: itr_node
+        integer :: location
 
 
 
-        do itr_node = 1, output_number_of_nodes(mesh_data)
+        location = findloc(mesh_data, node_number)
 
-            if ( mesh_data%node(itr_node)%node_number .eq. node_number ) then
+        if (location .lt. minval_location) then
 
-                node = mesh_data%node(itr_node)
+            call initialize_gmsh_msh1_node(node)
 
-                return
+        else
 
-            end if
+            node = mesh_data%node(location)
 
-        end do
-
-        call initialize_gmsh_msh1_node(node)
+        end if
 
     end function lookup_node_by_num_gmsh_msh1_file
 
@@ -878,7 +929,7 @@ module gmsh_msh1_reader
 
 
 
-        if (location .lt. 1) then
+        if (location .lt. minval_location) then
 
             call initialize_gmsh_msh1_number(node_number)
 
@@ -1303,7 +1354,7 @@ module gmsh_msh1_reader
 
 
 
-        if (location .lt. 1) then
+        if (location .lt. minval_location) then
 
             call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
 
