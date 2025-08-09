@@ -338,6 +338,8 @@ module gmsh_msh1_reader
         module procedure :: is_equal_gmsh_msh1_elm_number_type
         module procedure :: is_equal_gmsh_msh1_elm_type
         module procedure :: is_equal_gmsh_msh1_node_number_type
+        module procedure :: is_equal_gmsh_msh1_reg_elem_type
+        module procedure :: is_equal_gmsh_msh1_reg_phys_type
     end interface operator(.eq.)
 
 
@@ -709,6 +711,36 @@ module gmsh_msh1_reader
         is_equal = number1%number .eq. number2%number
 
     end function is_equal_gmsh_msh1_node_number_type
+
+
+
+    !> version: experimental
+    elemental function is_equal_gmsh_msh1_reg_elem_type(reg_elem1, reg_elem2) result(is_equal)
+
+        type(gmsh_msh1_reg_elem_type), intent(in) :: reg_elem1, reg_elem2
+
+        logical :: is_equal
+
+
+
+        is_equal = reg_elem1%expression .eq. reg_elem2%expression
+
+    end function is_equal_gmsh_msh1_reg_elem_type
+
+
+
+    !> version: experimental
+    elemental function is_equal_gmsh_msh1_reg_phys_type(reg_phys1, reg_phys2) result(is_equal)
+
+        type(gmsh_msh1_reg_phys_type), intent(in) :: reg_phys1, reg_phys2
+
+        logical :: is_equal
+
+
+
+        is_equal = reg_phys1%expression .eq. reg_phys2%expression
+
+    end function is_equal_gmsh_msh1_reg_phys_type
 
 
 
