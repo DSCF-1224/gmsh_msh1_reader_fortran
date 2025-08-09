@@ -26,11 +26,15 @@ module gmsh_msh1_reader
     public :: export_elm_type
     public :: export_node_number
     public :: export_node_number_list
+    public :: export_reg_elem
+    public :: export_reg_phys
     public :: gmsh_msh1_data_type
     public :: gmsh_msh1_element_type
     public :: gmsh_msh1_elm_number_type
     public :: gmsh_msh1_node_type
     public :: gmsh_msh1_node_number_type
+    public :: gmsh_msh1_reg_elem_type
+    public :: gmsh_msh1_reg_phys_type
     public :: lookup_element
     public :: lookup_node
     public :: output_elm_number
@@ -158,16 +162,42 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading
-    !> the *n*-th element in the
-    !> |GmshReferenceManualTop|
-    !> |GmshReferenceManualMsh1|
+    !> Derived type to for reading  
+    !> - |DescGmshMsh1RegElem|  
+    !> - |DescGmshMsh1RegPhys|
+    type, abstract :: gmsh_msh1_tag_type
+
+        integer, private :: expression
+
+    end type gmsh_msh1_tag_type
+
+
+
+    !> version: experimental
+    !> Derived type to for reading |DescGmshMsh1RegElem|
     !>
     !> @warning
-    !> - The [[gmsh_msh1_element_type:reg_phys]] must be a positive integer, or zero.
-    !>   If [[gmsh_msh1_element_type:reg_phys]] is equal to zero, the element is considered not to belong to any physical entity.
-    !> - The [[gmsh_msh1_element_type:reg_elem]] must be a positive (non-zero) integer.
+    !> |WarnGmshMsh1RegElem|
     !> @endwarning
+    type, extends(gmsh_msh1_tag_type) :: gmsh_msh1_reg_elem_type
+    end type gmsh_msh1_reg_elem_type
+
+
+
+    !> version: experimental
+    !> Derived type to for reading |DescGmshMsh1RegPhys|
+    !>
+    !> @warning
+    !> - |WarnGmshMsh1RegPhys1|
+    !> - |WarnGmshMsh1RegPhys2|
+    !> @endwarning
+    type, extends(gmsh_msh1_tag_type) :: gmsh_msh1_reg_phys_type
+    end type gmsh_msh1_reg_phys_type
+
+
+
+    !> version: experimental
+    !> Derived type to for reading the *n*-th element in the |GmshReferenceManualTop| |GmshReferenceManualMsh1|
     type :: gmsh_msh1_element_type
 
         private
@@ -178,11 +208,11 @@ module gmsh_msh1_reader
         !> |DescGmshMsh1ElmType|
         type(gmsh_msh1_elm_type) :: elm_type
 
-        !> the tag of the physical entity to which the element belongs
-        integer :: reg_phys
+        !> |DescGmshMsh1RegPhys|
+        type(gmsh_msh1_reg_phys_type) :: reg_phys
 
-        !> the tag of the elementary entity to which the element belongs
-        integer :: reg_elem
+        !> |DescGmshMsh1RegElem|
+        type(gmsh_msh1_reg_elem_type) :: reg_elem
 
         !> the list of the `number_of_nodes` node numbers of the *n*-th element.
         type(gmsh_msh1_node_number_type), allocatable, dimension(:) :: node_number_list
@@ -338,6 +368,22 @@ module gmsh_msh1_reader
     interface export_node_number_list
         module procedure :: export_node_number_list_gmsh_msh1_element
     end interface export_node_number_list
+
+
+
+    !> version: experimental
+    !> |DescExportRegElem|
+    interface export_reg_elem
+        module procedure :: export_reg_elem_gmsh_msh1_element
+    end interface export_reg_elem
+
+
+
+    !> version: experimental
+    !> |DescExportRegPhys|
+    interface export_reg_phys
+        module procedure :: export_reg_phys_gmsh_msh1_element
+    end interface export_reg_phys
 
 
 
@@ -550,6 +596,38 @@ module gmsh_msh1_reader
         node_number_list(:) = element%node_number_list(:)%number
 
     end function export_node_number_list_gmsh_msh1_element
+
+
+
+    !> version: experimental
+    !> |DescExportRegElem|
+    elemental function export_reg_elem_gmsh_msh1_element(element) result(reg_elem)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer :: reg_elem
+
+
+
+        reg_elem = element%reg_elem%expression
+
+    end function export_reg_elem_gmsh_msh1_element
+
+
+
+    !> version: experimental
+    !> |DescExportRegPhys|
+    elemental function export_reg_phys_gmsh_msh1_element(element) result(reg_phys)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer :: reg_phys
+
+
+
+        reg_phys = element%reg_phys%expression
+
+    end function export_reg_phys_gmsh_msh1_element
 
 
 
@@ -866,7 +944,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer :: reg_elem
+        type(gmsh_msh1_reg_elem_type) :: reg_elem
 
 
 
@@ -882,7 +960,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer :: reg_phys
+        type(gmsh_msh1_reg_phys_type) :: reg_phys
 
 
 
@@ -1034,8 +1112,8 @@ module gmsh_msh1_reader
         call initialize_gmsh_msh1_number(element%elm_number)
 
         element%elm_type%expression = 0
-        element%reg_elem = 0
-        element%reg_phys = 0
+        element%reg_elem%expression = 0
+        element%reg_phys%expression = 0
 
         if ( allocated(element%node_number_list) ) then
 
