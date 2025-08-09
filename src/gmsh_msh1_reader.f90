@@ -500,6 +500,8 @@ module gmsh_msh1_reader
         module procedure :: validate_gmsh_msh1_file
         module procedure :: validate_gmsh_msh1_node
         module procedure :: validate_gmsh_msh1_number
+        module procedure :: validate_gmsh_msh1_reg_elem
+        module procedure :: validate_gmsh_msh1_reg_phys
     end interface validate
 
 
@@ -1084,6 +1086,45 @@ module gmsh_msh1_reader
         is_valid = number%number .gt. 0
 
     end function validate_gmsh_msh1_number
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> |WarnGmshMsh1RegElem|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_reg_elem(reg_elem) result(is_valid)
+
+        type(gmsh_msh1_reg_elem_type), intent(in) :: reg_elem
+
+        logical :: is_valid
+
+
+
+        is_valid = reg_elem%expression .gt. 0
+
+    end function validate_gmsh_msh1_reg_elem
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> - |WarnGmshMsh1RegPhys1|
+    !> - |WarnGmshMsh1RegPhys2|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_reg_phys(reg_phys) result(is_valid)
+
+        type(gmsh_msh1_reg_phys_type), intent(in) :: reg_phys
+
+        logical :: is_valid
+
+
+
+        is_valid = reg_phys%expression .ge. 0
+
+    end function validate_gmsh_msh1_reg_phys
 
 
 
