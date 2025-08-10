@@ -1189,7 +1189,7 @@ module gmsh_msh1_reader
 
 
 
-        is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .gt. minval_location )
+        is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .ge. minval_location )
 
     end function validate_gmsh_msh1_element_with_mesh_data_private
 
