@@ -35,6 +35,7 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_node_number_type
     public :: gmsh_msh1_reg_elem_type
     public :: gmsh_msh1_reg_phys_type
+    public :: is_read_successful
     public :: lookup_element
     public :: lookup_node
     public :: output_elm_number
@@ -403,6 +404,13 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    interface is_read_successful
+        module procedure :: is_read_successful_gmsh_msh1_file
+    end interface is_read_successful
+
+
+
+    !> version: experimental
     !> |DescLookupElement|
     interface lookup_element
         module procedure :: lookup_element_by_loc_gmsh_msh1_file
@@ -514,7 +522,6 @@ module gmsh_msh1_reader
     interface validate
         module procedure :: validate_gmsh_msh1_element_with_mesh_data
         module procedure :: validate_gmsh_msh1_element_without_mesh_data
-        module procedure :: validate_gmsh_msh1_file
         module procedure :: validate_gmsh_msh1_node
         module procedure :: validate_gmsh_msh1_number
         module procedure :: validate_gmsh_msh1_reg_elem
@@ -795,6 +802,30 @@ module gmsh_msh1_reader
         is_equal = reg_phys1%expression .eq. reg_phys2%expression
 
     end function is_equal_gmsh_msh1_reg_phys_type
+
+
+
+    !> version: experimental
+    elemental function is_read_successful_gmsh_msh1_file(mesh_data) result(is_valid)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        logical :: is_invalid
+
+
+
+        is_invalid = &!
+            &              is_stat_failure   ( mesh_data%status )   &!
+            & .or.         is_iostat_failure ( mesh_data%status )   &!
+            & .or. ( .not. all_flag          ( mesh_data        ) )
+
+        is_valid = .not. is_invalid
+
+    end function is_read_successful_gmsh_msh1_file
 
 
 
@@ -1120,8 +1151,17 @@ module gmsh_msh1_reader
 
 
 
-        is_valid = validate( mesh_data ); if (.not. is_valid) return
-        is_valid = validate( element   ); if (.not. is_valid) return
+        is_valid = is_read_successful(mesh_data)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = validate(element)
+        
+        if (.not. is_valid) return
+
+
 
         is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .gt. minval_location )
 
@@ -1169,31 +1209,6 @@ module gmsh_msh1_reader
         is_valid = all( validate( element%node_number_list(:) ) )
 
     end function validate_gmsh_msh1_element_without_mesh_data
-
-
-
-    !> version: experimental
-    !> |DescValidate|
-    elemental function validate_gmsh_msh1_file(mesh_data) result(is_valid)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        logical :: is_valid
-
-
-
-        logical :: is_invalid
-
-
-
-        is_invalid = &!
-            &              is_stat_failure   ( mesh_data%status )   &!
-            & .or.         is_iostat_failure ( mesh_data%status )   &!
-            & .or. ( .not. all_flag          ( mesh_data        ) )
-
-        is_valid = .not. is_invalid
-
-    end function validate_gmsh_msh1_file
 
 
 
