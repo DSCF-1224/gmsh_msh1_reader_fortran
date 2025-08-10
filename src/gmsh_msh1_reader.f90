@@ -520,7 +520,8 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescValidate|
     interface validate
-        module procedure :: validate_gmsh_msh1_element_with_mesh_data
+        module procedure :: validate_gmsh_msh1_data
+        module procedure :: validate_gmsh_msh1_element_with_mesh_data_public
         module procedure :: validate_gmsh_msh1_element_without_mesh_data
         module procedure :: validate_gmsh_msh1_node
         module procedure :: validate_gmsh_msh1_number
@@ -1141,7 +1142,62 @@ module gmsh_msh1_reader
 
     !> version: experimental
     !> |DescValidate|
-    elemental function validate_gmsh_msh1_element_with_mesh_data(element, mesh_data) result(is_valid)
+    elemental function validate_gmsh_msh1_data(mesh_data) result(is_valid)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        is_valid = is_read_successful(mesh_data)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = all( validate( mesh_data%node(:) ) )
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = all( validate_gmsh_msh1_element_with_mesh_data_private( mesh_data%element(:), mesh_data ) )
+
+    end function validate_gmsh_msh1_data
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @note
+    !> This function does **NOT** validate [[validate_gmsh_msh1_element_with_mesh_data_private:mesh_data]].
+    !> @endnote
+    elemental function validate_gmsh_msh1_element_with_mesh_data_private(element, mesh_data) result(is_valid)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        is_valid = validate(element)
+        
+        if (.not. is_valid) return
+
+
+
+        is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .gt. minval_location )
+
+    end function validate_gmsh_msh1_element_with_mesh_data_private
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    elemental function validate_gmsh_msh1_element_with_mesh_data_public(element, mesh_data) result(is_valid)
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
@@ -1157,15 +1213,9 @@ module gmsh_msh1_reader
 
 
 
-        is_valid = validate(element)
-        
-        if (.not. is_valid) return
+        is_valid = validate_gmsh_msh1_element_with_mesh_data_private(element, mesh_data)
 
-
-
-        is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .gt. minval_location )
-
-    end function validate_gmsh_msh1_element_with_mesh_data
+    end function validate_gmsh_msh1_element_with_mesh_data_public
 
 
 
