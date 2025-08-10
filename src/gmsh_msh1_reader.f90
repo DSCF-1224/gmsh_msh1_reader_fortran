@@ -35,6 +35,7 @@ module gmsh_msh1_reader
     public :: gmsh_msh1_node_number_type
     public :: gmsh_msh1_reg_elem_type
     public :: gmsh_msh1_reg_phys_type
+    public :: is_read_successful
     public :: lookup_element
     public :: lookup_node
     public :: output_elm_number
@@ -106,6 +107,9 @@ module gmsh_msh1_reader
 
     !> `iostat` value when an I/O statement executes successfully
     integer, parameter :: iostat_success = 0
+
+    !> version: experimental
+    integer, parameter :: minval_location = 1
 
     !> version: experimental
     !> message length
@@ -188,9 +192,12 @@ module gmsh_msh1_reader
     !> Derived type to for reading |DescGmshMsh1RegPhys|
     !>
     !> @warning
-    !> - |WarnGmshMsh1RegPhys1|
-    !> - |WarnGmshMsh1RegPhys2|
+    !> |WarnGmshMsh1RegPhys|
     !> @endwarning
+    !>
+    !> @note
+    !> |NoteGmshMsh1RegPhys|
+    !> @endnote
     type, extends(gmsh_msh1_tag_type) :: gmsh_msh1_reg_phys_type
     end type gmsh_msh1_reg_phys_type
 
@@ -335,6 +342,8 @@ module gmsh_msh1_reader
         module procedure :: is_equal_gmsh_msh1_elm_number_type
         module procedure :: is_equal_gmsh_msh1_elm_type
         module procedure :: is_equal_gmsh_msh1_node_number_type
+        module procedure :: is_equal_gmsh_msh1_reg_elem_type
+        module procedure :: is_equal_gmsh_msh1_reg_phys_type
     end interface operator(.eq.)
 
 
@@ -384,6 +393,20 @@ module gmsh_msh1_reader
     interface export_reg_phys
         module procedure :: export_reg_phys_gmsh_msh1_element
     end interface export_reg_phys
+
+
+
+    !> version: experimental
+    interface findloc
+        module procedure :: findloc_gmsh_msh1_node_number
+    end interface findloc
+
+
+
+    !> version: experimental
+    interface is_read_successful
+        module procedure :: is_read_successful_gmsh_msh1_file
+    end interface is_read_successful
 
 
 
@@ -497,9 +520,13 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescValidate|
     interface validate
-        module procedure :: validate_gmsh_msh1_file
+        module procedure :: validate_gmsh_msh1_data
+        module procedure :: validate_gmsh_msh1_element_with_mesh_data_public
+        module procedure :: validate_gmsh_msh1_element_without_mesh_data
         module procedure :: validate_gmsh_msh1_node
         module procedure :: validate_gmsh_msh1_number
+        module procedure :: validate_gmsh_msh1_reg_elem
+        module procedure :: validate_gmsh_msh1_reg_phys
     end interface validate
 
 
@@ -632,6 +659,49 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> Returns the location of the [[gmsh_msh1_node_type]] corresponding to the [[findloc_gmsh_msh1_node_number:node_number]] argument.
+    !> @warning
+    !> If no [[gmsh_msh1_node_type]] corresponding to the [[findloc_gmsh_msh1_node_number:node_number]] argument exists,
+    !> **zero** will be returned.
+    elemental function findloc_gmsh_msh1_node_number(msh1_data, node_number) result(location)
+
+        type(gmsh_msh1_data_type), intent(in) :: msh1_data
+
+        type(gmsh_msh1_node_number_type), intent(in) :: node_number
+
+        integer :: location
+
+
+
+        integer :: itr_node
+
+
+
+        location = 0
+
+
+
+        if ( .not. allocated(msh1_data%node) ) return
+
+
+
+        do itr_node = 1, output_number_of_nodes(msh1_data)
+
+            if ( msh1_data%node(itr_node)%node_number .eq. node_number ) then
+
+                location = itr_node
+
+                return
+
+            end if
+
+        end do
+
+    end function findloc_gmsh_msh1_node_number
+
+
+
+    !> version: experimental
     elemental function is_iostat_failure(status)
 
         type(gmsh_msh1_status_type), intent(in) :: status
@@ -707,6 +777,60 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    elemental function is_equal_gmsh_msh1_reg_elem_type(reg_elem1, reg_elem2) result(is_equal)
+
+        type(gmsh_msh1_reg_elem_type), intent(in) :: reg_elem1, reg_elem2
+
+        logical :: is_equal
+
+
+
+        is_equal = reg_elem1%expression .eq. reg_elem2%expression
+
+    end function is_equal_gmsh_msh1_reg_elem_type
+
+
+
+    !> version: experimental
+    elemental function is_equal_gmsh_msh1_reg_phys_type(reg_phys1, reg_phys2) result(is_equal)
+
+        type(gmsh_msh1_reg_phys_type), intent(in) :: reg_phys1, reg_phys2
+
+        logical :: is_equal
+
+
+
+        is_equal = reg_phys1%expression .eq. reg_phys2%expression
+
+    end function is_equal_gmsh_msh1_reg_phys_type
+
+
+
+    !> version: experimental
+    elemental function is_read_successful_gmsh_msh1_file(mesh_data) result(is_valid)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        logical :: is_invalid
+
+
+
+        is_invalid = &!
+            &              is_stat_failure   ( mesh_data%status )   &!
+            & .or.         is_iostat_failure ( mesh_data%status )   &!
+            & .or. ( .not. all_flag          ( mesh_data        ) )
+
+        is_valid = .not. is_invalid
+
+    end function is_read_successful_gmsh_msh1_file
+
+
+
+    !> version: experimental
     elemental function is_stat_failure(status)
 
         type(gmsh_msh1_status_type), intent(in) :: status
@@ -737,7 +861,7 @@ module gmsh_msh1_reader
 
 
 
-        if (location .lt. 1) then
+        if (location .lt. minval_location) then
 
             call initialize_gmsh_msh1_node(node)
 
@@ -770,23 +894,21 @@ module gmsh_msh1_reader
 
 
 
-        integer :: itr_node
+        integer :: location
 
 
 
-        do itr_node = 1, output_number_of_nodes(mesh_data)
+        location = findloc(mesh_data, node_number)
 
-            if ( mesh_data%node(itr_node)%node_number .eq. node_number ) then
+        if (location .lt. minval_location) then
 
-                node = mesh_data%node(itr_node)
+            call initialize_gmsh_msh1_node(node)
 
-                return
+        else
 
-            end if
+            node = mesh_data%node(location)
 
-        end do
-
-        call initialize_gmsh_msh1_node(node)
+        end if
 
     end function lookup_node_by_num_gmsh_msh1_file
 
@@ -840,7 +962,7 @@ module gmsh_msh1_reader
 
 
 
-        if (location .lt. 1) then
+        if (location .lt. minval_location) then
 
             call initialize_gmsh_msh1_number(node_number)
 
@@ -1020,7 +1142,7 @@ module gmsh_msh1_reader
 
     !> version: experimental
     !> |DescValidate|
-    elemental function validate_gmsh_msh1_file(mesh_data) result(is_valid)
+    elemental function validate_gmsh_msh1_data(mesh_data) result(is_valid)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
 
@@ -1028,18 +1150,115 @@ module gmsh_msh1_reader
 
 
 
-        logical :: is_invalid
+        is_valid = is_read_successful(mesh_data)
+
+        if (.not. is_valid) return
 
 
 
-        is_invalid = &!
-            &              is_stat_failure   ( mesh_data%status )   &!
-            & .or.         is_iostat_failure ( mesh_data%status )   &!
-            & .or. ( .not. all_flag          ( mesh_data        ) )
+        is_valid = all( validate( mesh_data%node(:) ) )
 
-        is_valid = .not. is_invalid
+        if (.not. is_valid) return
 
-    end function validate_gmsh_msh1_file
+
+
+        is_valid = all( validate_gmsh_msh1_element_with_mesh_data_private( mesh_data%element(:), mesh_data ) )
+
+    end function validate_gmsh_msh1_data
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @note
+    !> This function does **NOT** validate [[validate_gmsh_msh1_element_with_mesh_data_private:mesh_data]].
+    !> @endnote
+    elemental function validate_gmsh_msh1_element_with_mesh_data_private(element, mesh_data) result(is_valid)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        is_valid = validate(element)
+        
+        if (.not. is_valid) return
+
+
+
+        is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .ge. minval_location )
+
+    end function validate_gmsh_msh1_element_with_mesh_data_private
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    elemental function validate_gmsh_msh1_element_with_mesh_data_public(element, mesh_data) result(is_valid)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        is_valid = is_read_successful(mesh_data)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = validate_gmsh_msh1_element_with_mesh_data_private(element, mesh_data)
+
+    end function validate_gmsh_msh1_element_with_mesh_data_public
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @note
+    !> This function does **NOT** verify that referenced [[gmsh_msh1_node_type]] exist in the mesh.
+    !> @endnote
+    elemental function validate_gmsh_msh1_element_without_mesh_data(element) result(is_valid)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        logical :: is_valid
+
+
+
+        is_valid = validate(element%elm_number)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = validate(element%reg_elem)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = validate(element%reg_phys)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = allocated(element%node_number_list)
+
+        if (.not. is_valid) return
+
+
+
+        is_valid = all( validate( element%node_number_list(:) ) )
+
+    end function validate_gmsh_msh1_element_without_mesh_data
 
 
 
@@ -1084,6 +1303,49 @@ module gmsh_msh1_reader
         is_valid = number%number .gt. 0
 
     end function validate_gmsh_msh1_number
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !> @warning
+    !> |WarnGmshMsh1RegElem|
+    !> @endwarning
+    elemental function validate_gmsh_msh1_reg_elem(reg_elem) result(is_valid)
+
+        type(gmsh_msh1_reg_elem_type), intent(in) :: reg_elem
+
+        logical :: is_valid
+
+
+
+        is_valid = reg_elem%expression .gt. 0
+
+    end function validate_gmsh_msh1_reg_elem
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    !>
+    !> @warning
+    !> |WarnGmshMsh1RegPhys|
+    !> @endwarning
+    !>
+    !> @note
+    !> |NoteGmshMsh1RegPhys|
+    !> @endnote
+    elemental function validate_gmsh_msh1_reg_phys(reg_phys) result(is_valid)
+
+        type(gmsh_msh1_reg_phys_type), intent(in) :: reg_phys
+
+        logical :: is_valid
+
+
+
+        is_valid = reg_phys%expression .ge. 0
+
+    end function validate_gmsh_msh1_reg_phys
 
 
 
@@ -1179,7 +1441,7 @@ module gmsh_msh1_reader
 
 
 
-        if (location .lt. 1) then
+        if (location .lt. minval_location) then
 
             call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
 
