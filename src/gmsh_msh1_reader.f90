@@ -512,6 +512,7 @@ module gmsh_msh1_reader
     !> version: experimental
     !> |DescValidate|
     interface validate
+        module procedure :: validate_gmsh_msh1_element_with_mesh_data
         module procedure :: validate_gmsh_msh1_element_without_mesh_data
         module procedure :: validate_gmsh_msh1_file
         module procedure :: validate_gmsh_msh1_node
@@ -1104,6 +1105,27 @@ module gmsh_msh1_reader
         z_coord = node%z_coord
 
     end function output_z_coord_gmsh_msh1_node
+
+
+
+    !> version: experimental
+    !> |DescValidate|
+    elemental function validate_gmsh_msh1_element_with_mesh_data(element, mesh_data) result(is_valid)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        logical :: is_valid
+
+
+
+        is_valid = validate( mesh_data ); if (.not. is_valid) return
+        is_valid = validate( element   ); if (.not. is_valid) return
+
+        is_valid = all( findloc( mesh_data, element%node_number_list(:) ) .gt. minval_location )
+
+    end function validate_gmsh_msh1_element_with_mesh_data
 
 
 
