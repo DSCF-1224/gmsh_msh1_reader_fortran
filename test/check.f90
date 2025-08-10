@@ -236,7 +236,7 @@ program check
 
         call read_gmsh_msh1_file( msh1_data, msh1_file )
 
-        if ( validate(msh1_data) ) then
+        if ( is_read_successful(msh1_data) ) then
 
             call test_read_gmsh_msh1_file_kernel( &!
             unit      = output_unit  , &!
@@ -251,6 +251,16 @@ program check
             msh1_file = msh1_file(:) , &!
             msh1_data = msh1_data      &!
             )
+
+            error stop
+
+        end if
+
+
+
+        if ( .not. validate(msh1_data) ) then
+
+            write( error_unit, "(A,1X,A)" ) "INVALID:", msh1_file(:)
 
             error stop
 
@@ -451,9 +461,9 @@ program check
 
             write( write_unit, '(I0,*(1X,I0))' ) &!
                 export_elm_number       (element) , &!
-                output_elm_type         (element) , &!
-                output_reg_phys         (element) , &!
-                output_reg_elem         (element) , &!
+                export_elm_type         (element) , &!
+                export_reg_phys         (element) , &!
+                export_reg_elem         (element) , &!
                 output_number_of_nodes  (element) , &!
                 export_node_number_list (element)
 
