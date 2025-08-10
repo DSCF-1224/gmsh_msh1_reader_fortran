@@ -450,7 +450,7 @@ program check
             end if
 
             write( write_unit, '(I0,*(1X,I0))' ) &!
-                output_elm_number       (element) , &!
+                export_elm_number       (element) , &!
                 output_elm_type         (element) , &!
                 output_reg_phys         (element) , &!
                 output_reg_elem         (element) , &!
