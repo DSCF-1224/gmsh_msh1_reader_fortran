@@ -258,6 +258,16 @@ program check
 
 
 
+        if ( .not. validate(msh1_data) ) then
+
+            write( error_unit, "(A,1X,A)" ) "INVALID:", msh1_file(:)
+
+            error stop
+
+        end if
+
+
+
         write( read_msh1_file(:), "(*(A))" ) "test/", "read_", msh1_file(6:)
 
         call write_gmsh_msh1_file( trim( read_msh1_file(:) ), msh1_data )
