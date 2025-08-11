@@ -326,7 +326,7 @@ program check
 
         write( unit, * ) new_line(""), msh1_file(:)
 
-        call write_stat_msg_gmsh_msh1_file( msh1_data, unit )
+        call write_diagnostic_report_reading( msh1_data, unit )
 
     end subroutine test_read_gmsh_msh1_file_kernel
 
