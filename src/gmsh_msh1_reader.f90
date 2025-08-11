@@ -22,6 +22,8 @@ module gmsh_msh1_reader
 
 
     public :: operator(.eq.)
+    public :: count_elements
+    public :: count_nodes
     public :: export_elm_number
     public :: export_elm_type
     public :: export_node_number
@@ -42,8 +44,6 @@ module gmsh_msh1_reader
     public :: output_elm_type
     public :: output_node_number
     public :: output_node_number_list
-    public :: output_number_of_elements
-    public :: output_number_of_nodes
     public :: output_reg_elem
     public :: output_reg_phys
     public :: output_x_coord
@@ -349,6 +349,23 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescCountElements|
+    interface count_elements
+        module procedure :: count_elements_gmsh_msh1_data
+    end interface count_elements
+
+
+
+    !> version: experimental
+    !> |DescCountNodes|.
+    interface count_nodes
+        module procedure :: count_nodes_gmsh_msh1_data
+        module procedure :: count_nodes_gmsh_msh1_element
+    end interface count_nodes
+
+
+
+    !> version: experimental
     !> |DescExportElmNumber|
     interface export_elm_number
         module procedure :: export_elm_number_gmsh_msh1_element
@@ -461,23 +478,6 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> |DescOutputNumberOfElements|
-    interface output_number_of_elements
-        module procedure :: output_number_of_elements_gmsh_msh1_file
-    end interface output_number_of_elements
-
-
-
-    !> version: experimental
-    !> |DescOutputNumberOfNodes|.
-    interface output_number_of_nodes
-        module procedure :: output_number_of_nodes_gmsh_msh1_element
-        module procedure :: output_number_of_nodes_gmsh_msh1_file
-    end interface output_number_of_nodes
-
-
-
-    !> version: experimental
     !> |DescOutputRegElem|
     interface output_reg_elem
         module procedure :: output_reg_elem_gmsh_msh1_element
@@ -570,6 +570,38 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
+    !> |DescCountNodes| in the [[gmsh_msh1_data_type]].
+    elemental function count_nodes_gmsh_msh1_data(mesh_data) result(number_of_nodes)
+
+        type(gmsh_msh1_data_type), intent(in) :: mesh_data
+
+        integer :: number_of_nodes
+
+
+
+        number_of_nodes = size( mesh_data%node(:) )
+
+    end function count_nodes_gmsh_msh1_data
+
+
+
+    !> version: experimental
+    !> |DescCountNodes| in the [[gmsh_msh1_element_type]].
+    elemental function count_nodes_gmsh_msh1_element(element) result(number_of_nodes)
+
+        type(gmsh_msh1_element_type), intent(in) :: element
+
+        integer :: number_of_nodes
+
+
+
+        number_of_nodes = size( element%node_number_list(:) )
+
+    end function count_nodes_gmsh_msh1_element
+
+
+
+    !> version: experimental
     !> |DescExportElmNumber|
     elemental function export_elm_number_gmsh_msh1_element(element) result(elm_number)
 
@@ -623,7 +655,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        integer, dimension( output_number_of_nodes(element) ) :: node_number_list
+        integer, dimension( count_nodes(element) ) :: node_number_list
 
 
 
@@ -692,7 +724,7 @@ module gmsh_msh1_reader
 
 
 
-        do itr_node = 1, output_number_of_nodes(msh1_data)
+        do itr_node = 1, count_nodes(msh1_data)
 
             if ( msh1_data%node(itr_node)%node_number .eq. node_number ) then
 
@@ -872,7 +904,7 @@ module gmsh_msh1_reader
 
             call initialize_gmsh_msh1_node(node)
 
-        else if ( output_number_of_nodes(mesh_data) .lt. location ) then
+        else if ( count_nodes(mesh_data) .lt. location ) then
 
             call initialize_gmsh_msh1_node(node)
 
@@ -973,7 +1005,7 @@ module gmsh_msh1_reader
 
             call initialize_gmsh_msh1_number(node_number)
 
-        else if ( output_number_of_nodes(element) .lt. location ) then
+        else if ( count_nodes(element) .lt. location ) then
 
             call initialize_gmsh_msh1_number(node_number)
 
@@ -1009,7 +1041,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        type(gmsh_msh1_node_number_type), dimension( output_number_of_nodes(element) ) :: node_number_list
+        type(gmsh_msh1_node_number_type), dimension( count_nodes(element) ) :: node_number_list
 
 
 
@@ -1020,8 +1052,8 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> |DescOutputNumberOfElements|
-    elemental function output_number_of_elements_gmsh_msh1_file(mesh_data) result(number_of_elements)
+    !> |DescCountElements|
+    elemental function count_elements_gmsh_msh1_data(mesh_data) result(number_of_elements)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
 
@@ -1031,39 +1063,7 @@ module gmsh_msh1_reader
 
         number_of_elements = size( mesh_data%element(:) )
 
-    end function output_number_of_elements_gmsh_msh1_file
-
-
-
-    !> version: experimental
-    !> |DescOutputNumberOfNodes| in the [[gmsh_msh1_element_type]].
-    elemental function output_number_of_nodes_gmsh_msh1_element(element) result(number_of_nodes)
-
-        type(gmsh_msh1_element_type), intent(in) :: element
-
-        integer :: number_of_nodes
-
-
-
-        number_of_nodes = size( element%node_number_list(:) )
-
-    end function output_number_of_nodes_gmsh_msh1_element
-
-
-
-    !> version: experimental
-    !> |DescOutputNumberOfNodes| in the [[gmsh_msh1_data_type]].
-    elemental function output_number_of_nodes_gmsh_msh1_file(mesh_data) result(number_of_nodes)
-
-        type(gmsh_msh1_data_type), intent(in) :: mesh_data
-
-        integer :: number_of_nodes
-
-
-
-        number_of_nodes = size( mesh_data%node(:) )
-
-    end function output_number_of_nodes_gmsh_msh1_file
+    end function count_elements_gmsh_msh1_data
 
 
 
@@ -1452,7 +1452,7 @@ module gmsh_msh1_reader
 
             call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
 
-        else if ( output_number_of_elements(mesh_data) .lt. location ) then
+        else if ( count_elements(mesh_data) .lt. location ) then
 
             call initialize_gmsh_msh1_element( element, stat, errmsg(:) )
 
