@@ -16,28 +16,37 @@ print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
 license: mit
 alias: DescExportElmNumber = Get the [[gmsh_msh1_elm_number_type]] from the [[gmsh_msh1_element_type]] (as integer).
+alias: DescExportElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_element_type]] (as integer).
        DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as integer).
+       DescExportRegElem = Get the [[gmsh_msh1_reg_elem_type]] from the [[gmsh_msh1_element_type]] (as integer).
+       DescExportRegPhys = Get the [[gmsh_msh1_reg_phys_type]] from the [[gmsh_msh1_element_type]] (as integer).
        DescExportNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as integer).
        DescGmshMsh1ElmNumber = the number (index) of the *n*-th element in the mesh.
+       DescGmshMsh1ElmType = the geometrical type of the *n*-th element in the mesh.
        DescGmshMsh1NodeNumber = the number (index) of the *n*-th node in the mesh.
+       DescGmshMsh1RegElem = the tag of the elementary entity to which the element belongs
+       DescGmshMsh1RegPhys = the tag of the physical entity to which the element belongs
        DescValidate = Checks if the derived type is **valid**.
        DescLookupElement = Look up a [[gmsh_msh1_element_type]] in the [[gmsh_msh1_data_type]].
        DescLookupNode = Look up a [[gmsh_msh1_node_type]] in the [[gmsh_msh1_data_type]].
        DescOutputElmNumber = Get the [[gmsh_msh1_elm_number_type]] from the [[gmsh_msh1_element_type]] (as derived type).
-       DescOutputElmType = Get the [[gmsh_msh1_element_type:elm_type]] from the [[gmsh_msh1_element_type]].
+       DescOutputElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as derived type).
        DescOutputNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputNumberOfElements = Get the number of [[gmsh_msh1_element_type]]s in the [[gmsh_msh1_data_type]].
        DescOutputNumberOfNodes = Get the number of [[gmsh_msh1_node_type]]s
-       DescOutputRegElem = Get the [[gmsh_msh1_element_type:reg_elem]] from the [[gmsh_msh1_element_type]].
-       DescOutputRegPhys = Get the [[gmsh_msh1_element_type:reg_phys]] from the [[gmsh_msh1_element_type]].
+       DescOutputRegElem = Get the [[gmsh_msh1_reg_elem_type]] from the [[gmsh_msh1_element_type]] (as derived type).
+       DescOutputRegPhys = Get the [[gmsh_msh1_reg_phys_type]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputXCoord = Get the [[gmsh_msh1_node_type:x_coord]] from the [[gmsh_msh1_node_type]].
        DescOutputYCoord = Get the [[gmsh_msh1_node_type:y_coord]] from the [[gmsh_msh1_node_type]].
        DescOutputZCoord = Get the [[gmsh_msh1_node_type:z_coord]] from the [[gmsh_msh1_node_type]].
        GmshDefinesH = Reference: [`GmshDefines.h`](https://gitlab.onelab.info/gmsh/gmsh/blob/master/src/common/GmshDefines.h)
        GmshReferenceManualTop = [Gmsh](https://gmsh.info/doc/texinfo/gmsh.html)
        GmshReferenceManualMsh1 = [MSH file format version 1](https://gmsh.info/doc/texinfo/gmsh.html#MSH-file-format-version-1-_0028Legacy_0029)
+       NoteGmshMsh1RegPhys = If [[gmsh_msh1_tag_type:expression]] is equal to zero, the element is considered not to belong to any physical entity.
        WarnGmshMsh1NumberType = The [[gmsh_msh1_number_type:number]] must be a positive (non-zero) integer.
+       WarnGmshMsh1RegElem = The [[gmsh_msh1_tag_type:expression]] must be a positive (non-zero) integer.
+       WarnGmshMsh1RegPhys = The [[gmsh_msh1_tag_type:expression]] must be a positive integer, or zero.
 ---
 
 [TOC]

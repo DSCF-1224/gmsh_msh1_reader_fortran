@@ -70,13 +70,21 @@ call read_gmsh_msh1_file(mesh_data, 'your_mesh_file.msh1')
 
 #### 3. Error Checking
 
+- [interface `is_read_successful`](https://dscf-1224.github.io/gmsh_msh1_reader_fortran/interface/is_read_successful.html)
 - [interface `validate`](https://dscf-1224.github.io/gmsh_msh1_reader_fortran/interface/validate.html)
-- [`write_stat_msg_gmsh_msh1_file` Subroutine](https://dscf-1224.github.io/gmsh_msh1_reader_fortran/proc/write_stat_msg_gmsh_msh1_file.html)
+- [interface `write_diagnostic_report_reading`](https://dscf-1224.github.io/gmsh_msh1_reader_fortran/interface/write_diagnostic_report_reading.html)
+
+```fortran
+if ( .not. is_read_successful(mesh_data) ) then
+    write(error_unit,*) 'Error: Failed to read mesh file'
+    call write_diagnostic_report_reading(mesh_data, error_unit)
+    error stop
+endif
+```
 
 ```fortran
 if ( .not. validate(mesh_data) ) then
-    write(error_unit,*) 'Error: Failed to read mesh file'
-    call write_stat_msg_gmsh_msh1_file(mesh_data, error_unit)
+    write(error_unit,*) 'INVALID: The read msh1 data is invalid.'
     error stop
 endif
 ```
