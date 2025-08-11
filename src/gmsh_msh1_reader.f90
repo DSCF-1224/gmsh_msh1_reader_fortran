@@ -51,7 +51,7 @@ module gmsh_msh1_reader
     public :: output_z_coord
     public :: read_gmsh_msh1_file
     public :: validate
-    public :: write_stat_msg_gmsh_msh1_file
+    public :: write_diagnostic_report_reading
 
 
 
@@ -528,6 +528,13 @@ module gmsh_msh1_reader
         module procedure :: validate_gmsh_msh1_reg_elem
         module procedure :: validate_gmsh_msh1_reg_phys
     end interface validate
+
+
+
+    !> version: experimental
+    interface write_diagnostic_report_reading
+        module procedure :: write_diagnostic_report_reading_gmsh_msh1_file
+    end interface write_diagnostic_report_reading
 
 
 
@@ -2179,7 +2186,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    subroutine write_stat_msg_gmsh_msh1_file(mesh_data, write_unit)
+    subroutine write_diagnostic_report_reading_gmsh_msh1_file(mesh_data, write_unit)
 
         type(gmsh_msh1_data_type), intent(in) :: mesh_data
 
@@ -2240,6 +2247,6 @@ module gmsh_msh1_reader
         write( write_unit, "(A,I0)" ) "stat   : ",       mesh_data%status% err %code
         write( write_unit, "(A,A )" ) "errmsg : ", trim( mesh_data%status% err %msg(:) )
 
-    end subroutine  write_stat_msg_gmsh_msh1_file
+    end subroutine  write_diagnostic_report_reading_gmsh_msh1_file
 
 end module gmsh_msh1_reader
