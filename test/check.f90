@@ -417,9 +417,9 @@ program check
 
         write( write_unit, "(A)" ) "$NOD"
 
-        write( write_unit, "(I0)" ) output_number_of_nodes(msh1_data)
+        write( write_unit, "(I0)" ) count_nodes(msh1_data)
 
-        do itr = 1, output_number_of_nodes(msh1_data)
+        do itr = 1, count_nodes(msh1_data)
 
             node = lookup_node( msh1_data, itr )
 
@@ -437,9 +437,9 @@ program check
 
         write( write_unit, "(A)" ) "$ELM"
 
-        write( write_unit, "(I0)" ) output_number_of_elements(msh1_data)
+        write( write_unit, "(I0)" ) count_elements(msh1_data)
 
-        do itr = 1, output_number_of_elements(msh1_data)
+        do itr = 1, count_elements(msh1_data)
 
             call lookup_element( &!
             mesh_data = msh1_data , &!
@@ -464,7 +464,7 @@ program check
                 export_elm_type         (element) , &!
                 export_reg_phys         (element) , &!
                 export_reg_elem         (element) , &!
-                output_number_of_nodes  (element) , &!
+                count_nodes             (element) , &!
                 export_node_number_list (element)
 
         end do
