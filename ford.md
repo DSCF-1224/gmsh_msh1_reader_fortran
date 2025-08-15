@@ -18,7 +18,7 @@ license: mit
 alias: DescCountElements = Count the number of [[gmsh_msh1_element_type]]s in the [[gmsh_msh1_data_type]].
        DescCountNodes = Count the number of [[gmsh_msh1_node_type]]s
        DescExportElmNumber = Get the [[gmsh_msh1_elm_number_type]] from the [[gmsh_msh1_element_type]] (as integer).
-       DescExportElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_element_type]] (as integer).
+       DescExportElmType = Get the [[gmsh_msh_elm_type]] from the [[gmsh_msh1_element_type]] (as integer).
        DescExportNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as integer).
        DescExportRegElem = Get the [[gmsh_msh1_reg_elem_type]] from the [[gmsh_msh1_element_type]] (as integer).
        DescExportRegPhys = Get the [[gmsh_msh1_reg_phys_type]] from the [[gmsh_msh1_element_type]] (as integer).
@@ -32,7 +32,7 @@ alias: DescCountElements = Count the number of [[gmsh_msh1_element_type]]s in th
        DescLookupElement = Look up a [[gmsh_msh1_element_type]] in the [[gmsh_msh1_data_type]].
        DescLookupNode = Look up a [[gmsh_msh1_node_type]] in the [[gmsh_msh1_data_type]].
        DescOutputElmNumber = Get the [[gmsh_msh1_elm_number_type]] from the [[gmsh_msh1_element_type]] (as derived type).
-       DescOutputElmType = Get the [[gmsh_msh1_elm_type]] from the [[gmsh_msh1_element_type]] (as derived type).
+       DescOutputElmType = Get the [[gmsh_msh_elm_type]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputNodeNumber = Get the [[gmsh_msh1_node_number_type]] from the [[gmsh_msh1_node_type]] (as derived type).
        DescOutputNodeNumberList = Get the [[gmsh_msh1_element_type:node_number_list]] from the [[gmsh_msh1_element_type]] (as derived type).
        DescOutputRegElem = Get the [[gmsh_msh1_reg_elem_type]] from the [[gmsh_msh1_element_type]] (as derived type).

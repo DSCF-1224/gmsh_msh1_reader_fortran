@@ -27,8 +27,12 @@ Support for the following intrinsic modules:
 
 ### Manual Compilation
 
-This library is composed of a single Fortran `module` written in one [`.f90`][ThisModule] file.  
-To use the library, include this [source file][ThisModule] in your compilation process.
+~~This library is composed of a single Fortran `module` written in one `.f90` file.~~  
+~~To use the library, include this source file in your compilation process.~~  
+To use the library, include following source files in your compilation process.
+- [gmsh_msh1_reader.f90](src/gmsh_msh1_reader.f90)
+  - using
+    - [gmsh_msh_elm_type.f90](src/gmsh_msh_elm_type.f90)
 
 ### Using this `module` with [`fpm`][FpmGitHubRepository]
 
