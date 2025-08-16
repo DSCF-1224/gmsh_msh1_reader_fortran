@@ -19,3 +19,5 @@ source-form = "free"
 name = "check"
 source-dir = "test"
 main = "check.f90"
+[dependencies]
+gmsh_msh_elm_type_fortran = { git="https://github.com/DSCF-1224/gmsh_msh_elm_type_fortran" }
