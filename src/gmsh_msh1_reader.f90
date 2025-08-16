@@ -11,6 +11,8 @@ module gmsh_msh1_reader
         &     ieee_signaling_nan , &!
         &     ieee_value
 
+    use, non_intrinsic :: gmsh_msh_elm_type_fortran
+
 
 
     implicit none
@@ -156,16 +158,6 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading |DescGmshMsh1ElmType|
-    type :: gmsh_msh1_elm_type
-
-        integer, private :: expression
-
-    end type gmsh_msh1_elm_type
-
-
-
-    !> version: experimental
     !> Derived type to for reading  
     !> - |DescGmshMsh1RegElem|  
     !> - |DescGmshMsh1RegPhys|
@@ -213,7 +205,7 @@ module gmsh_msh1_reader
         type(gmsh_msh1_elm_number_type) :: elm_number
 
         !> |DescGmshMsh1ElmType|
-        type(gmsh_msh1_elm_type) :: elm_type
+        type(gmsh_msh_elm_type) :: elm_type
 
         !> |DescGmshMsh1RegPhys|
         type(gmsh_msh1_reg_phys_type) :: reg_phys
@@ -340,7 +332,6 @@ module gmsh_msh1_reader
     !> version: experimental
     interface operator(.eq.)
         module procedure :: is_equal_gmsh_msh1_elm_number_type
-        module procedure :: is_equal_gmsh_msh1_elm_type
         module procedure :: is_equal_gmsh_msh1_node_number_type
         module procedure :: is_equal_gmsh_msh1_reg_elem_type
         module procedure :: is_equal_gmsh_msh1_reg_phys_type
@@ -627,7 +618,7 @@ module gmsh_msh1_reader
 
 
 
-        elm_type = element%elm_type%expression
+        elm_type = export(element%elm_type)
 
     end function export_elm_type_gmsh_msh1_element
 
@@ -782,21 +773,6 @@ module gmsh_msh1_reader
         is_equal = number1%number .eq. number2%number
 
     end function is_equal_gmsh_msh1_elm_number_type
-
-
-
-    !> version: experimental
-    elemental function is_equal_gmsh_msh1_elm_type(type1, type2) result(is_equal)
-
-        type(gmsh_msh1_elm_type), intent(in) :: type1, type2
-
-        logical :: is_equal
-
-
-
-        is_equal = type1%expression .eq. type2%expression
-
-    end function is_equal_gmsh_msh1_elm_type
 
 
 
@@ -975,7 +951,7 @@ module gmsh_msh1_reader
 
         type(gmsh_msh1_element_type), intent(in) :: element
 
-        type(gmsh_msh1_elm_type) :: elm_type
+        type(gmsh_msh_elm_type) :: elm_type
 
 
 
@@ -1380,7 +1356,8 @@ module gmsh_msh1_reader
 
         call initialize_gmsh_msh1_number(element%elm_number)
 
-        element%elm_type%expression = 0
+        call initialize(element%elm_type)
+
         element%reg_elem%expression = 0
         element%reg_phys%expression = 0
 
