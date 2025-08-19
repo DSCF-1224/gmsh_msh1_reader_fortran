@@ -131,7 +131,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading  
+    !> Derived type for reading  
     !> - |DescGmshMsh1ElmNumber|  
     !> - |DescGmshMsh1NodeNumber|
     !>
@@ -151,14 +151,14 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading |DescGmshMsh1ElmNumber|
+    !> Derived type for reading |DescGmshMsh1ElmNumber|
     type, extends(gmsh_msh1_number_type) :: gmsh_msh1_elm_number_type
     end type gmsh_msh1_elm_number_type
 
 
 
     !> version: experimental
-    !> Derived type to for reading  
+    !> Derived type for reading  
     !> - |DescGmshMsh1RegElem|  
     !> - |DescGmshMsh1RegPhys|
     type, abstract :: gmsh_msh1_tag_type
@@ -170,7 +170,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading |DescGmshMsh1RegElem|
+    !> Derived type for reading |DescGmshMsh1RegElem|
     !>
     !> @warning
     !> |WarnGmshMsh1RegElem|
@@ -181,7 +181,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading |DescGmshMsh1RegPhys|
+    !> Derived type for reading |DescGmshMsh1RegPhys|
     !>
     !> @warning
     !> |WarnGmshMsh1RegPhys|
@@ -196,7 +196,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading the *n*-th element in the |GmshReferenceManualTop| |GmshReferenceManualMsh1|
+    !> Derived type for reading the *n*-th element in the |GmshReferenceManualTop| |GmshReferenceManualMsh1|
     type :: gmsh_msh1_element_type
 
         private
@@ -221,13 +221,13 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading |DescGmshMsh1NodeNumber|
+    !> Derived type for reading |DescGmshMsh1NodeNumber|
     type, extends(gmsh_msh1_number_type) :: gmsh_msh1_node_number_type
     end type gmsh_msh1_node_number_type
 
 
     !> version: experimental
-    !> Derived type to for reading
+    !> Derived type for reading
     !> the *n*-th node in the
     !> |GmshReferenceManualTop|
     !> |GmshReferenceManualMsh1|
@@ -272,7 +272,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    !> Derived type to for reading
+    !> Derived type for reading
     !> |GmshReferenceManualTop|
     !> |GmshReferenceManualMsh1|
     type :: gmsh_msh1_data_type
