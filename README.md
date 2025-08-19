@@ -32,7 +32,7 @@ Support for the following intrinsic modules:
 To use the library, include following source files in your compilation process.
 - [gmsh_msh1_reader.f90](src/gmsh_msh1_reader.f90)
   - using
-    - [gmsh_msh_elm_type.f90](src/gmsh_msh_elm_type.f90)
+    - [gmsh_msh_elm_type.f90](https://github.com/DSCF-1224/gmsh_msh_elm_type_fortran/blob/main/src/gmsh_msh_elm_type_fortran.f90) [@gmsh_msh_elm_type_fortran](https://github.com/DSCF-1224/gmsh_msh_elm_type_fortran)
 
 ### Using this `module` with [`fpm`][FpmGitHubRepository]
 
@@ -82,6 +82,13 @@ call read_gmsh_msh1_file(mesh_data, 'your_mesh_file.msh1')
 if ( .not. is_read_successful(mesh_data) ) then
     write(error_unit,*) 'Error: Failed to read mesh file'
     call write_diagnostic_report_reading(mesh_data, error_unit)
+    error stop
+endif
+```
+
+```fortran
+if ( .not. validate(mesh_data) ) then
+    write(error_unit,*) 'INVALID: The read msh1 data is invalid.'
     error stop
 endif
 ```
