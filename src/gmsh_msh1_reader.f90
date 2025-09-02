@@ -51,7 +51,7 @@ module gmsh_msh1_reader
     public :: output_x_coord
     public :: output_y_coord
     public :: output_z_coord
-    public :: read_gmsh_msh1_file
+    public :: read_file
     public :: validate
     public :: write_diagnostic_report_reading
 
@@ -505,6 +505,13 @@ module gmsh_msh1_reader
     interface output_z_coord
         module procedure :: output_z_coord_gmsh_msh1_node
     end interface output_z_coord
+
+
+
+    !> version: experimental
+    interface read_file
+        module procedure :: read_file_gmsh_msh1
+    end interface read_file
 
 
 
@@ -1637,7 +1644,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    subroutine read_gmsh_msh1_file(mesh_data, msh1_file)
+    subroutine read_file_gmsh_msh1(mesh_data, msh1_file)
 
         !> The read data will be stored in this argument
         type(gmsh_msh1_data_type), intent(inout) :: mesh_data
@@ -1697,7 +1704,7 @@ module gmsh_msh1_reader
 
         mesh_data%status%err%code = stat_success
 
-    end subroutine read_gmsh_msh1_file
+    end subroutine read_file_gmsh_msh1
 
 
 
