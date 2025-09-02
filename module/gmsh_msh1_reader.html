@@ -89,7 +89,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title="100.0% of total for modules and submodules.">711 statements</a>
+                 title="100.0% of total for modules and submodules.">714 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -188,6 +188,7 @@
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-output_x_coord">output_x_coord</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-output_y_coord">output_y_coord</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-output_z_coord">output_z_coord</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-read_file">read_file</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-validate">validate</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-write_diagnostic_report_reading">write_diagnostic_report_reading</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-findloc">findloc</a>
@@ -275,12 +276,12 @@
       </a>
       <div id="subs-0" class="collapse">
         <div class="list-group list-group-flush">
-            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_file">read_gmsh_msh1_file</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-clear_msg">clear_msg</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_element">initialize_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_node">initialize_gmsh_msh1_node</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_number">initialize_gmsh_msh1_number</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-lookup_element_by_loc_gmsh_msh1_file">lookup_element_by_loc_gmsh_msh1_file</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_file_gmsh_msh1">read_file_gmsh_msh1</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_element">read_gmsh_msh1_element</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_file_kernel">read_gmsh_msh1_file_kernel</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_header_footer">read_gmsh_msh1_header_footer</a>
@@ -312,9 +313,9 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <ul class="list-inline">
-                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
-                  <li class="list-inline-item"><a href='https://dscf-1224.github.io/gmsh_msh_elm_type_fortran'>gmsh_msh_elm_type_fortran</a></li>
                   <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/ieee_arithmetic'>ieee_arithmetic</a></li>
+                  <li class="list-inline-item"><a href='https://dscf-1224.github.io/gmsh_msh_elm_type_fortran'>gmsh_msh_elm_type_fortran</a></li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -2572,6 +2573,74 @@ a <a href="../type/gmsh_msh1_node_number_type.html">gmsh_msh1_node_number_type</
     <small>real(kind=real64)</small>
     </h4>
     
+
+          </li>
+    </ul>
+  </div>
+
+              <div class="card">
+    <div class="card-header bg-light codesum">
+      <span class="anchor" id="interface-read_file"></span>
+      <h3>public        interface <a href='../interface/read_file.html'>read_file</a> 
+      </h3>
+    </div>
+    <ul class="list-group">
+          <li class="list-group-item">
+                <h3>
+    private  subroutine <a href='../proc/read_file_gmsh_msh1.html'>read_file_gmsh_msh1</a>(mesh_data, msh1_file)  
+
+    </h3>
+        <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-mesh_data~11"></span>
+              type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>mesh_data</strong></td>
+            <td>
+<p>The read data will be stored in this argument</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-msh1_file"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>msh1_file</strong></td>
+            <td>
+<p>File path to read from</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
 
           </li>
     </ul>
@@ -6004,65 +6073,6 @@ the <em>n</em>-th node in the
         <section>
           <h2>Subroutines</h2>
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-read_gmsh_msh1_file"></span> <h3>public  subroutine <a href='../proc/read_gmsh_msh1_file.html'>read_gmsh_msh1_file</a>(mesh_data, msh1_file)  
-</h3></div>
-    <div class="card-body">
-              <dl class="dl-horizontal">
-        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
-        <dt>Version</dt><dd>experimental</dd>
-    </dl>
-
-  
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-mesh_data~11"></span>
-              type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
-            </td>
-<td>intent(inout)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>mesh_data</strong></td>
-            <td>
-<p>The read data will be stored in this argument</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-msh1_file"></span>
-              character(len=*),
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>msh1_file</strong></td>
-            <td>
-<p>File path to read from</p>
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-    </div>
-  </div>
-
-              <div class="card">
     <div class="card-header codesum"><span class="anchor" id="proc-clear_msg"></span> <h3>private  subroutine <a href='../proc/clear_msg.html'>clear_msg</a>(msg)  
 </h3></div>
     <div class="card-body">
@@ -6363,6 +6373,65 @@ the <em>n</em>-th node in the
             <td><strong>errmsg</strong></td>
             <td>
 
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-read_file_gmsh_msh1"></span> <h3>private  subroutine <a href='../proc/read_file_gmsh_msh1.html'>read_file_gmsh_msh1</a>(mesh_data, msh1_file)  
+</h3></div>
+    <div class="card-body">
+              <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-mesh_data~11"></span>
+              type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>mesh_data</strong></td>
+            <td>
+<p>The read data will be stored in this argument</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-msh1_file"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>msh1_file</strong></td>
+            <td>
+<p>File path to read from</p>
             </td>
         </tr>
     </tbody>
@@ -6944,7 +7013,7 @@ the <em>n</em>-th node in the
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-08-19 13:31 +0000             </p>
+ on 2025-09-02 22:19 +0000             </p>
           </div>
         </div>
         <br>

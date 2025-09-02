@@ -1,0 +1,622 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Fortran module for reading Gmsh MSH file format version 1">
+    <meta name="author" content="" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>read_file &ndash; DSCF-1224/gmsh_msh1_reader_fortran</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">DSCF-1224/gmsh_msh1_reader_fortran </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../sourcefile/gmsh_msh1_reader.f90.html">Source File</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>read_file
+      <small>Interface</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+            <li class="list-inline-item" id="meta-license"><i class="fa fa-legal"></i> <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></li>
+            <li class="list-inline-item" id="meta-version"><i class="fa fa-barcode"></i> experimental</li>
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p> 0.5% of total for procedures.</p>Including implementation: 26 statements,  4.3% of total for procedures.">3 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/gmsh_msh1_reader.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/gmsh_msh1_reader.f90.html'>gmsh_msh1_reader.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/gmsh_msh1_reader.html'>gmsh_msh1_reader</a></li>
+            <li class="breadcrumb-item active" aria-current="page">read_file</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
+      </a>
+      <div id="modprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../interface/read_file.html#moduleprocedure-read_file_gmsh_msh1">read_file_gmsh_msh1</a>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <h2>public interface read_file</h2>
+      
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Calls</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: interface~~read_file~~CallsGraph Pages: 1 -->
+<svg id="interfaceread_fileCallsGraph" width="641pt" height="220pt"
+ viewBox="0.00 0.00 641.00 219.65" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="interface~~read_file~~CallsGraph" class="graph" transform="scale(0.59 0.59) rotate(0) translate(4 369.51)">
+<title>interface~~read_file~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-369.51 1086,-369.51 1086,4 -4,4"/>
+<!-- interface~read_file -->
+<g id="interface~~read_file~~CallsGraph_node1" class="node">
+<title>interface~read_file</title>
+<polygon fill="none" stroke="black" points="58,-43.51 0,-43.51 0,-19.51 58,-19.51 58,-43.51"/>
+<text text-anchor="middle" x="29" y="-29.11" font-family="Helvetica,sans-Serif" font-size="10.50">read_file</text>
+</g>
+<!-- proc~read_file_gmsh_msh1 -->
+<g id="interface~~read_file~~CallsGraph_node2" class="node">
+<title>proc~read_file_gmsh_msh1</title>
+<g id="a_interface~~read_file~~CallsGraph_node2"><a xlink:href="../proc/read_file_gmsh_msh1.html" xlink:title="read_file_gmsh_msh1">
+<polygon fill="#d9534f" stroke="#d9534f" points="221,-43.51 94,-43.51 94,-19.51 221,-19.51 221,-43.51"/>
+<text text-anchor="middle" x="157.5" y="-29.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_file_gmsh_msh1</text>
+</a>
+</g>
+</g>
+<!-- interface~read_file&#45;&gt;proc~read_file_gmsh_msh1 -->
+<g id="interface~~read_file~~CallsGraph_edge1" class="edge">
+<title>interface~read_file&#45;&gt;proc~read_file_gmsh_msh1</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M58.07,-31.51C65.8,-31.51 74.54,-31.51 83.56,-31.51"/>
+<polygon fill="#000000" stroke="#000000" points="83.81,-35.01 93.81,-31.51 83.81,-28.01 83.81,-35.01"/>
+</g>
+<!-- proc~clear_msg -->
+<g id="interface~~read_file~~CallsGraph_node3" class="node">
+<title>proc~clear_msg</title>
+<g id="a_interface~~read_file~~CallsGraph_node3"><a xlink:href="../proc/clear_msg.html" xlink:title="clear_msg">
+<polygon fill="#d9534f" stroke="#d9534f" points="819,-83.51 752,-83.51 752,-59.51 819,-59.51 819,-83.51"/>
+<text text-anchor="middle" x="785.5" y="-69.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">clear_msg</text>
+</a>
+</g>
+</g>
+<!-- proc~read_file_gmsh_msh1&#45;&gt;proc~clear_msg -->
+<g id="interface~~read_file~~CallsGraph_edge2" class="edge">
+<title>proc~read_file_gmsh_msh1&#45;&gt;proc~clear_msg</title>
+<path fill="none" stroke="#000000" d="M221.35,-20.45C317.48,-5.62 506.26,15.29 662,-17.51 695.53,-24.57 731.07,-41.41 755.18,-54.42"/>
+<polygon fill="#000000" stroke="#000000" points="753.7,-57.6 764.15,-59.37 757.08,-51.47 753.7,-57.6"/>
+</g>
+<!-- proc~is_iostat_failure -->
+<g id="interface~~read_file~~CallsGraph_node4" class="node">
+<title>proc~is_iostat_failure</title>
+<g id="a_interface~~read_file~~CallsGraph_node4"><a xlink:href="../proc/is_iostat_failure.html" xlink:title="is_iostat_failure">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="832.5,-165.51 738.5,-165.51 738.5,-141.51 832.5,-141.51 832.5,-165.51"/>
+<text text-anchor="middle" x="785.5" y="-151.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_iostat_failure</text>
+</a>
+</g>
+</g>
+<!-- proc~read_file_gmsh_msh1&#45;&gt;proc~is_iostat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge3" class="edge">
+<title>proc~read_file_gmsh_msh1&#45;&gt;proc~is_iostat_failure</title>
+<path fill="none" stroke="#000000" d="M221.16,-27.73C338.41,-21.64 585.99,-13.8 662,-50.51 684.14,-61.2 679.81,-75.97 698,-92.51 715.94,-108.83 738.38,-124.54 755.9,-135.93"/>
+<polygon fill="#000000" stroke="#000000" points="754.26,-139.03 764.57,-141.47 758.03,-133.13 754.26,-139.03"/>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel -->
+<g id="interface~~read_file~~CallsGraph_node5" class="node">
+<title>proc~read_gmsh_msh1_file_kernel</title>
+<g id="a_interface~~read_file~~CallsGraph_node5"><a xlink:href="../proc/read_gmsh_msh1_file_kernel.html" xlink:title="read_gmsh_msh1_file_kernel">
+<polygon fill="#d9534f" stroke="#d9534f" points="423,-205.51 257,-205.51 257,-181.51 423,-181.51 423,-205.51"/>
+<text text-anchor="middle" x="340" y="-191.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_gmsh_msh1_file_kernel</text>
+</a>
+</g>
+</g>
+<!-- proc~read_file_gmsh_msh1&#45;&gt;proc~read_gmsh_msh1_file_kernel -->
+<g id="interface~~read_file~~CallsGraph_edge4" class="edge">
+<title>proc~read_file_gmsh_msh1&#45;&gt;proc~read_gmsh_msh1_file_kernel</title>
+<path fill="none" stroke="#000000" d="M172.07,-43.69C203.17,-71.6 279.81,-140.38 317.44,-174.16"/>
+<polygon fill="#000000" stroke="#000000" points="315.5,-177.12 325.28,-181.19 320.17,-171.91 315.5,-177.12"/>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~is_iostat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge6" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~is_iostat_failure</title>
+<path fill="none" stroke="#000000" d="M400.52,-181.51C419.18,-178.13 439.88,-174.76 459,-172.51 553.05,-161.43 663.19,-156.72 728.22,-154.78"/>
+<polygon fill="#000000" stroke="#000000" points="728.37,-158.28 738.26,-154.5 728.17,-151.28 728.37,-158.28"/>
+</g>
+<!-- proc~initialize_gmsh_msh1_node -->
+<g id="interface~~read_file~~CallsGraph_node6" class="node">
+<title>proc~initialize_gmsh_msh1_node</title>
+<g id="a_interface~~read_file~~CallsGraph_node6"><a xlink:href="../proc/initialize_gmsh_msh1_node.html" xlink:title="initialize_gmsh_msh1_node">
+<polygon fill="#d9534f" stroke="#d9534f" points="639.5,-365.51 481.5,-365.51 481.5,-341.51 639.5,-341.51 639.5,-365.51"/>
+<text text-anchor="middle" x="560.5" y="-351.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize_gmsh_msh1_node</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~initialize_gmsh_msh1_node -->
+<g id="interface~~read_file~~CallsGraph_edge5" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~initialize_gmsh_msh1_node</title>
+<path fill="none" stroke="#000000" d="M348.13,-205.68C364.29,-232.16 406.44,-295.22 459,-327.51 465.82,-331.7 473.3,-335.22 481.01,-338.18"/>
+<polygon fill="#000000" stroke="#000000" points="479.9,-341.5 490.49,-341.51 482.22,-334.89 479.9,-341.5"/>
+</g>
+<!-- proc~is_iostat_success -->
+<g id="interface~~read_file~~CallsGraph_node7" class="node">
+<title>proc~is_iostat_success</title>
+<g id="a_interface~~read_file~~CallsGraph_node7"><a xlink:href="../proc/is_iostat_success.html" xlink:title="is_iostat_success">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="836.5,-320.51 734.5,-320.51 734.5,-296.51 836.5,-296.51 836.5,-320.51"/>
+<text text-anchor="middle" x="785.5" y="-306.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_iostat_success</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~is_iostat_success -->
+<g id="interface~~read_file~~CallsGraph_edge7" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~is_iostat_success</title>
+<path fill="none" stroke="#000000" d="M353.1,-205.72C373.11,-225.04 415.25,-262.14 459,-278.51 546.91,-311.41 657.1,-314.32 724.08,-312.26"/>
+<polygon fill="#000000" stroke="#000000" points="724.58,-315.74 734.45,-311.89 724.34,-308.75 724.58,-315.74"/>
+</g>
+<!-- proc~is_stat_failure -->
+<g id="interface~~read_file~~CallsGraph_node8" class="node">
+<title>proc~is_stat_failure</title>
+<g id="a_interface~~read_file~~CallsGraph_node8"><a xlink:href="../proc/is_stat_failure.html" xlink:title="is_stat_failure">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="828,-274.51 743,-274.51 743,-250.51 828,-250.51 828,-274.51"/>
+<text text-anchor="middle" x="785.5" y="-260.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_stat_failure</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~is_stat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge8" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~is_stat_failure</title>
+<path fill="none" stroke="#000000" d="M357.53,-205.63C379.43,-220.89 419.89,-246.34 459,-256.51 553.11,-280.98 667.74,-275.27 732.8,-268.89"/>
+<polygon fill="#000000" stroke="#000000" points="733.22,-272.37 742.81,-267.87 732.51,-265.41 733.22,-272.37"/>
+</g>
+<!-- proc~read_gmsh_msh1_element -->
+<g id="interface~~read_file~~CallsGraph_node9" class="node">
+<title>proc~read_gmsh_msh1_element</title>
+<g id="a_interface~~read_file~~CallsGraph_node9"><a xlink:href="../proc/read_gmsh_msh1_element.html" xlink:title="read_gmsh_msh1_element">
+<polygon fill="#d9534f" stroke="#d9534f" points="638,-205.51 483,-205.51 483,-181.51 638,-181.51 638,-205.51"/>
+<text text-anchor="middle" x="560.5" y="-191.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_gmsh_msh1_element</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_element -->
+<g id="interface~~read_file~~CallsGraph_edge9" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_element</title>
+<path fill="none" stroke="#000000" d="M423.29,-193.51C439.42,-193.51 456.39,-193.51 472.66,-193.51"/>
+<polygon fill="#000000" stroke="#000000" points="472.69,-197.01 482.69,-193.51 472.69,-190.01 472.69,-197.01"/>
+</g>
+<!-- proc~read_gmsh_msh1_header_footer -->
+<g id="interface~~read_file~~CallsGraph_node10" class="node">
+<title>proc~read_gmsh_msh1_header_footer</title>
+<g id="a_interface~~read_file~~CallsGraph_node10"><a xlink:href="../proc/read_gmsh_msh1_header_footer.html" xlink:title="read_gmsh_msh1_header_footer">
+<polygon fill="#d9534f" stroke="#d9534f" points="654,-125.51 467,-125.51 467,-101.51 654,-101.51 654,-125.51"/>
+<text text-anchor="middle" x="560.5" y="-111.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_gmsh_msh1_header_footer</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_header_footer -->
+<g id="interface~~read_file~~CallsGraph_edge10" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_header_footer</title>
+<path fill="none" stroke="#000000" d="M364.45,-181.29C387.9,-169.42 425.24,-151.5 459,-139.51 470.79,-135.32 483.58,-131.49 495.96,-128.14"/>
+<polygon fill="#000000" stroke="#000000" points="497,-131.48 505.77,-125.55 495.21,-124.72 497,-131.48"/>
+</g>
+<!-- proc~read_gmsh_msh1_node -->
+<g id="interface~~read_file~~CallsGraph_node11" class="node">
+<title>proc~read_gmsh_msh1_node</title>
+<g id="a_interface~~read_file~~CallsGraph_node11"><a xlink:href="../proc/read_gmsh_msh1_node.html" xlink:title="read_gmsh_msh1_node">
+<polygon fill="#d9534f" stroke="#d9534f" points="629.5,-83.51 491.5,-83.51 491.5,-59.51 629.5,-59.51 629.5,-83.51"/>
+<text text-anchor="middle" x="560.5" y="-69.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_gmsh_msh1_node</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_node -->
+<g id="interface~~read_file~~CallsGraph_edge11" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_node</title>
+<path fill="none" stroke="#000000" d="M351.32,-181.34C370.29,-159.8 413.02,-115.12 459,-92.51 466.16,-88.99 473.9,-86.05 481.78,-83.61"/>
+<polygon fill="#000000" stroke="#000000" points="482.78,-86.97 491.45,-80.87 480.87,-80.23 482.78,-86.97"/>
+</g>
+<!-- proc~read_gmsh_msh1_number_of_items -->
+<g id="interface~~read_file~~CallsGraph_node12" class="node">
+<title>proc~read_gmsh_msh1_number_of_items</title>
+<g id="a_interface~~read_file~~CallsGraph_node12"><a xlink:href="../proc/read_gmsh_msh1_number_of_items.html" xlink:title="read_gmsh_msh1_number_of_items">
+<polygon fill="#d9534f" stroke="#d9534f" points="662,-247.51 459,-247.51 459,-223.51 662,-223.51 662,-247.51"/>
+<text text-anchor="middle" x="560.5" y="-233.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_gmsh_msh1_number_of_items</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_number_of_items -->
+<g id="interface~~read_file~~CallsGraph_edge12" class="edge">
+<title>proc~read_gmsh_msh1_file_kernel&#45;&gt;proc~read_gmsh_msh1_number_of_items</title>
+<path fill="none" stroke="#000000" d="M403.61,-205.55C429.56,-210.53 459.82,-216.35 486.74,-221.52"/>
+<polygon fill="#000000" stroke="#000000" points="486.4,-225.02 496.88,-223.47 487.72,-218.15 486.4,-225.02"/>
+</g>
+<!-- proc~initialize_gmsh_msh1_number -->
+<g id="interface~~read_file~~CallsGraph_node14" class="node">
+<title>proc~initialize_gmsh_msh1_number</title>
+<g id="a_interface~~read_file~~CallsGraph_node14"><a xlink:href="../proc/initialize_gmsh_msh1_number.html" xlink:title="initialize_gmsh_msh1_number">
+<polygon fill="#d9534f" stroke="#d9534f" points="1082,-314.51 909,-314.51 909,-290.51 1082,-290.51 1082,-314.51"/>
+<text text-anchor="middle" x="995.5" y="-300.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize_gmsh_msh1_number</text>
+</a>
+</g>
+</g>
+<!-- proc~initialize_gmsh_msh1_node&#45;&gt;proc~initialize_gmsh_msh1_number -->
+<g id="interface~~read_file~~CallsGraph_edge13" class="edge">
+<title>proc~initialize_gmsh_msh1_node&#45;&gt;proc~initialize_gmsh_msh1_number</title>
+<path fill="none" stroke="#000000" d="M639.61,-350.56C702.82,-347.44 794,-341.27 873,-329.51 894.4,-326.32 917.64,-321.5 938.02,-316.81"/>
+<polygon fill="#000000" stroke="#000000" points="938.83,-320.21 947.77,-314.52 937.23,-313.4 938.83,-320.21"/>
+</g>
+<!-- proc~read_gmsh_msh1_element&#45;&gt;proc~clear_msg -->
+<g id="interface~~read_file~~CallsGraph_edge14" class="edge">
+<title>proc~read_gmsh_msh1_element&#45;&gt;proc~clear_msg</title>
+<path fill="none" stroke="#000000" d="M583.7,-181.37C623.69,-159.49 707.9,-113.41 753.54,-88.45"/>
+<polygon fill="#000000" stroke="#000000" points="755.3,-91.47 762.39,-83.6 751.94,-85.33 755.3,-91.47"/>
+</g>
+<!-- proc~read_gmsh_msh1_element&#45;&gt;proc~is_iostat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge16" class="edge">
+<title>proc~read_gmsh_msh1_element&#45;&gt;proc~is_iostat_failure</title>
+<path fill="none" stroke="#000000" d="M628.41,-181.51C660.34,-175.78 698.1,-169.01 728.49,-163.56"/>
+<polygon fill="#000000" stroke="#000000" points="729.27,-166.97 738.49,-161.76 728.03,-160.08 729.27,-166.97"/>
+</g>
+<!-- proc~read_gmsh_msh1_element&#45;&gt;proc~is_stat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge17" class="edge">
+<title>proc~read_gmsh_msh1_element&#45;&gt;proc~is_stat_failure</title>
+<path fill="none" stroke="#000000" d="M631.68,-205.54C641.98,-208.06 652.36,-211.04 662,-214.51 679.02,-220.64 681.37,-226.39 698,-233.51 709.6,-238.48 722.37,-243.16 734.44,-247.26"/>
+<polygon fill="#000000" stroke="#000000" points="733.35,-250.59 743.94,-250.42 735.55,-243.94 733.35,-250.59"/>
+</g>
+<!-- proc~initialize_gmsh_msh1_element -->
+<g id="interface~~read_file~~CallsGraph_node13" class="node">
+<title>proc~initialize_gmsh_msh1_element</title>
+<g id="a_interface~~read_file~~CallsGraph_node13"><a xlink:href="../proc/initialize_gmsh_msh1_element.html" xlink:title="initialize_gmsh_msh1_element">
+<polygon fill="#d9534f" stroke="#d9534f" points="873,-224.51 698,-224.51 698,-200.51 873,-200.51 873,-224.51"/>
+<text text-anchor="middle" x="785.5" y="-210.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize_gmsh_msh1_element</text>
+</a>
+</g>
+</g>
+<!-- proc~read_gmsh_msh1_element&#45;&gt;proc~initialize_gmsh_msh1_element -->
+<g id="interface~~read_file~~CallsGraph_edge15" class="edge">
+<title>proc~read_gmsh_msh1_element&#45;&gt;proc~initialize_gmsh_msh1_element</title>
+<path fill="none" stroke="#000000" d="M638.24,-200.05C654.1,-201.4 671,-202.84 687.48,-204.24"/>
+<polygon fill="#000000" stroke="#000000" points="687.4,-207.75 697.66,-205.11 688,-200.78 687.4,-207.75"/>
+</g>
+<!-- proc~read_gmsh_msh1_node&#45;&gt;proc~clear_msg -->
+<g id="interface~~read_file~~CallsGraph_edge18" class="edge">
+<title>proc~read_gmsh_msh1_node&#45;&gt;proc~clear_msg</title>
+<path fill="none" stroke="#000000" d="M629.62,-71.51C666.1,-71.51 709.92,-71.51 741.62,-71.51"/>
+<polygon fill="#000000" stroke="#000000" points="741.88,-75.01 751.88,-71.51 741.88,-68.01 741.88,-75.01"/>
+</g>
+<!-- proc~read_gmsh_msh1_node&#45;&gt;proc~is_iostat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge19" class="edge">
+<title>proc~read_gmsh_msh1_node&#45;&gt;proc~is_iostat_failure</title>
+<path fill="none" stroke="#000000" d="M629.72,-83.3C640.64,-85.89 651.73,-88.95 662,-92.51 695.44,-104.11 731.44,-122.87 755.7,-136.52"/>
+<polygon fill="#000000" stroke="#000000" points="753.97,-139.57 764.39,-141.48 757.44,-133.49 753.97,-139.57"/>
+</g>
+<!-- proc~read_gmsh_msh1_number_of_items&#45;&gt;proc~is_iostat_failure -->
+<g id="interface~~read_file~~CallsGraph_edge20" class="edge">
+<title>proc~read_gmsh_msh1_number_of_items&#45;&gt;proc~is_iostat_failure</title>
+<path fill="none" stroke="#000000" d="M634.63,-223.5C644,-221.01 653.33,-218.04 662,-214.51 679.58,-207.34 681.26,-200.47 698,-191.51 712.83,-183.58 729.66,-175.9 744.5,-169.55"/>
+<polygon fill="#000000" stroke="#000000" points="746.07,-172.69 753.93,-165.58 743.36,-166.24 746.07,-172.69"/>
+</g>
+<!-- proc~read_gmsh_msh1_number_of_items&#45;&gt;proc~is_iostat_success -->
+<g id="interface~~read_file~~CallsGraph_edge21" class="edge">
+<title>proc~read_gmsh_msh1_number_of_items&#45;&gt;proc~is_iostat_success</title>
+<path fill="none" stroke="#000000" d="M594.15,-247.58C621.69,-257.62 662.23,-272.06 698,-283.51 708.6,-286.9 720,-290.34 730.92,-293.54"/>
+<polygon fill="#000000" stroke="#000000" points="730.21,-296.98 740.79,-296.4 732.16,-290.25 730.21,-296.98"/>
+</g>
+<!-- proc~initialize_gmsh_msh1_element&#45;&gt;proc~initialize_gmsh_msh1_number -->
+<g id="interface~~read_file~~CallsGraph_edge23" class="edge">
+<title>proc~initialize_gmsh_msh1_element&#45;&gt;proc~initialize_gmsh_msh1_number</title>
+<path fill="none" stroke="#000000" d="M826.55,-224.63C841.32,-229.44 858.08,-235.3 873,-241.51 904.55,-254.64 939.27,-272.43 963.49,-285.41"/>
+<polygon fill="#000000" stroke="#000000" points="962.09,-288.63 972.55,-290.3 965.41,-282.47 962.09,-288.63"/>
+</g>
+<!-- initialize -->
+<g id="interface~~read_file~~CallsGraph_node15" class="node">
+<title>initialize</title>
+<polygon fill="#777777" stroke="#777777" points="1024,-224.51 967,-224.51 967,-200.51 1024,-200.51 1024,-224.51"/>
+<text text-anchor="middle" x="995.5" y="-210.11" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">initialize</text>
+</g>
+<!-- proc~initialize_gmsh_msh1_element&#45;&gt;initialize -->
+<g id="interface~~read_file~~CallsGraph_edge22" class="edge">
+<title>proc~initialize_gmsh_msh1_element&#45;&gt;initialize</title>
+<path fill="none" stroke="#000000" d="M873.2,-212.51C902.2,-212.51 933.05,-212.51 956.38,-212.51"/>
+<polygon fill="#000000" stroke="#000000" points="956.53,-216.01 966.53,-212.51 956.53,-209.01 956.53,-216.01"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var paninterfaceread_fileCallsGraph = svgPanZoom('#interfaceread_fileCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+
+
+        <h2>Module Procedures</h2>
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-read_file_gmsh_msh1"></span> <h3>private  subroutine <a href='../proc/read_file_gmsh_msh1.html'>read_file_gmsh_msh1</a>(mesh_data, msh1_file)  
+</h3></div>
+    <div class="card-body">
+              <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-mesh_data~11"></span>
+              type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>mesh_data</strong></td>
+            <td>
+<p>The read data will be stored in this argument</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-msh1_file"></span>
+              character(len=*),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>msh1_file</strong></td>
+            <td>
+<p>File path to read from</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+</div>
+  </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              DSCF-1224/gmsh_msh1_reader_fortran
+              &copy; 2025 <a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-09-02 22:19 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
