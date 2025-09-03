@@ -188,7 +188,7 @@
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-output_x_coord">output_x_coord</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-output_y_coord">output_y_coord</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-output_z_coord">output_z_coord</a>
-            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-read_file">read_file</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-read_ascii_file">read_ascii_file</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-validate">validate</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-write_diagnostic_report_reading">write_diagnostic_report_reading</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#interface-findloc">findloc</a>
@@ -281,9 +281,9 @@
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_node">initialize_gmsh_msh1_node</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-initialize_gmsh_msh1_number">initialize_gmsh_msh1_number</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-lookup_element_by_loc_gmsh_msh1_file">lookup_element_by_loc_gmsh_msh1_file</a>
-            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_file_gmsh_msh1">read_file_gmsh_msh1</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_ascii_file">read_gmsh_msh1_ascii_file</a>
+            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_ascii_file_kernel">read_gmsh_msh1_ascii_file_kernel</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_element">read_gmsh_msh1_element</a>
-            <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_file_kernel">read_gmsh_msh1_file_kernel</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_header_footer">read_gmsh_msh1_header_footer</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_node">read_gmsh_msh1_node</a>
             <a class="list-group-item" href="../module/gmsh_msh1_reader.html#proc-read_gmsh_msh1_number_of_items">read_gmsh_msh1_number_of_items</a>
@@ -314,8 +314,8 @@
             <li class="list-group-item">
               <ul class="list-inline">
                   <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/ieee_arithmetic'>ieee_arithmetic</a></li>
-                  <li class="list-inline-item"><a href='https://dscf-1224.github.io/gmsh_msh_elm_type_fortran'>gmsh_msh_elm_type_fortran</a></li>
                   <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/iso_fortran_env'>iso_fortran_env</a></li>
+                  <li class="list-inline-item"><a href='https://dscf-1224.github.io/gmsh_msh_elm_type_fortran'>gmsh_msh_elm_type_fortran</a></li>
               </ul>
             </li>
             <li class="list-group-item">
@@ -2580,14 +2580,14 @@ a <a href="../type/gmsh_msh1_node_number_type.html">gmsh_msh1_node_number_type</
 
               <div class="card">
     <div class="card-header bg-light codesum">
-      <span class="anchor" id="interface-read_file"></span>
-      <h3>public        interface <a href='../interface/read_file.html'>read_file</a> 
+      <span class="anchor" id="interface-read_ascii_file"></span>
+      <h3>public        interface <a href='../interface/read_ascii_file.html'>read_ascii_file</a> 
       </h3>
     </div>
     <ul class="list-group">
           <li class="list-group-item">
                 <h3>
-    private  subroutine <a href='../proc/read_file_gmsh_msh1.html'>read_file_gmsh_msh1</a>(mesh_data, msh1_file)  
+    private  subroutine <a href='../proc/read_gmsh_msh1_ascii_file.html'>read_gmsh_msh1_ascii_file</a>(mesh_data, msh1_file)  
 
     </h3>
         <dl class="dl-horizontal">
@@ -6383,7 +6383,7 @@ the <em>n</em>-th node in the
   </div>
 
               <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-read_file_gmsh_msh1"></span> <h3>private  subroutine <a href='../proc/read_file_gmsh_msh1.html'>read_file_gmsh_msh1</a>(mesh_data, msh1_file)  
+    <div class="card-header codesum"><span class="anchor" id="proc-read_gmsh_msh1_ascii_file"></span> <h3>private  subroutine <a href='../proc/read_gmsh_msh1_ascii_file.html'>read_gmsh_msh1_ascii_file</a>(mesh_data, msh1_file)  
 </h3></div>
     <div class="card-body">
               <dl class="dl-horizontal">
@@ -6432,6 +6432,65 @@ the <em>n</em>-th node in the
             <td><strong>msh1_file</strong></td>
             <td>
 <p>File path to read from</p>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-read_gmsh_msh1_ascii_file_kernel"></span> <h3>private  subroutine <a href='../proc/read_gmsh_msh1_ascii_file_kernel.html'>read_gmsh_msh1_ascii_file_kernel</a>(mesh_data, file_unit)  
+</h3></div>
+    <div class="card-body">
+              <dl class="dl-horizontal">
+        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
+        <dt>Version</dt><dd>experimental</dd>
+    </dl>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-mesh_data~12"></span>
+              type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>mesh_data</strong></td>
+            <td>
+<p>The read data will be stored in this argument</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-file_unit~3"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>file_unit</strong></td>
+            <td>
+
             </td>
         </tr>
     </tbody>
@@ -6549,65 +6608,6 @@ the <em>n</em>-th node in the
             </td>
             <td>::</td>
             <td><strong>flag</strong></td>
-            <td>
-
-            </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-    </div>
-  </div>
-
-              <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-read_gmsh_msh1_file_kernel"></span> <h3>private  subroutine <a href='../proc/read_gmsh_msh1_file_kernel.html'>read_gmsh_msh1_file_kernel</a>(mesh_data, file_unit)  
-</h3></div>
-    <div class="card-body">
-              <dl class="dl-horizontal">
-        <dt>License</dt><dd><a rel="license" href="https://opensource.org/licenses/MIT">MIT</a></dd>
-        <dt>Version</dt><dd>experimental</dd>
-    </dl>
-
-  
-
-  <h4>Arguments</h4>
-      <table class="table table-striped varlist">
-    <thead>
-      <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-mesh_data~12"></span>
-              type(<a href='../type/gmsh_msh1_data_type.html'>gmsh_msh1_data_type</a>),
-            </td>
-<td>intent(inout)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>mesh_data</strong></td>
-            <td>
-<p>The read data will be stored in this argument</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-              <span class="anchor" id="variable-file_unit~3"></span>
-              integer,
-            </td>
-<td>intent(in)</td>
-              <td></td>            <td>
-              
-            </td>
-            <td>::</td>
-            <td><strong>file_unit</strong></td>
             <td>
 
             </td>
@@ -7013,7 +7013,7 @@ the <em>n</em>-th node in the
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-09-02 22:19 +0000             </p>
+ on 2025-09-03 22:18 +0000             </p>
           </div>
         </div>
         <br>

@@ -221,7 +221,7 @@
 <a id="ln-51" name="ln-51" href="#ln-51"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">output_x_coord</span>
 <a id="ln-52" name="ln-52" href="#ln-52"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">output_y_coord</span>
 <a id="ln-53" name="ln-53" href="#ln-53"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">output_z_coord</span>
-<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">read_file</span>
+<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">read_ascii_file</span>
 <a id="ln-55" name="ln-55" href="#ln-55"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">validate</span>
 <a id="ln-56" name="ln-56" href="#ln-56"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">write_diagnostic_report_reading</span>
 <a id="ln-57" name="ln-57" href="#ln-57"></a>
@@ -679,9 +679,9 @@
 <a id="ln-509" name="ln-509" href="#ln-509"></a>
 <a id="ln-510" name="ln-510" href="#ln-510"></a>
 <a id="ln-511" name="ln-511" href="#ln-511"></a><span class="w">    </span><span class="c">!&gt; version: experimental</span>
-<a id="ln-512" name="ln-512" href="#ln-512"></a><span class="w">    </span><span class="k">interface </span><span class="n">read_file</span>
-<a id="ln-513" name="ln-513" href="#ln-513"></a><span class="w">        </span><span class="k">module procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">read_file_gmsh_msh1</span>
-<a id="ln-514" name="ln-514" href="#ln-514"></a><span class="w">    </span><span class="k">end interface </span><span class="n">read_file</span>
+<a id="ln-512" name="ln-512" href="#ln-512"></a><span class="w">    </span><span class="k">interface </span><span class="n">read_ascii_file</span>
+<a id="ln-513" name="ln-513" href="#ln-513"></a><span class="w">        </span><span class="k">module procedure</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">read_gmsh_msh1_ascii_file</span>
+<a id="ln-514" name="ln-514" href="#ln-514"></a><span class="w">    </span><span class="k">end interface </span><span class="n">read_ascii_file</span>
 <a id="ln-515" name="ln-515" href="#ln-515"></a>
 <a id="ln-516" name="ln-516" href="#ln-516"></a>
 <a id="ln-517" name="ln-517" href="#ln-517"></a>
@@ -1814,7 +1814,7 @@
 <a id="ln-1644" name="ln-1644" href="#ln-1644"></a>
 <a id="ln-1645" name="ln-1645" href="#ln-1645"></a>
 <a id="ln-1646" name="ln-1646" href="#ln-1646"></a><span class="w">    </span><span class="c">!&gt; version: experimental</span>
-<a id="ln-1647" name="ln-1647" href="#ln-1647"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">read_file_gmsh_msh1</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">msh1_file</span><span class="p">)</span>
+<a id="ln-1647" name="ln-1647" href="#ln-1647"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">read_gmsh_msh1_ascii_file</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">msh1_file</span><span class="p">)</span>
 <a id="ln-1648" name="ln-1648" href="#ln-1648"></a>
 <a id="ln-1649" name="ln-1649" href="#ln-1649"></a><span class="w">        </span><span class="c">!&gt; The read data will be stored in this argument</span>
 <a id="ln-1650" name="ln-1650" href="#ln-1650"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">gmsh_msh1_data_type</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mesh_data</span>
@@ -1860,7 +1860,7 @@
 <a id="ln-1690" name="ln-1690" href="#ln-1690"></a>
 <a id="ln-1691" name="ln-1691" href="#ln-1691"></a>
 <a id="ln-1692" name="ln-1692" href="#ln-1692"></a>
-<a id="ln-1693" name="ln-1693" href="#ln-1693"></a><span class="k">        call </span><span class="n">read_gmsh_msh1_file_kernel</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">file_unit</span><span class="p">)</span>
+<a id="ln-1693" name="ln-1693" href="#ln-1693"></a><span class="k">        call </span><span class="n">read_gmsh_msh1_ascii_file_kernel</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">file_unit</span><span class="p">)</span>
 <a id="ln-1694" name="ln-1694" href="#ln-1694"></a>
 <a id="ln-1695" name="ln-1695" href="#ln-1695"></a>
 <a id="ln-1696" name="ln-1696" href="#ln-1696"></a>
@@ -1874,12 +1874,12 @@
 <a id="ln-1704" name="ln-1704" href="#ln-1704"></a>
 <a id="ln-1705" name="ln-1705" href="#ln-1705"></a><span class="w">        </span><span class="n">mesh_data</span><span class="p">%</span><span class="n">status</span><span class="p">%</span><span class="n">err</span><span class="p">%</span><span class="n">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stat_success</span>
 <a id="ln-1706" name="ln-1706" href="#ln-1706"></a>
-<a id="ln-1707" name="ln-1707" href="#ln-1707"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">read_file_gmsh_msh1</span>
+<a id="ln-1707" name="ln-1707" href="#ln-1707"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">read_gmsh_msh1_ascii_file</span>
 <a id="ln-1708" name="ln-1708" href="#ln-1708"></a>
 <a id="ln-1709" name="ln-1709" href="#ln-1709"></a>
 <a id="ln-1710" name="ln-1710" href="#ln-1710"></a>
 <a id="ln-1711" name="ln-1711" href="#ln-1711"></a><span class="w">    </span><span class="c">!&gt; version: experimental</span>
-<a id="ln-1712" name="ln-1712" href="#ln-1712"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">read_gmsh_msh1_file_kernel</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">file_unit</span><span class="p">)</span>
+<a id="ln-1712" name="ln-1712" href="#ln-1712"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">read_gmsh_msh1_ascii_file_kernel</span><span class="p">(</span><span class="n">mesh_data</span><span class="p">,</span><span class="w"> </span><span class="n">file_unit</span><span class="p">)</span>
 <a id="ln-1713" name="ln-1713" href="#ln-1713"></a>
 <a id="ln-1714" name="ln-1714" href="#ln-1714"></a><span class="w">        </span><span class="c">!&gt; The read data will be stored in this argument</span>
 <a id="ln-1715" name="ln-1715" href="#ln-1715"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">gmsh_msh1_data_type</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">mesh_data</span>
@@ -2135,7 +2135,7 @@
 <a id="ln-1965" name="ln-1965" href="#ln-1965"></a><span class="w">        </span><span class="k">end block</span><span class="w"> </span><span class="p">&amp;</span><span class="c">!</span>
 <a id="ln-1966" name="ln-1966" href="#ln-1966"></a><span class="w">        </span><span class="n">read_elm_section_footer</span>
 <a id="ln-1967" name="ln-1967" href="#ln-1967"></a>
-<a id="ln-1968" name="ln-1968" href="#ln-1968"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">read_gmsh_msh1_file_kernel</span>
+<a id="ln-1968" name="ln-1968" href="#ln-1968"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">read_gmsh_msh1_ascii_file_kernel</span>
 <a id="ln-1969" name="ln-1969" href="#ln-1969"></a>
 <a id="ln-1970" name="ln-1970" href="#ln-1970"></a>
 <a id="ln-1971" name="ln-1971" href="#ln-1971"></a>
@@ -2425,7 +2425,7 @@
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2025-09-02 22:19 +0000             </p>
+ on 2025-09-03 22:18 +0000             </p>
           </div>
         </div>
         <br>
