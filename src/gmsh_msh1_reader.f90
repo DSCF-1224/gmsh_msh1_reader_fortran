@@ -51,7 +51,7 @@ module gmsh_msh1_reader
     public :: output_x_coord
     public :: output_y_coord
     public :: output_z_coord
-    public :: read_file
+    public :: read_ascii_file
     public :: validate
     public :: write_diagnostic_report_reading
 
@@ -509,9 +509,9 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    interface read_file
-        module procedure :: read_file_gmsh_msh1
-    end interface read_file
+    interface read_ascii_file
+        module procedure :: read_gmsh_msh1_ascii_file
+    end interface read_ascii_file
 
 
 
@@ -1644,7 +1644,7 @@ module gmsh_msh1_reader
 
 
     !> version: experimental
-    subroutine read_file_gmsh_msh1(mesh_data, msh1_file)
+    subroutine read_gmsh_msh1_ascii_file(mesh_data, msh1_file)
 
         !> The read data will be stored in this argument
         type(gmsh_msh1_data_type), intent(inout) :: mesh_data
@@ -1690,7 +1690,7 @@ module gmsh_msh1_reader
 
 
 
-        call read_gmsh_msh1_file_kernel(mesh_data, file_unit)
+        call read_gmsh_msh1_ascii_file_kernel(mesh_data, file_unit)
 
 
 
@@ -1704,12 +1704,12 @@ module gmsh_msh1_reader
 
         mesh_data%status%err%code = stat_success
 
-    end subroutine read_file_gmsh_msh1
+    end subroutine read_gmsh_msh1_ascii_file
 
 
 
     !> version: experimental
-    subroutine read_gmsh_msh1_file_kernel(mesh_data, file_unit)
+    subroutine read_gmsh_msh1_ascii_file_kernel(mesh_data, file_unit)
 
         !> The read data will be stored in this argument
         type(gmsh_msh1_data_type), intent(inout) :: mesh_data
@@ -1965,7 +1965,7 @@ module gmsh_msh1_reader
         end block &!
         read_elm_section_footer
 
-    end subroutine read_gmsh_msh1_file_kernel
+    end subroutine read_gmsh_msh1_ascii_file_kernel
 
 
 
