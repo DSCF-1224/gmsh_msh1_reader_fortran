@@ -62,10 +62,10 @@ type(gmsh_msh1_data_type) :: mesh_data
 
 #### 2. Read [Gmsh][GmshReferenceManualTop] [MSH file format version 1][GmshReferenceManualMsh1]
 
-- [interface `read_file`](https://dscf-1224.github.io/gmsh_msh1_reader_fortran/interface/read_file.html)
+- [interface `read_ascii_file`](https://dscf-1224.github.io/gmsh_msh1_reader_fortran/interface/read_ascii_file.html)
 
 ```fortran
-call read_file(mesh_data, 'your_mesh_file.msh1')
+call read_ascii_file(mesh_data, 'your_mesh_file.msh1')
 ```
 
 > [!NOTE]

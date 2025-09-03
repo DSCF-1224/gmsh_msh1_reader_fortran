@@ -20,40 +20,40 @@ program check
 
 
 
-    call test_read_file( "test/empty.msh1" )
+    call test_read_ascii_file( "test/empty.msh1" )
 
-    call test_read_file( "test/2d_tri_order01.msh1" )
-    call test_read_file( "test/2d_tri_order02.msh1" )
-    call test_read_file( "test/2d_tri_order03.msh1" )
-    call test_read_file( "test/2d_tri_order04.msh1" )
-    call test_read_file( "test/2d_tri_order05.msh1" )
-    call test_read_file( "test/2d_tri_order06.msh1" )
-    call test_read_file( "test/2d_tri_order07.msh1" )
-    call test_read_file( "test/2d_tri_order08.msh1" )
-    call test_read_file( "test/2d_tri_order09.msh1" )
-    call test_read_file( "test/2d_tri_order10.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order01.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order02.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order03.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order04.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order05.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order06.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order07.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order08.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order09.msh1" )
+    call test_read_ascii_file( "test/2d_tri_order10.msh1" )
 
-    call test_read_file( "test/2d_qua_order01.msh1" )
-    call test_read_file( "test/2d_qua_order02.msh1" )
-    call test_read_file( "test/2d_qua_order03.msh1" )
-    call test_read_file( "test/2d_qua_order04.msh1" )
-    call test_read_file( "test/2d_qua_order05.msh1" )
-    call test_read_file( "test/2d_qua_order06.msh1" )
-    call test_read_file( "test/2d_qua_order07.msh1" )
-    call test_read_file( "test/2d_qua_order08.msh1" )
-    call test_read_file( "test/2d_qua_order09.msh1" )
-    call test_read_file( "test/2d_qua_order10.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order01.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order02.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order03.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order04.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order05.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order06.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order07.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order08.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order09.msh1" )
+    call test_read_ascii_file( "test/2d_qua_order10.msh1" )
 
-    call test_read_file( "test/3d_tet_order01.msh1" )
-    call test_read_file( "test/3d_tet_order02.msh1" )
-    call test_read_file( "test/3d_tet_order03.msh1" )
-    call test_read_file( "test/3d_tet_order04.msh1" )
-    call test_read_file( "test/3d_tet_order05.msh1" )
-    call test_read_file( "test/3d_tet_order06.msh1" )
-    call test_read_file( "test/3d_tet_order07.msh1" )
-    call test_read_file( "test/3d_tet_order08.msh1" )
-    call test_read_file( "test/3d_tet_order09.msh1" )
-    call test_read_file( "test/3d_tet_order10.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order01.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order02.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order03.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order04.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order05.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order06.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order07.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order08.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order09.msh1" )
+    call test_read_ascii_file( "test/3d_tet_order10.msh1" )
 
 
 
@@ -216,7 +216,7 @@ program check
 
 
 
-    subroutine test_read_file(msh1_file)
+    subroutine test_read_ascii_file(msh1_file)
 
         character(len=*), intent(in) :: msh1_file
 
@@ -234,11 +234,11 @@ program check
 
 
 
-        call read_file( msh1_data, msh1_file )
+        call read_ascii_file( msh1_data, msh1_file )
 
         if ( is_read_successful(msh1_data) ) then
 
-            call test_read_file_kernel( &!
+            call test_read_ascii_file_kernel( &!
             unit      = output_unit  , &!
             msh1_file = msh1_file(:) , &!
             msh1_data = msh1_data      &!
@@ -246,7 +246,7 @@ program check
 
         else
 
-            call test_read_file_kernel( &!
+            call test_read_ascii_file_kernel( &!
             unit      = error_unit   , &!
             msh1_file = msh1_file(:) , &!
             msh1_data = msh1_data      &!
@@ -310,11 +310,11 @@ program check
 
         call compare_files( msh1_file(:) , trim( rewrite_msh1_file(:) ) )
 
-    end subroutine test_read_file
+    end subroutine test_read_ascii_file
 
 
 
-    subroutine test_read_file_kernel(unit, msh1_file, msh1_data)
+    subroutine test_read_ascii_file_kernel(unit, msh1_file, msh1_data)
 
         integer, intent(in) :: unit
 
@@ -328,7 +328,7 @@ program check
 
         call write_diagnostic_report_reading( msh1_data, unit )
 
-    end subroutine test_read_file_kernel
+    end subroutine test_read_ascii_file_kernel
 
 
 
